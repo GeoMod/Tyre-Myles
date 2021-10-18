@@ -9,54 +9,73 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-				  animation: .default)
-    private var items: FetchedResults<Item>
 
 	let tireImages = ["Summer", "Winter"]
+	enum TireType: String, CaseIterable, Identifiable {
+		// Identifiable for use in ForEach
+		var id: String { UUID().uuidString }
+
+		case summer = "Summer"
+		case winter = "Winter"
+	}
 
 	@State private var summerSelected = false
+	@State private var selectedTire: TireType = .summer
 
 
 	var body: some View {
 		ZStack {
 			Color("Background").ignoresSafeArea()
-			VStack(alignment: .leading) {
+			VStack {
 				Title
+				Text("Select Season")
+					.foregroundColor(.gray)
+					.font(.title.bold())
+					.padding()
 				HStack(spacing: 30) {
-					ForEach(tireImages, id: \.self) { tire in
+					ForEach(TireType.allCases) { tire in
 						Button {
-							summerSelected.toggle()
+							selectedTire(type: tire)
 						} label: {
 							VStack {
-								Image(tire)
+								Image(tire.rawValue)
 									.resizable()
 									.padding()
 									.frame(width: 150, height: 150)
-									.background { summerSelected ? Color.gray : Color.white }
+									.background { Color.white }
 									.clipShape(RoundedRectangle(cornerRadius: 18))
-								Text(tire)
-									.foregroundColor(.white)
+								Text(tire.rawValue)
 									.font(Font.system(size: 26))
+									.foregroundColor(.white)
 							}
 						}
-
 					}
 				}
+				Text(selectedTire.rawValue)
+					.foregroundColor(selectedTire == .summer ? .red : .white)
+					.font(.title.bold())
+					.padding()
 				Spacer()
 			}
 
 		}
 	}
 
+	private func selectedTire(type: TireType) {
+		switch type {
+			case .summer:
+				selectedTire = .summer
+				print("Summer")
+			case .winter:
+				selectedTire = .winter
+				print("Winter")
+		}
+	}
+
 	private var Title: some View {
-		Text("Tyre Myles")
+		Text("My Tyre Myles")
 			.font(Font.system(size: 40, weight: .semibold, design: .rounded))
 			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
-			.foregroundColor(.white)
-			.padding(.leading)
 	}
 
 
