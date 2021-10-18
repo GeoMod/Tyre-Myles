@@ -11,78 +11,61 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+				  animation: .default)
     private var items: FetchedResults<Item>
 
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
+	let tireImages = ["Summer", "Winter"]
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+	@State private var summerSelected = false
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+	var body: some View {
+		ZStack {
+			Color("Background").ignoresSafeArea()
+			VStack(alignment: .leading) {
+				Title
+				HStack(spacing: 30) {
+					ForEach(tireImages, id: \.self) { tire in
+						Button {
+							summerSelected.toggle()
+						} label: {
+							VStack {
+								Image(tire)
+									.resizable()
+									.padding()
+									.frame(width: 150, height: 150)
+									.background { summerSelected ? Color.gray : Color.white }
+									.clipShape(RoundedRectangle(cornerRadius: 18))
+								Text(tire)
+									.foregroundColor(.white)
+									.font(Font.system(size: 26))
+							}
+						}
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
+					}
+				}
+				Spacer()
+			}
+
+		}
+	}
+
+	private var Title: some View {
+		Text("Tyre Myles")
+			.font(Font.system(size: 40, weight: .semibold, design: .rounded))
+			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
+			.foregroundColor(.white)
+			.padding(.leading)
+	}
+
+
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
+		//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
