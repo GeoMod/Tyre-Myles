@@ -19,7 +19,7 @@ struct ContentView: View {
 		case winter = "Winter"
 	}
 
-	@State private var summerSelected = false
+//	@State private var summerSelected = false
 	@State private var selectedTire: TireType = .summer
 
 	let winterBackground = "WinterBackground"
@@ -28,19 +28,14 @@ struct ContentView: View {
 
 	var body: some View {
 		ZStack {
-			Color(selectedTire == .summer ? summerBackground : winterBackground).ignoresSafeArea()
+				Color(selectedTire == .summer ? summerBackground : winterBackground).ignoresSafeArea()
+				.animation(.easeIn(duration: 0.75), value: selectedTire)
 			VStack {
 				Title
-				Text("Select Season")
-					.foregroundColor(.gray)
-					.font(.title.bold())
-					.padding(.bottom)
 				HStack(spacing: 30) {
 					ForEach(TireType.allCases) { tire in
 						Button {
-							withAnimation(.easeIn(duration: 0.75)) {
 								selectedTire(type: tire)
-							}
 						} label: {
 							VStack {
 								Image(tire.rawValue)
@@ -59,13 +54,15 @@ struct ContentView: View {
 				Text(selectedTire.rawValue)
 					.foregroundColor(selectedTire == .summer ? .red : .white)
 					.font(.title.bold())
-					.padding(.top)
+					.padding()
 				DateMilageView()
 					.foregroundColor(.white)
 				Spacer()
 			}
-			.animation(.easeIn(duration: 2.75), value: summerSelected)
 		}
+
+
+
 	}
 
 	private func selectedTire(type: TireType) {
