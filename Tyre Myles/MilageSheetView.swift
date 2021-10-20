@@ -16,7 +16,7 @@ struct MilageSheetView: View {
 
 	var body: some View {
 		VStack {
-						Spacer()
+			Spacer()
 			Text("Enter Milage Values")
 				.font(.headline)
 				.padding()
@@ -24,6 +24,7 @@ struct MilageSheetView: View {
 				TextField("Install Milage", text: $installMilage, prompt: Text("Installation Milage"))
 				TextField("Removal Milage", text: $removalMilage, prompt: Text("Removal Milage"))
 			}
+			.keyboardType(.numberPad)
 			.textFieldStyle(.roundedBorder)
 			.padding([.leading, .trailing], 50)
 

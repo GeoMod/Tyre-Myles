@@ -22,20 +22,25 @@ struct ContentView: View {
 	@State private var summerSelected = false
 	@State private var selectedTire: TireType = .summer
 
+	let winterBackground = "WinterBackground"
+	let summerBackground = "Background"
+
 
 	var body: some View {
 		ZStack {
-			Color("Background").ignoresSafeArea()
+			Color(selectedTire == .summer ? summerBackground : winterBackground).ignoresSafeArea()
 			VStack {
 				Title
 				Text("Select Season")
 					.foregroundColor(.gray)
 					.font(.title.bold())
-					.padding()
+					.padding(.bottom)
 				HStack(spacing: 30) {
 					ForEach(TireType.allCases) { tire in
 						Button {
-							selectedTire(type: tire)
+							withAnimation(.easeIn(duration: 0.75)) {
+								selectedTire(type: tire)
+							}
 						} label: {
 							VStack {
 								Image(tire.rawValue)
@@ -54,10 +59,12 @@ struct ContentView: View {
 				Text(selectedTire.rawValue)
 					.foregroundColor(selectedTire == .summer ? .red : .white)
 					.font(.title.bold())
-					.padding()
+					.padding(.top)
 				DateMilageView()
+					.foregroundColor(.white)
+				Spacer()
 			}
-
+			.animation(.easeIn(duration: 2.75), value: summerSelected)
 		}
 	}
 
@@ -72,7 +79,7 @@ struct ContentView: View {
 
 	private var Title: some View {
 		Text("My Tyre Myles")
-			.font(Font.system(size: 40, weight: .semibold, design: .rounded))
+			.font(Font.system(size: 35, weight: .semibold))
 			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
 	}
 
@@ -83,6 +90,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+//			.preferredColorScheme(.dark)
 		//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
