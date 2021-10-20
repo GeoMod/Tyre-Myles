@@ -48,14 +48,14 @@ struct ContentView: View {
 									.font(Font.system(size: 26))
 									.foregroundColor(.white)
 							}
-						}
+						}.shadow(color: .gray, radius: 5, x: 3, y: 0)
 					}
 				}
 				Text(selectedTire.rawValue)
 					.foregroundColor(selectedTire == .summer ? .red : .white)
 					.font(.title.bold())
 					.padding()
-				Spacer()
+				DateMilageView()
 			}
 
 		}
@@ -65,10 +65,8 @@ struct ContentView: View {
 		switch type {
 			case .summer:
 				selectedTire = .summer
-				print("Summer")
 			case .winter:
 				selectedTire = .winter
-				print("Winter")
 		}
 	}
 
