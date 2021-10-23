@@ -13,7 +13,7 @@ struct DateSheetView: View {
 	@Binding var installDate: Date
 	@Binding var removalDate: Date
 
-    var body: some View {
+	var body: some View {
 		VStack {
 			Text("Enter Date Values")
 				.font(.headline)
@@ -35,12 +35,15 @@ struct DateSheetView: View {
 					dismiss()
 				} label: {
 					Text("Save")
+						.foregroundColor(.white)
 				}.buttonStyle(.borderedProminent)
 					.padding()
 			}
 
-		}.padding()
-    }
+		}
+		.foregroundColor(.gray)
+		.padding()
+	}
 
 
 }

@@ -20,7 +20,7 @@ struct ContentView: View {
 	}
 
 //	@State private var summerSelected = false
-	@State private var selectedTire: TireType = .summer
+	@State private var selectedTire: TireType = .winter
 
 	let winterBackground = "WinterBackground"
 	let summerBackground = "Background"
@@ -28,7 +28,7 @@ struct ContentView: View {
 
 	var body: some View {
 		ZStack {
-				Color(selectedTire == .summer ? summerBackground : winterBackground).ignoresSafeArea()
+			Color(selectedTire == .summer ? summerBackground : winterBackground).ignoresSafeArea()
 				.animation(.easeIn(duration: 0.75), value: selectedTire)
 			VStack {
 				Title

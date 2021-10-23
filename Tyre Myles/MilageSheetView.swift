@@ -18,6 +18,7 @@ struct MilageSheetView: View {
 		VStack {
 			Spacer()
 			Text("Enter Milage Values")
+				.foregroundColor(.gray)
 				.font(.headline)
 				.padding()
 			Group {
