@@ -32,3 +32,12 @@ extension Color {
 		)
 	}
 }
+
+
+enum TireType: String, CaseIterable, Identifiable {
+	// Identifiable for use in ForEach
+	var id: String { UUID().uuidString }
+
+	case summer = "Summer"
+	case winter = "Winter"
+}

@@ -15,7 +15,8 @@ struct DateMilageView: View {
 	@State private var savedInstallDate = ""
 	@State private var savedRemovalDate = ""
 
-	@State private var installMilage = ""
+	@AppStorage("installDistance") var installDistance = ""
+	
 	@State private var removalMilage = ""
 	@State private var totalMilage = "0"
 
@@ -44,7 +45,7 @@ struct DateMilageView: View {
 			HStack {
 				VStack(alignment: .center, spacing: 5) {
 					Text("Install Milage")
-					TextField("Install Milage", text: $installMilage, prompt: Text("Make Selection"))
+					TextField("Install Milage", text: $installDistance, prompt: Text("Make Selection"))
 						.textFieldStyle(.roundedBorder)
 						.onTapGesture {
 							isPresendingMilageSheet.toggle()
@@ -72,7 +73,7 @@ struct DateMilageView: View {
 		.padding([.leading, .trailing])
 
 		.sheet(isPresented: $isPresentingDateSheet) {
-			print("date picker was dismissed")
+//			print("date picker was dismissed")
 		} content: {
 			DateSheetView(installDate: $installDate, removalDate: $removalDate)
 		}
@@ -80,7 +81,7 @@ struct DateMilageView: View {
 		.sheet(isPresented: $isPresendingMilageSheet) {
 			// do nothing if dismissed manually
 		} content: {
-			MilageSheetView(installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
+			MilageSheetView(installMilage: $installDistance, removalMilage: $removalMilage, totalMilage: $totalMilage)
 		}
 	}
 

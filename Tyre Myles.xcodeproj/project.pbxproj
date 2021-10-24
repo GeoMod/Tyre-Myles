@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1853F00A2725B111006A9CB5 /* NewTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1853F0092725B111006A9CB5 /* NewTireView.swift */; };
 		185BC7CC27224FD700A8DD32 /* TireModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BC7CB27224FD700A8DD32 /* TireModel.swift */; };
 		18C3A0FB271DADAD005EB3E9 /* Tyre_MylesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */; };
 		18C3A0FD271DADAD005EB3E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FC271DADAD005EB3E9 /* ContentView.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1853F0092725B111006A9CB5 /* NewTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTireView.swift; sourceTree = "<group>"; };
 		185BC7CB27224FD700A8DD32 /* TireModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TireModel.swift; sourceTree = "<group>"; };
 		18C3A0F7271DADAD005EB3E9 /* Tyre Myles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tyre Myles.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tyre_MylesApp.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
 				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
+				1853F0092725B111006A9CB5 /* NewTireView.swift */,
 				18EB7797271F665A00905BE1 /* DateMilageView.swift */,
 				18EB779B271FB98A00905BE1 /* MilageSheetView.swift */,
 				18EB7799271FB97100905BE1 /* DateSheetView.swift */,
@@ -165,6 +168,7 @@
 				18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */,
 				18EB779A271FB97100905BE1 /* DateSheetView.swift in Sources */,
 				18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */,
+				1853F00A2725B111006A9CB5 /* NewTireView.swift in Sources */,
 				18EB779C271FB98A00905BE1 /* MilageSheetView.swift in Sources */,
 				185BC7CC27224FD700A8DD32 /* TireModel.swift in Sources */,
 				18C3A104271DADAE005EB3E9 /* Persistence.swift in Sources */,
