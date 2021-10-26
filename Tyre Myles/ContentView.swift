@@ -13,7 +13,6 @@ struct ContentView: View {
 	let tireImages = ["Summer", "Winter"]
 
 	@State private var selectedTire: TireType = .winter
-//	@State private var isAddingNewTire = false
 
 	let winterBackground = "WinterBackground"
 	let summerBackground = "Background"
@@ -22,7 +21,7 @@ struct ContentView: View {
 	var body: some View {
 		NavigationView {
 			VStack {
-				HStack(spacing: 30) {
+				HStack(spacing: 40) {
 					ForEach(TireType.allCases) { tire in
 						Button {
 							selectedTire(type: tire)
@@ -45,12 +44,10 @@ struct ContentView: View {
 					.foregroundColor(selectedTire == .summer ? .orange : .secondary)
 					.font(.title.bold())
 					.padding()
-				Text("Edit")
-					.foregroundColor(.blue)
 				DateMilageView()
-				Spacer()
 			}
 			.navigationTitle("Tyre Myles")
+			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					NavigationLink {
@@ -64,7 +61,6 @@ struct ContentView: View {
 				}
 			}
 		}
-
 
 
 	}

@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+
 struct DateMilageView: View {
 
 	@AppStorage("installDistance") var installMilage = "23000"
 	@AppStorage("removalDistance") var removalMilage = "320987"
 
+	@State private var isEditingDetails = false
 
 	// Will need to be saved for both summer and winter values.
 	@State private var totalMilage = "0"
@@ -20,16 +22,22 @@ struct DateMilageView: View {
 	@State private var removalDate = Date()
 
 
-	@State private var isPresentingDateSheet = false
-	@State private var isPresendingMilageSheet = false
-
 	var body: some View {
 		VStack {
 
 			VStack(alignment: .leading) {
-				Text("Intallation")
-					.font(.title2.bold())
-					.padding(.bottom)
+				HStack(alignment: .firstTextBaseline) {
+					Text("Intallation")
+						.font(.title2.bold())
+						.padding(.top)
+						Spacer()
+
+					Button {
+						isEditingDetails.toggle()
+					} label: {
+						Image(systemName: "square.and.pencil")
+					}
+				}
 				HStack {
 					Text("Date:")
 					Text(installDate, style: .date)
@@ -45,7 +53,7 @@ struct DateMilageView: View {
 
 				Text("Removal")
 					.font(.title2.bold())
-					.padding([.top, .bottom])
+					.padding([.top])
 				HStack {
 					Text("Date:")
 					Text(removalDate, style: .date)
@@ -70,17 +78,17 @@ struct DateMilageView: View {
 		.padding([.leading, .trailing])
 		.font(.title3.monospaced())
 
-		.sheet(isPresented: $isPresentingDateSheet) {
-//			print("date picker was dismissed")
-		} content: {
-			DateSheetView(installDate: $installDate, removalDate: $removalDate)
-		}
-
-		.sheet(isPresented: $isPresendingMilageSheet) {
-			// do nothing if dismissed manually
-		} content: {
-			MilageSheetView(installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
-		}
+//		.sheet(isPresented: $isPresentingDateSheet) {
+////			print("date picker was dismissed")
+//		} content: {
+//			DateSheetView(installDate: $installDate, removalDate: $removalDate)
+//		}
+//
+//		.sheet(isPresented: $isPresendingMilageSheet) {
+//			// do nothing if dismissed manually
+//		} content: {
+//			MilageSheetView(installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
+//		}
 	}
 
 	
