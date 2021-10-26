@@ -78,11 +78,11 @@ struct DateMilageView: View {
 		.padding([.leading, .trailing])
 		.font(.title3.monospaced())
 
-//		.sheet(isPresented: $isPresentingDateSheet) {
-////			print("date picker was dismissed")
-//		} content: {
-//			DateSheetView(installDate: $installDate, removalDate: $removalDate)
-//		}
+		.sheet(isPresented: $isEditingDetails) {
+//			print("editor was dismissed")
+		} content: {
+			TireDataEntryView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
+		}
 //
 //		.sheet(isPresented: $isPresendingMilageSheet) {
 //			// do nothing if dismissed manually
