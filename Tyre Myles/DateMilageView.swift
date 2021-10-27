@@ -79,16 +79,10 @@ struct DateMilageView: View {
 		.font(.title3.monospaced())
 
 		.sheet(isPresented: $isEditingDetails) {
-//			print("editor was dismissed")
+			print("editor was dismissed")
 		} content: {
 			TireDataEntryView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
 		}
-//
-//		.sheet(isPresented: $isPresendingMilageSheet) {
-//			// do nothing if dismissed manually
-//		} content: {
-//			MilageSheetView(installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
-//		}
 	}
 
 	
@@ -99,6 +93,6 @@ struct DateMilageView_Previews: PreviewProvider {
 
     static var previews: some View {
         DateMilageView()
-//			.preferredColorScheme(.dark)
+			.preferredColorScheme(.dark)
     }
 }

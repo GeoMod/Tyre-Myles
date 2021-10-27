@@ -9,13 +9,13 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+	@Environment(\.colorScheme) var colorScheme
 
 	let tireImages = ["Summer", "Winter"]
-
-	@State private var selectedTire: TireType = .winter
-
 	let winterBackground = "WinterBackground"
 	let summerBackground = "Background"
+
+	@State private var selectedTire: TireType = .winter
 
 
 	var body: some View {
@@ -31,13 +31,13 @@ struct ContentView: View {
 									.resizable()
 									.padding()
 									.frame(width: 150, height: 150)
-									.background { Color.white }
+									.background { colorScheme == .dark ? Color.black : Color.white }
 									.clipShape(RoundedRectangle(cornerRadius: 18))
 								Text(tire.rawValue)
 									.font(Font.system(size: 26))
 									.foregroundColor(.primary)
 							}
-						}.shadow(color: .gray, radius: 5, x: 3, y: 0)
+						}.shadow(color: .gray, radius: 5, x: 1, y: 0)
 					}
 				}
 				Text(selectedTire.rawValue)
@@ -87,7 +87,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-//			.preferredColorScheme(.dark)
+			.preferredColorScheme(.dark)
 		//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
