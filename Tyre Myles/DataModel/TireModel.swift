@@ -9,26 +9,8 @@ import CoreData
 import SwiftUI
 
 
-//struct TireModel {
-//
-//	enum Season {
-//		case summer
-//		case winter
-//	}
-//
-//	let id: UUID
-//	let name: String
-//	let season: Season
-//	let size: Int
-//	let installDate: Date
-//	let removalDate: Date
-//	let installDistance: Int
-//	let removalDistance: Int
-//	let totalDistance: Int
-//
-//}
 
-class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
+final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var savedTires: [TireEntity] = []
 
 	let savedTireController: NSFetchedResultsController<TireEntity>
@@ -63,49 +45,48 @@ class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate 
 		savedTires = fetchedRunEvents
 	}
 
+	func saveNewTireProfile(name: String, season: Season, installMiles: Double, removalMiles: Double, installDate: Date, removallDate: Date) {
 
+		//struct TireModel {
+		//
+		
+		//
+		//	let id: UUID
+		//	let name: String
+		//	let season: Season
+		//	let size: Int
+		//	let installDate: Date
+		//	let removalDate: Date
+		//	let installDistance: Int
+		//	let removalDistance: Int
+		//	let totalDistance: Int
+		//
+		//}
+
+
+		saveToMOC()
+
+	}
+
+	private func saveToMOC() {
+		let moc = savedTireController.managedObjectContext
+
+		do {
+			try moc.save()
+		} catch {
+			print("Error in ", #function)
+		}
+	}
 
 }
 
 
 /*
  class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-	 @Published var savedRunEvents: [RunEvents] = []
-
-	 // Managed Object Context
-	 let savedRunEventsController: NSFetchedResultsController<RunEvents>
-
-	 init(managedObjectContext: NSManagedObjectContext) {
-		 var request: NSFetchRequest<RunEvents> {
-			 let fetched = NSFetchRequest<RunEvents>(entityName: "RunEvents")
-			 // Sorts the RunEvents in the DetailView by date. Change this to change sorting.
-			 fetched.sortDescriptors = [NSSortDescriptor(keyPath: \RunEvents.date, ascending: false)]
-			 return fetched
-		 }
-		 savedRunEventsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-
-		 savedRunEventsController.managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-		 savedRunEventsController.managedObjectContext.automaticallyMergesChangesFromParent = true
-
-		 super.init()
-
-		 savedRunEventsController.delegate = self
-
-		 do {
-			 try savedRunEventsController.performFetch()
-			 savedRunEvents = savedRunEventsController.fetchedObjects ?? []
-		 } catch {
-			 print("failed to fetch items!")
-		 }
-	 }
 
 
-	 func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-	   guard let fetchedRunEvents = controller.fetchedObjects as? [RunEvents]
-		 else { return }
-
-		 savedRunEvents = fetchedRunEvents
-	 }
+	** CoreData Init code **
+	removed for readability.
 
 
 	 // MARK: CoreData

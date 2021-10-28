@@ -10,6 +10,7 @@ import CoreData
 
 struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
+//	@EnvironmentObject var dataModel: DataModel
 
 	let tireImages = ["Summer", "Winter"]
 	let winterBackground = "WinterBackground"

@@ -13,7 +13,7 @@ struct PersistenceController {
 	let container: NSPersistentCloudKitContainer
 
 	init(inMemory: Bool = false) {
-		container = NSPersistentCloudKitContainer(name: "TireEntity")
+		container = NSPersistentCloudKitContainer(name: "Tyre_Myles")
 		if inMemory {
 			container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
 		}

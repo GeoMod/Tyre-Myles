@@ -33,6 +33,12 @@ extension Color {
 	}
 }
 
+enum Season {
+	case summer
+	case winter
+	case allSeason
+}
+
 
 enum TireType: String, CaseIterable, Identifiable {
 	// Identifiable for use in ForEach
