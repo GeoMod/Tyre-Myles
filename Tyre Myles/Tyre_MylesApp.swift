@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct Tyre_MylesApp: App {
-    let persistenceController = PersistenceController.shared
+	@StateObject var savedTires = DataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+				.environmentObject(savedTires)
         }
     }
 }

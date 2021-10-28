@@ -21,25 +21,31 @@ struct ContentView: View {
 	var body: some View {
 		NavigationView {
 			VStack {
-				HStack(spacing: 40) {
-					ForEach(TireType.allCases) { tire in
-						Button {
-							selectedTire(type: tire)
-						} label: {
-							VStack {
-								Image(tire.rawValue)
-									.resizable()
-									.padding()
-									.frame(width: 150, height: 150)
-									.background { colorScheme == .dark ? Color.black : Color.white }
-									.clipShape(RoundedRectangle(cornerRadius: 18))
-								Text(tire.rawValue)
-									.font(Font.system(size: 26))
-									.foregroundColor(.primary)
+
+				ScrollView(.horizontal, showsIndicators: true) {
+
+					HStack(spacing: 40) {
+						ForEach(TireType.allCases) { tire in
+							Button {
+								selectedTire(type: tire)
+							} label: {
+								VStack {
+									Image(tire.rawValue)
+										.resizable()
+										.aspectRatio(contentMode: .fit)
+										.frame(width: 100, height: 100)
+										.background { colorScheme == .dark ? Color.black : Color.white }
+										.clipShape(Circle())
+									Text(tire.rawValue)
+										.font(Font.system(size: 26))
+										.foregroundColor(.primary)
+								}
 							}
-						}.shadow(color: .gray, radius: 5, x: 1, y: 0)
+						}
 					}
-				}
+
+				}.shadow(color: .gray, radius: 5, x: 1, y: 0)
+
 				Text(selectedTire.rawValue)
 					.foregroundColor(selectedTire == .summer ? .orange : .secondary)
 					.font(.title.bold())
@@ -47,7 +53,7 @@ struct ContentView: View {
 				DateMilageView()
 			}
 			.navigationTitle("Tyre Myles")
-			.navigationBarTitleDisplayMode(.inline)
+//			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					NavigationLink {
@@ -71,6 +77,10 @@ struct ContentView: View {
 				selectedTire = .summer
 			case .winter:
 				selectedTire = .winter
+			case .rim1:
+				selectedTire = .winter
+			case .rim2:
+				selectedTire = .winter
 		}
 	}
 
@@ -87,7 +97,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-			.preferredColorScheme(.dark)
+//			.preferredColorScheme(.dark)
 		//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

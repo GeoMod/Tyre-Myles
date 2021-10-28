@@ -40,4 +40,6 @@ enum TireType: String, CaseIterable, Identifiable {
 
 	case summer = "Summer"
 	case winter = "Winter"
+	case rim1 = "Rim1"
+	case rim2 = "Rim2"
 }
