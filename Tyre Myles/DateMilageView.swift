@@ -9,14 +9,14 @@ import SwiftUI
 
 
 struct DateMilageView: View {
-
-	@AppStorage("installDistance") var installMilage = "23000"
-	@AppStorage("removalDistance") var removalMilage = "320987"
+	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false
 
 	// Will need to be saved for both summer and winter values.
 	@State private var totalMilage = "0"
+	@State private var installMilage = ""
+	@State private var removalMilage = ""
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -40,14 +40,14 @@ struct DateMilageView: View {
 				}
 				HStack {
 					Text("Date:")
-					Text(installDate, style: .date)
+					Text(currentTire.installDate ?? Date(), style: .date)
 						.padding(.leading, 30)
 				}
 
 				HStack {
 					Text("Milage:")
 						.padding(.trailing)
-					Text(installMilage)
+					Text("\(currentTire.installMiles)")
 						.padding(.leading, -10)
 				}
 
@@ -56,13 +56,13 @@ struct DateMilageView: View {
 					.padding([.top])
 				HStack {
 					Text("Date:")
-					Text(removalDate, style: .date)
+					Text(currentTire.removalDate ?? Date(), style: .date)
 						.padding(.leading, 30)
 				}
 				HStack {
 					Text("Milage:")
 						.padding(.trailing)
-					Text(removalMilage)
+					Text("\(currentTire.removalMiles)")
 						.padding(.leading, -10)
 				}
 			}
@@ -81,7 +81,7 @@ struct DateMilageView: View {
 		.sheet(isPresented: $isEditingDetails) {
 			print("editor was dismissed")
 		} content: {
-			TireDataEntryView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
+			EditTireView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
 		}
 	}
 
@@ -89,10 +89,10 @@ struct DateMilageView: View {
 
 }
 
-struct DateMilageView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        DateMilageView()
-			.preferredColorScheme(.dark)
-    }
-}
+//struct DateMilageView_Previews: PreviewProvider {
+//
+//    static var previews: some View {
+//        DateMilageView()
+//			.preferredColorScheme(.dark)
+//    }
+//}

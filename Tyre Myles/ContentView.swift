@@ -10,11 +10,9 @@ import CoreData
 
 struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
-//	@EnvironmentObject var dataModel: DataModel
+	@EnvironmentObject var dataModel: DataModel
 
 	let tireImages = ["Summer", "Winter"]
-	let winterBackground = "WinterBackground"
-	let summerBackground = "Background"
 
 	@State private var selectedTire: TireType = .winter
 
@@ -25,21 +23,27 @@ struct ContentView: View {
 
 				ScrollView(.horizontal, showsIndicators: true) {
 
+					if dataModel.savedTires.count == 0 {
+						// Display empty scroll view
+						Text("No tires added")
+					}
+
 					HStack(spacing: 40) {
-						ForEach(TireType.allCases) { tire in
+						ForEach(dataModel.savedTires, id: \.id) { tire in
 							Button {
-								selectedTire(type: tire)
+								selectedTireInstallation(date: tire.installDate!)
 							} label: {
 								VStack {
-									Image(tire.rawValue)
+									Image("Summer")
 										.resizable()
 										.aspectRatio(contentMode: .fit)
 										.frame(width: 100, height: 100)
 										.background { colorScheme == .dark ? Color.black : Color.white }
 										.clipShape(Circle())
-									Text(tire.rawValue)
+									Text(tire.name!)
 										.font(Font.system(size: 26))
 										.foregroundColor(.primary)
+
 								}
 							}
 						}
@@ -51,14 +55,14 @@ struct ContentView: View {
 					.foregroundColor(selectedTire == .summer ? .orange : .secondary)
 					.font(.title.bold())
 					.padding()
-				DateMilageView()
+//				DateMilageView(currentTire: dataModel.savedTires)
 			}
 			.navigationTitle("Tyre Myles")
 //			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					NavigationLink {
-						NewTireView()
+						AddTireView()
 					} label: {
 						Image(systemName: "chevron.forward")
 							.foregroundColor(.secondary)
@@ -72,17 +76,21 @@ struct ContentView: View {
 
 	}
 
-	private func selectedTire(type: TireType) {
-		switch type {
-			case .summer:
-				selectedTire = .summer
-			case .winter:
-				selectedTire = .winter
-			case .rim1:
-				selectedTire = .winter
-			case .rim2:
-				selectedTire = .winter
-		}
+	private func selectedTireInstallation(date: Date) {
+
+//		get the tire from the matching installation date
+
+
+//		switch type {
+//			case .summer:
+//				selectedTire = .summer
+//			case .winter:
+//				selectedTire = .winter
+//			case .rim1:
+//				selectedTire = .winter
+//			case .rim2:
+//				selectedTire = .winter
+//		}
 	}
 
 	private var Title: some View {

@@ -9,7 +9,6 @@ import CoreData
 import SwiftUI
 
 
-
 final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var savedTires: [TireEntity] = []
 
@@ -45,27 +44,17 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		savedTires = fetchedRunEvents
 	}
 
-	func saveNewTireProfile(name: String, season: Season, installMiles: Double, removalMiles: Double, installDate: Date, removallDate: Date) {
+	func saveTireProfileWith(name: String, season: Season, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
+		let moc = savedTireController.managedObjectContext
+		let entity = TireEntity(context: moc)
 
-		//struct TireModel {
-		//
-		
-		//
-		//	let id: UUID
-		//	let name: String
-		//	let season: Season
-		//	let size: Int
-		//	let installDate: Date
-		//	let removalDate: Date
-		//	let installDistance: Int
-		//	let removalDistance: Int
-		//	let totalDistance: Int
-		//
-		//}
-
+		entity.name = name
+		entity.installMiles = Double(installMiles) ?? 0.0
+		entity.removalMiles = Double(removalMiles) ?? 0.0
+		entity.installDate = installDate
+		entity.removalDate = removallDate
 
 		saveToMOC()
-
 	}
 
 	private func saveToMOC() {
