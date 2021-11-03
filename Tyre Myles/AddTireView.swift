@@ -9,12 +9,10 @@ import SwiftUI
 
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
-
-	// MARK: If new tires will not add to CoreData, try changing this to ObservedObject
 	@EnvironmentObject var dataModel: DataModel
 
 	@State private var name = ""
-	@State private var season: Season = .summer
+	@State private var season: TireType = .allSeason
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
 	@State private var installMiles = ""
@@ -22,7 +20,7 @@ struct AddTireView: View {
 
 //	@FocusState private var isFocused: Bool
 
-	
+
 	var body: some View {
 		VStack {
 			Text("Tire Type")
@@ -30,11 +28,11 @@ struct AddTireView: View {
 				.font(.title2)
 			Picker("Season", selection: $season) {
 				Text("Summer")
-					.tag(Season.summer)
+					.tag(TireType.summer)
 				Text("Winter")
-					.tag(Season.winter)
+					.tag(TireType.winter)
 				Text("All Season")
-					.tag(Season.allSeason)
+					.tag(TireType.allSeason)
 			}
 			.padding([.leading, .trailing])
 			.pickerStyle(.segmented)
@@ -70,9 +68,9 @@ struct AddTireView: View {
 								.font(.title2.bold())
 								.foregroundColor(.white)
 					)
-			}.foregroundStyle(LinearGradient(colors: [.purple, .blue], startPoint: .top, endPoint: .bottom))
-				.padding()
-
+			}
+			.foregroundStyle(LinearGradient(colors: [.purple, .blue], startPoint: .top, endPoint: .bottom))
+			.padding([.leading, .trailing], 40)
 		}
 		.navigationTitle("Add New Tire")
 		.toolbar {
@@ -87,7 +85,9 @@ struct AddTireView: View {
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: season, installMiles: installMiles, removalMiles: removalMiles, installDate: installDate, removallDate: removalDate)
+		dataModel.saveTireProfileWith(name: name, season: season, installMiles: installMiles,
+									  removalMiles: removalMiles, installDate: installDate,
+									  removallDate: removalDate)
 		dismiss()
 	}
 
@@ -98,9 +98,9 @@ struct AddTireView: View {
 }
 
 struct NewTireView_Previews: PreviewProvider {
-	static let model = DataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
 
     static var previews: some View {
 		AddTireView()
+			.preferredColorScheme(.dark)
     }
 }

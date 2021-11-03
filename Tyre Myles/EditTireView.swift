@@ -49,8 +49,6 @@ struct EditTireView: View {
 				Button {
 //					calculateTotalMilesFrom(install: installMilage, to: removalMilage)
 					dataModel.saveTireProfileWith(name: "New", season: .summer, installMiles: installMilage, removalMiles: removalMilage, installDate: installDate, removallDate: removalDate)
-
-
 				} label: {
 					Text("Save")
 						.foregroundColor(.white)

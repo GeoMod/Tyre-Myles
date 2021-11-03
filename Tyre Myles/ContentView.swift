@@ -8,13 +8,13 @@
 import SwiftUI
 import CoreData
 
+
 struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var dataModel: DataModel
 
-	let tireImages = ["Summer", "Winter"]
 
-	@State private var selectedTire: TireType = .winter
+	@State private var selectedTire: TireType = .allSeason
 
 
 	var body: some View {
@@ -24,8 +24,7 @@ struct ContentView: View {
 				ScrollView(.horizontal, showsIndicators: true) {
 
 					if dataModel.savedTires.count == 0 {
-						// Display empty scroll view
-						Text("No tires added")
+						EmptyTireView
 					}
 
 					HStack(spacing: 40) {
@@ -43,7 +42,6 @@ struct ContentView: View {
 									Text(tire.name!)
 										.font(Font.system(size: 26))
 										.foregroundColor(.primary)
-
 								}
 							}
 						}
@@ -64,16 +62,35 @@ struct ContentView: View {
 					NavigationLink {
 						AddTireView()
 					} label: {
-						Image(systemName: "chevron.forward")
-							.foregroundColor(.secondary)
-							.shadow(radius: 2)
-							.font(.title2)
+						Image(systemName: "plus.circle")
+							.font(.title2.bold())
 					}
 				}
 			}
 		}
 
 
+	}
+
+	private var EmptyTireView: some View {
+		VStack {
+			HStack(spacing: 40) {
+				Image(systemName: "text.below.photo.fill")
+					.font(Font.system(size: 80))
+					.frame(height: 100)
+					.shadow(color: .clear, radius: 1, x: 0, y: 0)
+				Image(systemName: "text.below.photo.fill")
+					.font(Font.system(size: 80))
+					.frame(height: 100)
+					.shadow(color: .clear, radius: 1, x: 0, y: 0)
+				Image(systemName: "text.below.photo.fill")
+					.font(Font.system(size: 80))
+					.frame(height: 100)
+					.shadow(color: .clear, radius: 1, x: 0, y: 0)
+			}
+			Text("No Tires Added")
+				.font(.title)
+		}
 	}
 
 	private func selectedTireInstallation(date: Date) {
@@ -104,9 +121,14 @@ struct ContentView: View {
 
 
 struct ContentView_Previews: PreviewProvider {
+	static let model = DataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
+
     static var previews: some View {
-        ContentView()
-//			.preferredColorScheme(.dark)
-		//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+		ContentView()
+			.environmentObject(model)
+//		Image(systemName: "plus.circle")
+//			.foregroundColor(.red)
+//			.font(.title2.bold())
+
     }
 }

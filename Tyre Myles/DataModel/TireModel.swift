@@ -8,6 +8,15 @@
 import CoreData
 import SwiftUI
 
+enum TireType: String, CaseIterable, Identifiable {
+	// Identifiable for use in ForEach
+	var id: String { UUID().uuidString }
+
+	case summer = "Summer"
+	case winter = "Winter"
+	case allSeason = "All Season"
+}
+
 
 final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var savedTires: [TireEntity] = []
@@ -44,13 +53,14 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		savedTires = fetchedRunEvents
 	}
 
-	func saveTireProfileWith(name: String, season: Season, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
+	func saveTireProfileWith(name: String, season: TireType, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
 
 		entity.name = name
 		entity.installMiles = Double(installMiles) ?? 0.0
 		entity.removalMiles = Double(removalMiles) ?? 0.0
+		entity.type = season.rawValue
 		entity.installDate = installDate
 		entity.removalDate = removallDate
 
