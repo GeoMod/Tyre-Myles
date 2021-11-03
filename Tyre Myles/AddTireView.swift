@@ -29,10 +29,10 @@ struct AddTireView: View {
 			Picker("Season", selection: $season) {
 				Text("Summer")
 					.tag(TireType.summer)
-				Text("Winter")
-					.tag(TireType.winter)
 				Text("All Season")
 					.tag(TireType.allSeason)
+				Text("Winter")
+					.tag(TireType.winter)
 			}
 			.padding([.leading, .trailing])
 			.pickerStyle(.segmented)

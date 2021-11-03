@@ -13,8 +13,8 @@ enum TireType: String, CaseIterable, Identifiable {
 	var id: String { UUID().uuidString }
 
 	case summer = "Summer"
-	case winter = "Winter"
 	case allSeason = "All Season"
+	case winter = "Winter"
 }
 
 
