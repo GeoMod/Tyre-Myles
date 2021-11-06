@@ -14,7 +14,8 @@ struct ContentView: View {
 	@EnvironmentObject var dataModel: DataModel
 
 
-	@State private var selectedTire: TireType = .allSeason
+	@State private var selectedTireSeason: TireType = .allSeason
+	@State private var selectedTire: TireEntity? 
 
 
 	var body: some View {
@@ -31,6 +32,7 @@ struct ContentView: View {
 						ForEach(dataModel.savedTires, id: \.id) { tire in
 							Button {
 								selectedTireInstallation(date: tire.installDate!)
+								selected(tire: tire)
 							} label: {
 								VStack {
 									Image("Summer")
@@ -49,11 +51,13 @@ struct ContentView: View {
 
 				}.shadow(color: .gray, radius: 5, x: 1, y: 0)
 
-				Text(selectedTire.rawValue)
-					.foregroundColor(selectedTire == .summer ? .orange : .secondary)
+				Text(selectedTireSeason.rawValue)
+					.foregroundColor(selectedTireSeason == .summer ? .orange : .secondary)
 					.font(.title.bold())
 					.padding()
-//				DateMilageView(currentTire: dataModel.savedTires)
+				if selectedTire != nil {
+					DateMilageView(currentTire: selectedTire!)
+				}
 			}
 			.navigationTitle("Tyre Myles")
 //			.navigationBarTitleDisplayMode(.inline)
@@ -91,6 +95,10 @@ struct ContentView: View {
 			Text("No Tires Added")
 				.font(.title)
 		}
+	}
+
+	private func selected(tire: TireEntity) {
+		selectedTire = tire
 	}
 
 	private func selectedTireInstallation(date: Date) {

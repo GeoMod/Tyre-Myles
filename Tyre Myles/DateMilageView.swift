@@ -30,6 +30,7 @@ struct DateMilageView: View {
 					Text("Intallation")
 						.font(.title2.bold())
 						.padding(.top)
+
 						Spacer()
 
 					Button {
@@ -47,7 +48,7 @@ struct DateMilageView: View {
 				HStack {
 					Text("Milage:")
 						.padding(.trailing)
-					Text("\(currentTire.installMiles)")
+					Text(String(format: "%.0f", currentTire.installMiles))
 						.padding(.leading, -10)
 				}
 
@@ -62,7 +63,7 @@ struct DateMilageView: View {
 				HStack {
 					Text("Milage:")
 						.padding(.trailing)
-					Text("\(currentTire.removalMiles)")
+					Text(String(format: "%.0f", currentTire.removalMiles))
 						.padding(.leading, -10)
 				}
 			}

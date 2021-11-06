@@ -63,6 +63,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		entity.type = season.rawValue
 		entity.installDate = installDate
 		entity.removalDate = removallDate
+		entity.id = UUID()
 
 		saveToMOC()
 	}
