@@ -11,8 +11,6 @@ import SwiftUI
 struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
-//	@State private var isEditingDetails = false
-
 	// Will need to be saved for both summer and winter values.
 	@State private var totalMilage = "0"
 	@State private var installMilage = ""

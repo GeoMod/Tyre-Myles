@@ -13,39 +13,38 @@ struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var dataModel: DataModel
 
+	@State private var isEditingDetails = false
+
 	@State private var selectedTireSeason: TireType = .allSeason
-	@State private var selectedTire: TireEntity?
 
 
 	var body: some View {
 		NavigationView {
 			VStack(alignment: .leading) {
-
 				if dataModel.savedTires.count == 0 {
 					EmptyTireView
 				}
-
 				List {
 					ForEach(dataModel.savedTires, id: \.id) { tire in
 						VStack {
-//							Image("Summer")
-//								.resizable()
-//								.aspectRatio(contentMode: .fit)
-//								.frame(width: 100, height: 100)
-//								.background { colorScheme == .dark ? Color.black : Color.white }
-//								.clipShape(Circle())
-							Text(tire.name!)
-								.font(Font.system(size: 26))
-								.foregroundColor(.primary)
+							HStack {
+								Text(tire.name!)
+									.font(Font.system(size: 26).bold())
+								Spacer()
+								Button {
+									isEditingDetails.toggle()
+								} label: {
+									Image(systemName: "square.and.pencil")
+
+										.font(.headline)
+								}.buttonStyle(.bordered)
+
+							}
 							DateMilageView(currentTire: tire)
 						}
-
 					}.onDelete { index in
 						dataModel.deleteTire(at: index)
 					}
-				}
-				if selectedTire != nil {
-					DateMilageView(currentTire: selectedTire!)
 				}
 
 			}
@@ -64,7 +63,6 @@ struct ContentView: View {
 			}
 			.navigationTitle("My Tyre Myles")
 		}
-
 
 	}
 
@@ -93,22 +91,6 @@ struct ContentView: View {
 //		selectedTire = tire
 //	}
 
-	private func selectedTireInstallation(date: Date) {
-
-//		get the tire from the matching installation date
-
-
-//		switch type {
-//			case .summer:
-//				selectedTire = .summer
-//			case .winter:
-//				selectedTire = .winter
-//			case .rim1:
-//				selectedTire = .winter
-//			case .rim2:
-//				selectedTire = .winter
-//		}
-	}
 
 //	private var Title: some View {
 //		Text("My Tyre Myles")
@@ -116,6 +98,13 @@ struct ContentView: View {
 //			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
 //	}
 
+
+//					Image("Summer")
+//						.resizable()
+//						.aspectRatio(contentMode: .fit)
+//						.frame(width: 100, height: 100)
+//						.background { colorScheme == .dark ? Color.black : Color.white }
+//						.clipShape(Circle())
 
 }
 
