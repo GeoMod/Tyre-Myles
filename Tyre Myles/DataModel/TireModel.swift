@@ -27,7 +27,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		var request: NSFetchRequest<TireEntity> {
 			let fetched = NSFetchRequest<TireEntity>(entityName: "TireEntity")
 			// Sorts the TireEnty by name. Change this to change sorting.
-			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.name, ascending: false)]
+			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.installMiles, ascending: true)]
 			return fetched
 		}
 		savedTireController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -65,6 +65,18 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		entity.removalDate = removallDate
 		entity.id = UUID()
 
+		saveToMOC()
+	}
+
+	func deleteTire(at index: IndexSet) {
+		withAnimation {
+			let moc = savedTireController.managedObjectContext
+			index.forEach { item in
+				let tire = savedTires[item]
+				moc.delete(tire)
+			}
+		}
+		// resave to CoreData
 		saveToMOC()
 	}
 

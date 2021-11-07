@@ -13,56 +13,47 @@ struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var dataModel: DataModel
 
-
 	@State private var selectedTireSeason: TireType = .allSeason
-	@State private var selectedTire: TireEntity? 
+	@State private var selectedTire: TireEntity?
 
 
 	var body: some View {
 		NavigationView {
-			VStack {
+			VStack(alignment: .leading) {
 
-				ScrollView(.horizontal, showsIndicators: true) {
+				if dataModel.savedTires.count == 0 {
+					EmptyTireView
+				}
 
-					if dataModel.savedTires.count == 0 {
-						EmptyTireView
-					}
-
-					HStack(spacing: 40) {
-						ForEach(dataModel.savedTires, id: \.id) { tire in
-							Button {
-								selectedTireInstallation(date: tire.installDate!)
-								selected(tire: tire)
-							} label: {
-								VStack {
-									Image("Summer")
-										.resizable()
-										.aspectRatio(contentMode: .fit)
-										.frame(width: 100, height: 100)
-										.background { colorScheme == .dark ? Color.black : Color.white }
-										.clipShape(Circle())
-									Text(tire.name!)
-										.font(Font.system(size: 26))
-										.foregroundColor(.primary)
-								}
-							}
+				List {
+					ForEach(dataModel.savedTires, id: \.id) { tire in
+						VStack {
+//							Image("Summer")
+//								.resizable()
+//								.aspectRatio(contentMode: .fit)
+//								.frame(width: 100, height: 100)
+//								.background { colorScheme == .dark ? Color.black : Color.white }
+//								.clipShape(Circle())
+							Text(tire.name!)
+								.font(Font.system(size: 26))
+								.foregroundColor(.primary)
+							DateMilageView(currentTire: tire)
 						}
+
+					}.onDelete { index in
+						dataModel.deleteTire(at: index)
 					}
-
-				}.shadow(color: .gray, radius: 5, x: 1, y: 0)
-
-				Text(selectedTireSeason.rawValue)
-					.foregroundColor(selectedTireSeason == .summer ? .orange : .secondary)
-					.font(.title.bold())
-					.padding()
+				}
 				if selectedTire != nil {
 					DateMilageView(currentTire: selectedTire!)
 				}
+
 			}
-			.navigationTitle("Tyre Myles")
-//			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItem(placement: .primaryAction) {
+				ToolbarItem(placement: .navigationBarLeading) {
+					EditButton()
+				}
+				ToolbarItem(placement: .navigationBarTrailing) {
 					NavigationLink {
 						AddTireView()
 					} label: {
@@ -71,6 +62,7 @@ struct ContentView: View {
 					}
 				}
 			}
+			.navigationTitle("My Tyre Myles")
 		}
 
 
@@ -97,9 +89,9 @@ struct ContentView: View {
 		}
 	}
 
-	private func selected(tire: TireEntity) {
-		selectedTire = tire
-	}
+//	private func selected(tire: TireEntity) {
+//		selectedTire = tire
+//	}
 
 	private func selectedTireInstallation(date: Date) {
 
@@ -118,11 +110,11 @@ struct ContentView: View {
 //		}
 	}
 
-	private var Title: some View {
-		Text("My Tyre Myles")
-			.font(Font.system(size: 35, weight: .semibold))
-			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
-	}
+//	private var Title: some View {
+//		Text("My Tyre Myles")
+//			.font(Font.system(size: 35, weight: .semibold))
+//			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
+//	}
 
 
 }
