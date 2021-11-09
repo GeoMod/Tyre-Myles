@@ -57,7 +57,7 @@ struct DateMilageView: View {
 				}.font(.title2)
 			}.font(.footnote.monospaced())
 			.onAppear {
-				calculateTotalMilesFrom(installation: currentTire.installMiles, removal: currentTire.removalMiles)
+				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			}
 
 
@@ -69,7 +69,7 @@ struct DateMilageView: View {
 	}
 
 
-	@MainActor private func calculateTotalMilesFrom(installation: Double, removal: Double) {
+	@MainActor private func totalMiles(installation: Double, removal: Double) {
 		let total = removal - installation
 		if total > 0 {
 			totalMilage = String(Int(total))
