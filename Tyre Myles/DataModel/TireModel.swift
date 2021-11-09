@@ -27,7 +27,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		var request: NSFetchRequest<TireEntity> {
 			let fetched = NSFetchRequest<TireEntity>(entityName: "TireEntity")
 			// Sorts the TireEnty by name. Change this to change sorting.
-			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.installMiles, ascending: true)]
+			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.installDate, ascending: true)]
 			return fetched
 		}
 		savedTireController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -60,7 +60,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		entity.name = name
 		entity.installMiles = Double(installMiles) ?? 0.0
 		entity.removalMiles = Double(removalMiles) ?? 0.0
-		entity.type = season.rawValue
+		entity.seasonType = season.rawValue
 		entity.installDate = installDate
 		entity.removalDate = removallDate
 		entity.id = UUID()
@@ -89,6 +89,22 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 			print("Error in ", #function)
 		}
 	}
+
+	// can be used in place of DispatchQueue.main.async
+
+	/*
+	 extension MainActor {
+		 /// Execute the given body closure on the main actor.
+		 public static func run<T>(resultType: T.Type = T.self, body: @MainActor @Sendable () throws -> T) async rethrows -> T
+	 }
+
+	 Usage:
+	 async {
+		 await MainActor.run {
+			 // Perform UI updates
+		 }
+	 }
+	 */
 
 }
 

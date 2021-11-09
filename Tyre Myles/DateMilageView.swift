@@ -12,9 +12,9 @@ struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
 	// Will need to be saved for both summer and winter values.
-	@State private var totalMilage = "0"
-	@State private var installMilage = ""
-	@State private var removalMilage = ""
+	@State private var totalMilage = "999"
+//	@State private var installMilage = "0"
+//	@State private var removalMilage = "0"
 
 
 	var body: some View {
@@ -51,10 +51,14 @@ struct DateMilageView: View {
 						.bold()
 
 					Spacer()
-					Text("\(totalMilage)")
+					Text(totalMilage)
+						.foregroundColor(.red)
 						.bold()
 				}.font(.title2)
 			}.font(.footnote.monospaced())
+			.onAppear {
+				calculateTotalMilesFrom(installation: currentTire.installMiles, removal: currentTire.removalMiles)
+			}
 
 
 //		.sheet(isPresented: $isEditingDetails) {
@@ -62,6 +66,17 @@ struct DateMilageView: View {
 //		} content: {
 //			EditTireView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
 //		}
+	}
+
+
+	@MainActor private func calculateTotalMilesFrom(installation: Double, removal: Double) {
+		let total = removal - installation
+		if total > 0 {
+			totalMilage = String(Int(total))
+		} else {
+			totalMilage = "On Vehicle"
+		}
+
 	}
 
 	

@@ -12,7 +12,7 @@ struct AddTireView: View {
 	@EnvironmentObject var dataModel: DataModel
 
 	@State private var name = ""
-	@State private var season: TireType = .allSeason
+	@State private var seasonType: TireType = .allSeason
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
 	@State private var installMiles = ""
@@ -26,7 +26,7 @@ struct AddTireView: View {
 			Text("Tire Type")
 				.padding([.top, .leading])
 				.font(.title2)
-			Picker("Season", selection: $season) {
+			Picker("Season", selection: $seasonType) {
 				Text("Summer")
 					.tag(TireType.summer)
 				Text("All Season")
@@ -85,7 +85,7 @@ struct AddTireView: View {
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: season, installMiles: installMiles,
+		dataModel.saveTireProfileWith(name: name, season: seasonType, installMiles: installMiles,
 									  removalMiles: removalMiles, installDate: installDate,
 									  removallDate: removalDate)
 		dismiss()

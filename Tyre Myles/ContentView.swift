@@ -30,12 +30,14 @@ struct ContentView: View {
 							HStack {
 								Text(tire.name!)
 									.font(Font.system(size: 26).bold())
+								Text(tire.seasonType!)
+									.font(Font.system(size: 26).bold())
+									.foregroundColor(.gray)
 								Spacer()
 								Button {
 									isEditingDetails.toggle()
 								} label: {
 									Image(systemName: "square.and.pencil")
-
 										.font(.headline)
 								}.buttonStyle(.bordered)
 
@@ -49,9 +51,7 @@ struct ContentView: View {
 
 			}
 			.toolbar {
-				ToolbarItem(placement: .navigationBarLeading) {
-					EditButton()
-				}
+				ToolbarItem(placement: .navigationBarLeading) { EditButton() }
 				ToolbarItem(placement: .navigationBarTrailing) {
 					NavigationLink {
 						AddTireView()
@@ -62,6 +62,13 @@ struct ContentView: View {
 				}
 			}
 			.navigationTitle("My Tyre Myles")
+
+//			.sheet(isPresented: $isEditingDetails) {
+//				// on dismiss
+//			} content: {
+//				EditTireView(installDate: <#T##Binding<Date>#>, removalDate: <#T##Binding<Date>#>, installMilage: <#T##Binding<String>#>, removalMilage: <#T##Binding<String>#>, totalMilage: <#T##Binding<String>#>)
+//			}
+
 		}
 
 	}

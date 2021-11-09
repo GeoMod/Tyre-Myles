@@ -60,19 +60,6 @@ struct EditTireView: View {
 		.padding()
 	}
 
-	private func calculateTotalMilesFrom(install: String, to removal: String) {
-		var result = 0
-
-		guard let installMilageInt = Int(install) else { return }
-		guard let removalMilageInt = Int(removal) else { return }
-
-		result = removalMilageInt - installMilageInt
-
-		totalMilage = String(result)
-
-		dismiss()
-	}
-
 
 }
 
