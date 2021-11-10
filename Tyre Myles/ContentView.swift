@@ -24,28 +24,20 @@ struct ContentView: View {
 				}
 				List {
 					ForEach(dataModel.savedTires, id: \.id) { tire in
-						VStack {
-							HStack {
-								Text(tire.name!)
-									.font(Font.system(size: 26).bold())
-								Text(tire.seasonType!)
-									.font(Font.system(size: 26).bold())
+						Section(header: Text(tire.seasonType!)
+									.font(.largeTitle.bold())
 									.foregroundColor(.gray)
-//								Spacer()
-//								Button {
-////									isEditingDetails.toggle()
-//								} label: {
-//									Image(systemName: "square.and.pencil")
-//										.font(.headline)
-//								}.buttonStyle(.bordered)
-
+						) {
+							VStack {
+								Text(tire.name!)
+									.font(Font.title2.bold())
+								DateMilageView(currentTire: tire)
 							}
-							DateMilageView(currentTire: tire)
-						}
+						}.headerProminence(.increased)
 					}.onDelete { index in
 						dataModel.deleteTire(at: index)
 					}
-				}
+				}.listStyle(.insetGrouped)
 
 			}
 			.toolbar {

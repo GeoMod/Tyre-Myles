@@ -49,14 +49,14 @@ struct DateMilageView: View {
 					.bold()
 
 				Spacer()
-				Button {
-					isEditingDetails.toggle()
-				} label: {
-				Text(totalMilage)
-					.foregroundColor(.green)
-					.bold()
-				}
 
+				Text(totalMilage)
+					.underline()
+					.foregroundColor(.blue)
+					.padding([.top, .bottom])
+					.onTapGesture {
+						isEditingDetails.toggle()
+					}
 			}.font(.title2)
 		}.font(.footnote.monospaced())
 			.onAppear {

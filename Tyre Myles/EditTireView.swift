@@ -24,7 +24,7 @@ struct EditTireView: View {
 
 	var body: some View {
 		VStack {
-			TextField(currentTire.name ?? "test...", text: $name, prompt: nil)
+			TextField(currentTire.name ?? "Name", text: $name, prompt: nil)
 				.textFieldStyle(.roundedBorder)
 			Picker("Season", selection: $seasonType) {
 				Text("Summer")
@@ -82,16 +82,33 @@ struct EditTireView: View {
 		guard let loadedName = currentTire.name else { return }
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
+		guard let loadedTireSeason = currentTire.seasonType else { return }
 		let loadedInstallMilage = currentTire.installMiles
 		let loadedRemovalMilage = currentTire.removalMiles
 
 		name = loadedName
+		seasonType = checkTireSeason(type: loadedTireSeason)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
 		installMilage = String(loadedInstallMilage)
 		removalMilage = String(loadedRemovalMilage)
 
 	}
+
+	// Takes the enum used to create the tire when it was initially saved, and works it backwards.
+	private func checkTireSeason(type: String) -> TireType {
+		switch type {
+			case "Summer":
+				return .summer
+			case "All Season":
+				return .allSeason
+			case "Winter":
+				return .winter
+			default:
+				return .allSeason
+		}
+	}
+
 
 	private func save() {
 		currentTire.name = name
