@@ -13,8 +13,6 @@ struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var dataModel: DataModel
 
-	@State private var isEditingDetails = false
-
 	@State private var selectedTireSeason: TireType = .allSeason
 
 
@@ -33,13 +31,13 @@ struct ContentView: View {
 								Text(tire.seasonType!)
 									.font(Font.system(size: 26).bold())
 									.foregroundColor(.gray)
-								Spacer()
-								Button {
-									isEditingDetails.toggle()
-								} label: {
-									Image(systemName: "square.and.pencil")
-										.font(.headline)
-								}.buttonStyle(.bordered)
+//								Spacer()
+//								Button {
+////									isEditingDetails.toggle()
+//								} label: {
+//									Image(systemName: "square.and.pencil")
+//										.font(.headline)
+//								}.buttonStyle(.bordered)
 
 							}
 							DateMilageView(currentTire: tire)
@@ -60,15 +58,7 @@ struct ContentView: View {
 							.font(.title2.bold())
 					}
 				}
-			}
-			.navigationTitle("My Tyre Myles")
-
-//			.sheet(isPresented: $isEditingDetails) {
-//				// on dismiss
-//			} content: {
-//				EditTireView(installDate: <#T##Binding<Date>#>, removalDate: <#T##Binding<Date>#>, installMilage: <#T##Binding<String>#>, removalMilage: <#T##Binding<String>#>, totalMilage: <#T##Binding<String>#>)
-//			}
-
+			}.navigationTitle("My Tyre Myles")
 		}
 
 	}
@@ -94,24 +84,12 @@ struct ContentView: View {
 		}
 	}
 
-//	private func selected(tire: TireEntity) {
-//		selectedTire = tire
-//	}
-
-
-//	private var Title: some View {
-//		Text("My Tyre Myles")
-//			.font(Font.system(size: 35, weight: .semibold))
-//			.foregroundStyle(LinearGradient(gradient: cARGradientColors, startPoint: .leading, endPoint: .trailing))
-//	}
-
-
-//					Image("Summer")
-//						.resizable()
-//						.aspectRatio(contentMode: .fit)
-//						.frame(width: 100, height: 100)
-//						.background { colorScheme == .dark ? Color.black : Color.white }
-//						.clipShape(Circle())
+//			Image("Summer")
+//				.resizable()
+//				.aspectRatio(contentMode: .fit)
+//				.frame(width: 100, height: 100)
+//				.background { colorScheme == .dark ? Color.black : Color.white }
+//				.clipShape(Circle())
 
 }
 

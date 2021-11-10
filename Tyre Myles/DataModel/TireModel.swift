@@ -80,7 +80,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		saveToMOC()
 	}
 
-	private func saveToMOC() {
+	func saveToMOC() {
 		let moc = savedTireController.managedObjectContext
 
 		do {

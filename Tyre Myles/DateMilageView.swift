@@ -11,61 +11,65 @@ import SwiftUI
 struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
-	// Will need to be saved for both summer and winter values.
-	@State private var totalMilage = "999"
-//	@State private var installMilage = "0"
-//	@State private var removalMilage = "0"
+	@State private var isEditingDetails = false
+	@State private var totalMilage = "---"
 
 
 	var body: some View {
-			VStack(alignment: .leading) {
-				HStack(alignment: .firstTextBaseline) {
-					Text("Intallation")
-						.font(.title3.bold())
-				}
-				HStack {
-					Text("Date:")
-					Text(currentTire.installDate ?? Date(), style: .date)
-				}
-
-				HStack {
-					Text("Milage:")
-					Text(String(format: "%.0f", currentTire.installMiles))
-				}
-
-				Text("Removal")
+		VStack(alignment: .leading) {
+			HStack(alignment: .firstTextBaseline) {
+				Text("Intallation")
 					.font(.title3.bold())
-					.padding([.top])
-				HStack {
-					Text("Date:")
-					Text(currentTire.removalDate ?? Date(), style: .date)
-				}
-				HStack {
-					Text("Milage:")
-						.padding(.trailing)
-					Text(String(format: "%.0f", currentTire.removalMiles))
-						.padding(.leading, -10)
-				}
-				HStack {
-					Text("Total Tyre Myles")
-						.bold()
+			}
+			HStack {
+				Text("Date:")
+				Text(currentTire.installDate ?? Date(), style: .date)
+			}
 
-					Spacer()
-					Text(totalMilage)
-						.foregroundColor(.red)
-						.bold()
-				}.font(.title2)
-			}.font(.footnote.monospaced())
+			HStack {
+				Text("Milage:")
+				Text(String(format: "%.0f", currentTire.installMiles))
+			}
+
+			Text("Removal")
+				.font(.title3.bold())
+				.padding([.top])
+			HStack {
+				Text("Date:")
+				Text(currentTire.removalDate ?? Date(), style: .date)
+			}
+			HStack {
+				Text("Milage:")
+					.padding(.trailing)
+				Text(String(format: "%.0f", currentTire.removalMiles))
+					.padding(.leading, -10)
+			}
+			HStack {
+				Text("Total Tyre Myles")
+					.bold()
+
+				Spacer()
+				Button {
+					isEditingDetails.toggle()
+				} label: {
+				Text(totalMilage)
+					.foregroundColor(.green)
+					.bold()
+				}
+
+			}.font(.title2)
+		}.font(.footnote.monospaced())
 			.onAppear {
 				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			}
 
+			.sheet(isPresented: $isEditingDetails) {
+				// on dismiss
+				print("Sheet is dismissed.")
+			} content: {
+				EditTireView(currentTire: currentTire)
+			}
 
-//		.sheet(isPresented: $isEditingDetails) {
-//			print("editor was dismissed")
-//		} content: {
-//			EditTireView(installDate: $installDate, removalDate: $removalDate, installMilage: $installMilage, removalMilage: $removalMilage, totalMilage: $totalMilage)
-//		}
 	}
 
 
@@ -76,7 +80,6 @@ struct DateMilageView: View {
 		} else {
 			totalMilage = "On Vehicle"
 		}
-
 	}
 
 	
