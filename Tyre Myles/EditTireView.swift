@@ -115,8 +115,8 @@ struct EditTireView: View {
 		currentTire.seasonType = seasonType.rawValue
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
-		currentTire.installMiles = Double(installMilage)!
-		currentTire.removalMiles = Double(removalMilage)!
+		currentTire.installMiles = Double(installMilage) ?? 0
+		currentTire.removalMiles = Double(removalMilage) ?? 0
 
 		dataModel.saveToMOC()
 	}
@@ -127,44 +127,6 @@ struct EditTireView: View {
 
 struct EditTireView_Previews: PreviewProvider {
     static var previews: some View {
-		VStack {
-			TextField("Name", text: .constant("Name"))
-				.font(.largeTitle)
-			Text("Enter Date Values")
-				.font(.headline)
-				.padding()
-			DatePicker("Install Date", selection: .constant(Date()), displayedComponents: .date)
-			DatePicker("Removal Date", selection: .constant(Date()), displayedComponents: .date)
-
-			Text("Enter Milage Values")
-				.font(.headline)
-				.padding()
-
-			Group {
-				TextField("Install Milage", text: .constant("100"), prompt: Text("Installation Milage"))
-				TextField("Removal Milage", text: .constant("200"), prompt: Text("Removal Milage"))
-			}
-			.keyboardType(.numberPad)
-			.textFieldStyle(.roundedBorder)
-
-			HStack {
-				Button(role: .cancel) {
-					// dismiss
-				} label: {
-					Text("Cancel")
-						.foregroundColor(.red)
-				}.buttonStyle(.automatic)
-
-				Button {
-					// save the data to core Data
-//					dataModel.saveTireProfileWith(name: currentTire.name!, season: season, installMiles: installMilage, removalMiles: removalMilage, installDate: installDate, removallDate: removalDate)
-				} label: {
-					Text("Save")
-						.foregroundColor(.white)
-				}.buttonStyle(.borderedProminent)
-					.padding()
-			}
-		}
-		.padding()
+		Text("Test View")
     }
 }

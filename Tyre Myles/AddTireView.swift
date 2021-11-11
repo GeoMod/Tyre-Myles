@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct AddTireView: View {
+	enum Field {
+		case name
+		case install
+		case removal
+	}
+
 	@Environment(\.dismiss) var dismiss
 	@EnvironmentObject var dataModel: DataModel
 
@@ -18,7 +24,7 @@ struct AddTireView: View {
 	@State private var installMiles = ""
 	@State private var removalMiles = ""
 
-//	@FocusState private var isFocused: Bool
+	@FocusState private var focusedField: Field?
 
 
 	var body: some View {
@@ -39,12 +45,18 @@ struct AddTireView: View {
 
 			Group {
 				TextField("Tire Name", text: $name)
+					.focused($focusedField, equals: .name)
 					.keyboardType(.alphabet)
+					.submitLabel(.next)
 					.padding(.top, 10)
 				TextField("Install Distance", text: $installMiles)
-					.keyboardType(.numberPad)
+					.focused($focusedField, equals: .install)
+					.keyboardType(.numbersAndPunctuation)
+					.submitLabel(.next)
 				TextField("Removal Distance", text: $removalMiles)
-					.keyboardType(.numberPad)
+					.focused($focusedField, equals: .removal)
+					.keyboardType(.numbersAndPunctuation)
+					.submitLabel(.done)
 			}
 			.textFieldStyle(.roundedBorder)
 			.padding([.leading, .trailing])
@@ -78,6 +90,19 @@ struct AddTireView: View {
 				Button("Cancel", role: .cancel) {
 					cancel()
 				}
+			}
+		}
+
+		.onSubmit {
+			switch focusedField {
+				case .name:
+					focusedField = .install
+				case .install:
+					focusedField = .removal
+				case .removal:
+					focusedField = nil
+				case .none:
+					focusedField = nil
 			}
 		}
 

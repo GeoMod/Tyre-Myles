@@ -65,7 +65,7 @@ struct DateMilageView: View {
 
 			.sheet(isPresented: $isEditingDetails) {
 				// on dismiss
-				print("Sheet is dismissed.")
+				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			} content: {
 				EditTireView(currentTire: currentTire)
 			}
