@@ -71,29 +71,19 @@ struct AddTireView: View {
 
 			Spacer()
 
-			Button {
-				save()
-			} label: {
-				Capsule()
-					.frame(height: 50)
-					.overlay(Text("Save")
-								.font(.title2.bold())
-								.foregroundColor(.white)
-					)
-			}
-			.foregroundStyle(LinearGradient(colors: [.purple, .blue], startPoint: .top, endPoint: .bottom))
-			.padding([.leading, .trailing], 40)
+			SaveButton
+
+			.navigationTitle("Add New Tire")
 		}
-		.navigationTitle("Add New Tire")
+
 		.toolbar {
 			ToolbarItem(placement: .cancellationAction) {
-				Button("Cancel", role: .cancel) {
-					cancel()
-				}
+				Button("Cancel", role: .cancel) { cancel() }
 			}
 		}
 
 		.onSubmit {
+			// move text focus to next field upon entry.
 			switch focusedField {
 				case .name:
 					focusedField = .install
@@ -107,6 +97,21 @@ struct AddTireView: View {
 		}
 
 
+	}
+
+	private var SaveButton: some View {
+		Button {
+			save()
+		} label: {
+			Capsule()
+				.frame(height: 50)
+				.overlay(Text("Save")
+							.font(.title2.bold())
+							.foregroundColor(.white)
+				)
+		}
+		.foregroundStyle(LinearGradient(colors: [.purple, .blue], startPoint: .top, endPoint: .bottom))
+		.padding([.leading, .trailing], 40)
 	}
 
 	private func save() {
