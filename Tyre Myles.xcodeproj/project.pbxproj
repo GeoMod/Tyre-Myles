@@ -10,6 +10,7 @@
 		1850E7C2272AEDD200224BE5 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1850E7C1272AEDD200224BE5 /* CloudKit.framework */; };
 		1853F00A2725B111006A9CB5 /* AddTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1853F0092725B111006A9CB5 /* AddTireView.swift */; };
 		185BC7CC27224FD700A8DD32 /* TireModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BC7CB27224FD700A8DD32 /* TireModel.swift */; };
+		18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0059C273DFA3A005492B7 /* SplashScreen.swift */; };
 		18C3A0FB271DADAD005EB3E9 /* Tyre_MylesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */; };
 		18C3A0FD271DADAD005EB3E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FC271DADAD005EB3E9 /* ContentView.swift */; };
 		18C3A0FF271DADAE005EB3E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C3A0FE271DADAE005EB3E9 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		1850E7C1272AEDD200224BE5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		1853F0092725B111006A9CB5 /* AddTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTireView.swift; sourceTree = "<group>"; };
 		185BC7CB27224FD700A8DD32 /* TireModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TireModel.swift; sourceTree = "<group>"; };
+		18C0059C273DFA3A005492B7 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		18C3A0F7271DADAD005EB3E9 /* Tyre Myles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tyre Myles.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tyre_MylesApp.swift; sourceTree = "<group>"; };
 		18C3A0FC271DADAD005EB3E9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */,
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
+				18C0059C273DFA3A005492B7 /* SplashScreen.swift */,
 				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
 				18EB7797271F665A00905BE1 /* DateMilageView.swift */,
 				1853F0092725B111006A9CB5 /* AddTireView.swift */,
@@ -182,6 +185,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */,
 				18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */,
 				18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */,
 				18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */,
