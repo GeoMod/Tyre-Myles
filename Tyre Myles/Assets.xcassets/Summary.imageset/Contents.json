@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Winter.png",
+      "filename" : "Summary.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Winter@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Winter@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

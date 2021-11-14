@@ -12,7 +12,7 @@ struct Tyre_MylesApp: App {
 	@StateObject var savedTiresData = DataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
 
     var body: some Scene {
-        WindowGroup {
+		WindowGroup {
             ContentView()
 				.environmentObject(savedTiresData)
         }

@@ -49,11 +49,11 @@ struct AddTireView: View {
 					.keyboardType(.alphabet)
 					.submitLabel(.next)
 					.padding(.top, 10)
-				TextField("Install Distance", text: $installMiles)
+				TextField("Install Milage", text: $installMiles)
 					.focused($focusedField, equals: .install)
 					.keyboardType(.numbersAndPunctuation)
 					.submitLabel(.next)
-				TextField("Removal Distance", text: $removalMiles)
+				TextField("Removal Milage", text: $removalMiles)
 					.focused($focusedField, equals: .removal)
 					.keyboardType(.numbersAndPunctuation)
 					.submitLabel(.done)
@@ -106,11 +106,11 @@ struct AddTireView: View {
 			Capsule()
 				.frame(height: 50)
 				.overlay(Text("Save")
-							.font(.title2.bold())
-							.foregroundColor(.white)
+							.font(.title.bold())
+							.foregroundColor(.blue)
 				)
 		}
-		.foregroundStyle(LinearGradient(colors: [.purple, .blue], startPoint: .top, endPoint: .bottom))
+		.foregroundStyle(LinearGradient(colors: [.white, .orange, .white], startPoint: .leading, endPoint: .trailing))
 		.padding([.leading, .trailing], 40)
 	}
 

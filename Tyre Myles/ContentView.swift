@@ -15,11 +15,16 @@ struct ContentView: View {
 
 	@State private var selectedTireSeason: TireType = .allSeason
 
+	@AppStorage("showIntroCard") var showIntroCard = true
+
 
 	var body: some View {
 
 		NavigationView {
 			VStack {
+				Button("show") {
+					showIntroCard = true
+				}
 				List {
 					ForEach(dataModel.savedTires, id: \.id) { tire in
 						Section(header: Text(tire.seasonType!)
@@ -52,6 +57,13 @@ struct ContentView: View {
 			}
 
 		}
+
+		.fullScreenCover(isPresented: $showIntroCard) {
+//			print("dismissed")
+		} content: {
+			SplashScreen()
+		}
+
 	}
 
 	
