@@ -76,12 +76,6 @@ struct AddTireView: View {
 			.navigationTitle("Add New Tire")
 		}
 
-		.toolbar {
-			ToolbarItem(placement: .cancellationAction) {
-				Button("Cancel", role: .cancel) { cancel() }
-			}
-		}
-
 		.onSubmit {
 			// move text focus to next field upon entry.
 			switch focusedField {

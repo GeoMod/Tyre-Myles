@@ -14,17 +14,35 @@ struct ContentView: View {
 	@EnvironmentObject var dataModel: DataModel
 
 	@State private var selectedTireSeason: TireType = .allSeason
+	@State private var editing: EditMode = .inactive
+
+	// Animation
+	@State private var rotation: Double = 0
 
 	@AppStorage("showIntroCard") var showIntroCard = true
 
 
 	var body: some View {
-
 		NavigationView {
 			VStack {
-				Button("show") {
-					showIntroCard = true
-				}
+
+				HStack(alignment: .firstTextBaseline) {
+					Button(role: .destructive) {
+						editing = .active
+					} label: {
+						Text("Edit")
+							.font(.title2)
+							.foregroundColor(.blue)
+					}.padding(.leading)
+					Spacer()
+					NavigationLink {
+						AddTireView()
+					} label: {
+						PlusButton
+							.padding(.trailing)
+					}
+				}.padding(.top)
+
 				List {
 					ForEach(dataModel.savedTires, id: \.id) { tire in
 						Section(header: Text(tire.seasonType!)
@@ -41,39 +59,53 @@ struct ContentView: View {
 						dataModel.deleteTire(at: index)
 					}
 				}.listStyle(.insetGrouped)
-			}
+			}.onAppear(perform: {
+				animatePlusButton()
+			})
 			.navigationTitle("My Tyre Myles")
-
-			.toolbar {
-				ToolbarItem(placement: .navigationBarLeading) { EditButton() }
-				ToolbarItem(placement: .navigationBarTrailing) {
-					NavigationLink {
-						AddTireView()
-					} label: {
-						Image(systemName: "plus.circle")
-							.font(.title2.bold())
-					}
-				}
-			}
-
 		}
 
 		.fullScreenCover(isPresented: $showIntroCard) {
-//			print("dismissed")
+			// View only displays on first use.
+			// No action is made on dismiss.
 		} content: {
 			SplashScreen()
 		}
 
+
+
+	}
+
+	private func animatePlusButton() {
+		if dataModel.savedTires.isEmpty {
+			withAnimation {
+				rotation = 360
+			}
+		} else {
+			 return
+		}
+	}
+
+	private var PlusButton: some View {
+		Image(systemName: "plus.circle")
+			.font(.title)
+			.foregroundColor(dataModel.savedTires.isEmpty ? .green : .blue)
+			.rotationEffect(.degrees(rotation))
+			.animation(Animation.easeInOut(duration: 1.0).repeatCount(4, autoreverses: true), value: rotation)
 	}
 
 	
 }
 
 
-//struct ContentView_Previews: PreviewProvider {
-////	static let model = DataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
-//    static var previews: some View {
-//		Text("Hello World")
-//	}
-//
-//}
+struct ContentView_Previews: PreviewProvider {
+	static var animate = true
+
+
+	static var previews: some View {
+		Image(systemName: "plus.circle")
+			.font(.largeTitle)
+			.foregroundStyle(.green)
+	}
+
+}

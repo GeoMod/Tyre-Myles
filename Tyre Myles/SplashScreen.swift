@@ -81,7 +81,7 @@ struct SceneThree: View {
 					.resizable()
 					.scaledToFit()
 					.clipShape(RoundedRectangle(cornerRadius: 10))
-					.frame(width: 400, height: 400)
+					.frame(width: 400, height: 500)
 
 				GroupBox {
 					Text("Keep a log of your wheels.")
