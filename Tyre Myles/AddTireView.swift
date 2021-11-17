@@ -72,6 +72,7 @@ struct AddTireView: View {
 			Spacer()
 
 			SaveButton
+				.padding(.bottom)
 
 			.navigationTitle("Add New Tire")
 		}
@@ -101,10 +102,11 @@ struct AddTireView: View {
 				.frame(height: 50)
 				.overlay(Text("Save")
 							.font(.title.bold())
-							.foregroundColor(.blue)
+							.foregroundColor(.black)
 				)
 		}
-		.foregroundStyle(LinearGradient(colors: [.white, .orange, .white], startPoint: .leading, endPoint: .trailing))
+		.foregroundStyle(LinearGradient(colors: [.gray, .white, .gray], startPoint: .leading, endPoint: .trailing))
+		.shadow(color: .gray, radius: 4, x: 2, y: 2)
 		.padding([.leading, .trailing], 40)
 	}
 
@@ -125,6 +127,6 @@ struct NewTireView_Previews: PreviewProvider {
 
     static var previews: some View {
 		AddTireView()
-			.preferredColorScheme(.dark)
+			.preferredColorScheme(.light)
     }
 }

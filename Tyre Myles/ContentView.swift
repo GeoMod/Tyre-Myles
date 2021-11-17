@@ -27,13 +27,16 @@ struct ContentView: View {
 			VStack {
 
 				HStack(alignment: .firstTextBaseline) {
-					Button(role: .destructive) {
-						editing = .active
-					} label: {
-						Text("Edit")
-							.font(.title2)
-							.foregroundColor(.blue)
-					}.padding(.leading)
+					EditButton()
+						.padding(.leading)
+//					Button(role: .destructive) {
+//						editing = .active
+//					} label: {
+//
+//						Text("Edit")
+//							.font(.title2)
+//							.foregroundColor(.blue)
+//					}.padding(.leading)
 					Spacer()
 					NavigationLink {
 						AddTireView()
@@ -41,7 +44,7 @@ struct ContentView: View {
 						PlusButton
 							.padding(.trailing)
 					}
-				}.padding(.top)
+				}
 
 				List {
 					ForEach(dataModel.savedTires, id: \.id) { tire in
