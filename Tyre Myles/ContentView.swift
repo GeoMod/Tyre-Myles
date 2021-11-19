@@ -29,14 +29,6 @@ struct ContentView: View {
 				HStack(alignment: .firstTextBaseline) {
 					EditButton()
 						.padding(.leading)
-//					Button(role: .destructive) {
-//						editing = .active
-//					} label: {
-//
-//						Text("Edit")
-//							.font(.title2)
-//							.foregroundColor(.blue)
-//					}.padding(.leading)
 					Spacer()
 					NavigationLink {
 						AddTireView()
@@ -65,7 +57,7 @@ struct ContentView: View {
 			}.onAppear(perform: {
 				animatePlusButton()
 			})
-			.navigationTitle("My Tyre Myles")
+			.navigationTitle("Tyre Myles")
 		}
 
 		.fullScreenCover(isPresented: $showIntroCard) {
@@ -101,14 +93,17 @@ struct ContentView: View {
 }
 
 
+#if DEBUG
 struct ContentView_Previews: PreviewProvider {
 	static var animate = true
 
-
 	static var previews: some View {
-		Image(systemName: "plus.circle")
-			.font(.largeTitle)
-			.foregroundStyle(.green)
+		Text("Tyre Myles")
+			.font(Font.system(size: 55).weight(.semibold))
+			.foregroundStyle(LinearGradient(colors: [.orange, .white, .orange], startPoint: .leading, endPoint: .trailing))
+//		Image(systemName: "plus.circle")
+//			.font(.largeTitle)
+//			.foregroundStyle(.green)
 	}
-
 }
+#endif

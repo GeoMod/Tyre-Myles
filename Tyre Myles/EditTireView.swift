@@ -124,9 +124,10 @@ struct EditTireView: View {
 
 }
 
-
+#if DEBUG
 struct EditTireView_Previews: PreviewProvider {
     static var previews: some View {
 		Text("Test View")
     }
 }
+#endif

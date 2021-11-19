@@ -123,6 +123,8 @@ struct AddTireView: View {
 
 }
 
+
+#if DEBUG
 struct NewTireView_Previews: PreviewProvider {
 
     static var previews: some View {
@@ -130,3 +132,4 @@ struct NewTireView_Previews: PreviewProvider {
 			.preferredColorScheme(.light)
     }
 }
+#endif

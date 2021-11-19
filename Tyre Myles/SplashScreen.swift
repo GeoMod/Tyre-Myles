@@ -100,7 +100,7 @@ struct SceneThree: View {
 	}
 }
 
-
+#if DEBUG
 struct SplashScreen_Previews: PreviewProvider {
     static var previews: some View {
 //        SplashScreen()
@@ -109,3 +109,4 @@ struct SplashScreen_Previews: PreviewProvider {
 		SceneThree()
     }
 }
+#endif
