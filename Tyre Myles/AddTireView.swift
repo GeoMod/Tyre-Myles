@@ -23,6 +23,7 @@ struct AddTireView: View {
 	@State private var removalDate = Date()
 	@State private var installMiles = ""
 	@State private var removalMiles = ""
+	@State private var isOnVehicle = false
 
 	@FocusState private var focusedField: Field?
 
@@ -66,7 +67,16 @@ struct AddTireView: View {
 					.font(.title2)
 					.padding(.top, 40)
 				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
-				DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+
+				Toggle(isOn: $isOnVehicle) {
+					Text(isOnVehicle ? "In Storage" : "On Vehicle")
+						.foregroundColor(isOnVehicle ? .black : .purple)
+						.font(.title3.bold())
+				}
+				if isOnVehicle {
+					DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+				}
+
 			}.padding([.leading, .trailing])
 
 			Spacer()
@@ -74,7 +84,7 @@ struct AddTireView: View {
 			SaveButton
 				.padding(.bottom)
 
-			.navigationTitle("Add New Tire")
+			.navigationTitle("Add New Tyre")
 		}
 
 		.onSubmit {

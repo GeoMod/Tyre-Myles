@@ -12,6 +12,7 @@ struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false
+	@State private var isOnVehicle = false
 	@State private var totalMilage = "---"
 
 
@@ -31,19 +32,27 @@ struct DateMilageView: View {
 				Text(String(format: "%.0f", currentTire.installMiles))
 			}
 
-			Text("Removal")
-				.font(.title3.bold())
-				.padding([.top])
-			HStack {
-				Text("Date:")
-				Text(currentTire.removalDate ?? Date(), style: .date)
+			
+			Toggle(isOn: $isOnVehicle) {
+				Text(isOnVehicle ? "In Storage" : "On Vehicle")
+					.foregroundColor(isOnVehicle ? .primary : .purple)
+					.font(.title3.bold())
 			}
-			HStack {
-				Text("Milage:")
-					.padding(.trailing)
-				Text(String(format: "%.0f", currentTire.removalMiles))
-					.padding(.leading, -10)
+			if isOnVehicle {
+				Text("Removal")
+					.font(.title3.bold())
+				HStack {
+					Text("Date:")
+					Text(currentTire.removalDate ?? Date(), style: .date)
+				}
+				HStack {
+					Text("Milage:")
+						.padding(.trailing)
+					Text(String(format: "%.0f", currentTire.removalMiles))
+						.padding(.leading, -10)
+				}
 			}
+
 			HStack {
 				Text("Total Tyre Myles")
 					.bold()
@@ -73,7 +82,7 @@ struct DateMilageView: View {
 	}
 
 
-	@MainActor private func totalMiles(installation: Double, removal: Double) {
+	 private func totalMiles(installation: Double, removal: Double) {
 		let total = removal - installation
 		if total > 0 {
 			totalMilage = String(Int(total))

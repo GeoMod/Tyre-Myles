@@ -24,6 +24,8 @@ struct EditTireView: View {
 
 	var body: some View {
 		VStack {
+			Text("Edit Tyre")
+				.font(.largeTitle)
 			TextField(currentTire.name ?? "Name", text: $name, prompt: nil)
 				.textFieldStyle(.roundedBorder)
 			Picker("Season", selection: $seasonType) {

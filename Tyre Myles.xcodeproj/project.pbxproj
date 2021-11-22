@@ -20,6 +20,7 @@
 		18C3A110271DBE37005EB3E9 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A10F271DBE37005EB3E9 /* StyleConstants.swift */; };
 		18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7797271F665A00905BE1 /* DateMilageView.swift */; };
 		18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7799271FB97100905BE1 /* EditTireView.swift */; };
+		18FB29852747E75E0099C58E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB29842747E75E0099C58E /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		18C3A10F271DBE37005EB3E9 /* StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
 		18EB7797271F665A00905BE1 /* DateMilageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMilageView.swift; sourceTree = "<group>"; };
 		18EB7799271FB97100905BE1 /* EditTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTireView.swift; sourceTree = "<group>"; };
+		18FB29842747E75E0099C58E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +95,8 @@
 				18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */,
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
-				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
 				18C0059C273DFA3A005492B7 /* SplashScreen.swift */,
+				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
 				18EB7797271F665A00905BE1 /* DateMilageView.swift */,
 				1853F0092725B111006A9CB5 /* AddTireView.swift */,
 				18EB7799271FB97100905BE1 /* EditTireView.swift */,
@@ -103,6 +105,7 @@
 				18C3A0FE271DADAE005EB3E9 /* Assets.xcassets */,
 				18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */,
 				18C3A100271DADAE005EB3E9 /* Preview Content */,
+				18FB29842747E75E0099C58E /* TestView.swift */,
 			);
 			path = "Tyre Myles";
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */,
 				18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */,
+				18FB29852747E75E0099C58E /* TestView.swift in Sources */,
 				18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */,
 				18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */,
 				1853F00A2725B111006A9CB5 /* AddTireView.swift in Sources */,
