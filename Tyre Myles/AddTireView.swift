@@ -27,6 +27,9 @@ struct AddTireView: View {
 
 	@FocusState private var focusedField: Field?
 
+	// Save button outline.
+	let linearGradient = LinearGradient(gradient: Gradient(colors: [.gray, .white, .gray]), startPoint: .top, endPoint: .bottom)
+
 
 	var body: some View {
 		VStack {
@@ -104,20 +107,21 @@ struct AddTireView: View {
 
 	}
 
+
 	private var SaveButton: some View {
 		Button {
 			save()
 		} label: {
 			Capsule()
+				.stroke(linearGradient, lineWidth: 4)
 				.frame(height: 50)
 				.overlay(Text("Save")
 							.font(.title.bold())
-							.foregroundColor(.black)
+							.foregroundColor(.primary)
 				)
 		}
-		.foregroundStyle(LinearGradient(colors: [.gray, .white, .gray], startPoint: .leading, endPoint: .trailing))
-		.shadow(color: .gray, radius: 4, x: 2, y: 2)
 		.padding([.leading, .trailing], 40)
+		.shadow(color: .gray, radius: 2, x: 0, y: 1)
 	}
 
 	private func save() {
