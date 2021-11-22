@@ -33,9 +33,9 @@ struct AddTireView: View {
 
 	var body: some View {
 		VStack {
-			Text("Tire Type")
+			Text("Add New Tire")
 				.padding([.top, .leading])
-				.font(.title2)
+				.font(.title.bold())
 			Picker("Season", selection: $seasonType) {
 				Text("Summer")
 					.tag(TireType.summer)
@@ -88,8 +88,7 @@ struct AddTireView: View {
 
 			SaveButton
 				.padding(.bottom)
-
-			.navigationTitle("Add New Tyre")
+				.navigationBarTitleDisplayMode(.inline)
 		}
 
 		.onSubmit {

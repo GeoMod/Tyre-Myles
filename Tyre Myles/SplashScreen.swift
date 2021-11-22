@@ -62,7 +62,7 @@ struct SceneTwo: View {
 				GroupBox {
 					Text("Enter tire type, name,")
 					Text("and miles on the vehicle")
-					Text("when these tires were installed.")
+					Text("when your tires were installed.")
 				}.font(.title2.bold())
 					.padding([.top, .bottom], 50)
 			}
@@ -85,7 +85,6 @@ struct SceneThree: View {
 
 				GroupBox {
 					Text("Keep a log of your wheels.")
-					Text("Sync's accross iCloud.")
 				}.font(.title2.bold())
 
 				Button {

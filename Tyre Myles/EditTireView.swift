@@ -11,7 +11,8 @@ import CoreData
 struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
 	@EnvironmentObject var dataModel: DataModel
-	let currentTire: TireEntity
+
+	@FocusState private var fieldIsFocused: Bool
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -22,6 +23,7 @@ struct EditTireView: View {
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 
+	let currentTire: TireEntity
 
 	var body: some View {
 		VStack {
@@ -52,6 +54,7 @@ struct EditTireView: View {
 				.padding(.vertical)
 
 			DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+				.opacity(tireStatus == .onVehicle ? 0.25 : 1.0)
 				.disabled(tireStatus == .onVehicle)
 
 			Text("Enter Mileage Values")
@@ -61,6 +64,8 @@ struct EditTireView: View {
 			Group {
 				TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
 				TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
+					.focused($fieldIsFocused)
+//					.submitLabel(.done)
 			}
 			.keyboardType(.numberPad)
 			.textFieldStyle(.roundedBorder)

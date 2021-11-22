@@ -17,11 +17,14 @@ struct DateMilageView: View {
 
 	@State private var tireStatus: TireStatus = .inStorage
 
+	private let installed = "Installed"
+	private let removed = "Removed"
+	private let onVehicle = "On Vehicle"
 
 	var body: some View {
 		VStack(alignment: .leading) {
 			HStack(alignment: .firstTextBaseline) {
-				Text("Intallation")
+				Text(installed)
 					.font(.title3.bold())
 			}
 			HStack {
@@ -30,12 +33,12 @@ struct DateMilageView: View {
 			}
 
 			HStack {
-				Text("Milage:")
+				Text("Mileage:")
 				Text(String(format: "%.0f", currentTire.installMiles))
 			}
 
 			Group {
-				Text("Removal")
+				Text(currentTire.isInStorage == true ? removed : onVehicle)
 					.font(.title3.bold())
 					.padding(.top)
 				HStack {
@@ -43,7 +46,7 @@ struct DateMilageView: View {
 					Text(currentTire.removalDate ?? Date(), style: .date)
 				}
 				HStack {
-					Text("Milage:")
+					Text("Mileage:")
 						.padding(.trailing)
 					Text(String(format: "%.0f", currentTire.removalMiles))
 						.padding(.leading, -10)
@@ -79,16 +82,17 @@ struct DateMilageView: View {
 	}
 
 
-	 private func totalMiles(installation: Double, removal: Double) {
+	private func totalMiles(installation: Double, removal: Double) {
 		let total = removal - installation
-		 if total > 0 {
+
+		if !currentTire.isInStorage {
+			// Tires are on vehicle.
+			totalMilage = onVehicle
+		} else if total > 0 {
 			totalMilage = String(Int(total))
-		} else {
-			totalMilage = "On Vehicle"
 		}
 	}
 
-	
 
 }
 
