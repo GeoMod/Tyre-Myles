@@ -45,13 +45,13 @@ struct EditTireView: View {
 			DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 			DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
 
-			Text("Enter Milage Values")
+			Text("Enter Mileage Values")
 				.font(.headline)
 				.padding()
 
 			Group {
-				TextField("Install Milage", text: $installMilage, prompt: Text("Installation Milage"))
-				TextField("Removal Milage", text: $removalMilage, prompt: Text("Removal Milage"))
+				TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
+				TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
 			}
 			.keyboardType(.numberPad)
 			.textFieldStyle(.roundedBorder)

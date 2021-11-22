@@ -37,7 +37,7 @@ struct SceneOne: View {
 					.font(Font.system(size: 55).weight(.semibold))
 					.foregroundStyle(LinearGradient(colors: [.orange, .white, .orange], startPoint: .leading, endPoint: .trailing))
 				GroupBox {
-					Text("Track milage on multiple")
+					Text("Track mileage on multiple")
 					Text("sets of tires for your ride.")
 				}.font(.title2.bold())
 			}
