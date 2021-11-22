@@ -32,10 +32,12 @@ struct AddTireView: View {
 
 
 	var body: some View {
+		ScrollView {
+
 		VStack {
-			Text("Add New Tire")
-				.padding([.top, .leading])
-				.font(.title.bold())
+//			Text("Add New Tire")
+//				.padding([.top, .leading])
+//				.font(.title.bold())
 			Picker("Season", selection: $seasonType) {
 				Text("Summer")
 					.tag(TireType.summer)
@@ -53,11 +55,11 @@ struct AddTireView: View {
 					.keyboardType(.alphabet)
 					.submitLabel(.next)
 					.padding(.top, 10)
-				TextField("Install Milage", text: $installMiles)
+				TextField("Install Mileage", text: $installMiles)
 					.focused($focusedField, equals: .install)
 					.keyboardType(.numbersAndPunctuation)
 					.submitLabel(.next)
-				TextField("Removal Milage", text: $removalMiles)
+				TextField("Removal Mileage", text: $removalMiles)
 					.focused($focusedField, equals: .removal)
 					.keyboardType(.numbersAndPunctuation)
 					.submitLabel(.done)
@@ -79,17 +81,18 @@ struct AddTireView: View {
 				.padding(.vertical)
 
 				if tireStatus == .inStorage {
-					DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+					DatePicker(selection: $removalDate, in: installDate..., displayedComponents: .date) { Text("Removal Date") }
 				}
-
 			}.padding(.horizontal)
 
 			Spacer()
 
 			SaveButton
-				.padding(.bottom)
-				.navigationBarTitleDisplayMode(.inline)
 		}
+
+	}// End of ScrollView
+		.navigationBarTitle(Text("Add New Tire"))
+
 
 		.onSubmit {
 			// move text focus to next field upon entry.
@@ -121,7 +124,11 @@ struct AddTireView: View {
 							.foregroundColor(.primary)
 				)
 		}
-		.padding([.leading, .trailing], 40)
+		.padding()
+//		.padding(.horizontal, 40)
+//		.padding(.bottom)
+		.disabled(name.isEmpty)
+		.opacity(name.isEmpty ? 0.25 : 1.0)
 	}
 
 	private func save() {

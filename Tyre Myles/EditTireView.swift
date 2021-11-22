@@ -26,72 +26,77 @@ struct EditTireView: View {
 	let currentTire: TireEntity
 
 	var body: some View {
-		VStack {
-			Text("Edit Tyre")
-				.font(.largeTitle)
-			TextField(currentTire.name ?? "Name", text: $name, prompt: nil)
-				.textFieldStyle(.roundedBorder)
-			Picker("Season", selection: $seasonType) {
-				Text("Summer")
-					.tag(TireType.summer)
-				Text("All Season")
-					.tag(TireType.allSeason)
-				Text("Winter")
-					.tag(TireType.winter)
-			}
-			.padding([.leading, .trailing])
-			.pickerStyle(.segmented)
+		ScrollView {
 
-			Text("Enter Date Values")
-				.font(.headline)
-				.padding()
-			DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
+			VStack {
+				Text("Edit Tyre")
+					.font(.largeTitle)
+				TextField(currentTire.name ?? "Name", text: $name, prompt: nil)
+					.textFieldStyle(.roundedBorder)
+				Picker("Season", selection: $seasonType) {
+					Text("Summer")
+						.tag(TireType.summer)
+					Text("All Season")
+						.tag(TireType.allSeason)
+					Text("Winter")
+						.tag(TireType.winter)
+				}
+				.padding([.leading, .trailing])
+				.pickerStyle(.segmented)
 
-			Picker("Wheel Status", selection: $tireStatus) {
-				Text("In Storage").tag(TireStatus.inStorage)
-				Text("On Vehicle").tag(TireStatus.onVehicle)
-			}.pickerStyle(.segmented)
-				.padding(.vertical)
-
-			DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
-				.opacity(tireStatus == .onVehicle ? 0.25 : 1.0)
-				.disabled(tireStatus == .onVehicle)
-
-			Text("Enter Mileage Values")
-				.font(.headline)
-				.padding()
-
-			Group {
-				TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
-				TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
-					.focused($fieldIsFocused)
-//					.submitLabel(.done)
-			}
-			.keyboardType(.numberPad)
-			.textFieldStyle(.roundedBorder)
-
-			HStack {
-				Button(role: .cancel) {
-					dismiss()
-				} label: {
-					Text("Cancel")
-						.foregroundColor(.red)
-				}.buttonStyle(.automatic)
-
-				Button {
-					save()
-					dismiss()
-				} label: {
-					Text("Save")
-						.foregroundColor(.white)
-				}.buttonStyle(.borderedProminent)
+				Text("Enter Date Values")
+					.font(.headline)
 					.padding()
+				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
+
+				Picker("Wheel Status", selection: $tireStatus) {
+					Text("In Storage").tag(TireStatus.inStorage)
+					Text("On Vehicle").tag(TireStatus.onVehicle)
+				}.pickerStyle(.segmented)
+					.padding(.vertical)
+
+				DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+					.opacity(tireStatus == .onVehicle ? 0.25 : 1.0)
+					.disabled(tireStatus == .onVehicle)
+
+				Text("Enter Mileage Values")
+					.font(.headline)
+					.padding()
+
+				Group {
+					TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
+					TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
+						.disabled(tireStatus == .onVehicle)
+
+				}
+				.keyboardType(.numberPad)
+				.textFieldStyle(.roundedBorder)
+
+				HStack {
+					Button(role: .cancel) {
+						dismiss()
+					} label: {
+						Text("Cancel")
+							.foregroundColor(.red)
+					}.buttonStyle(.automatic)
+
+					Button {
+						save()
+						dismiss()
+					} label: {
+						Text("Save")
+							.foregroundColor(.white)
+					}.buttonStyle(.borderedProminent)
+						.padding()
+				}
 			}
-		}
-		.padding()
-		.onAppear {
-			loadInitialValues()
-		}
+			.padding()
+			.onAppear {
+				loadInitialValues()
+			}
+
+		} // End ScrollView
+
 	}
 
 	private func loadInitialValues() {
@@ -158,6 +163,10 @@ struct EditTireView: View {
 		currentTire.removalMiles = Double(removalMilage) ?? 0
 
 		dataModel.saveToMOC()
+	}
+
+	private func checkLogicalMileageEntered(install: Double, removal: Double) {
+		
 	}
 
 
