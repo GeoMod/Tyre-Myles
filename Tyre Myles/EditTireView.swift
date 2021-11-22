@@ -100,7 +100,7 @@ struct EditTireView: View {
 
 		name = loadedName
 		seasonType = checkTireSeason(type: loadedTireSeason)
-		tireStatus = tireLocation(status: loadedTireStatus)
+		tireStatus = loadTireLocation(status: loadedTireStatus)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
 		installMilage = String(loadedInstallMilage)
@@ -122,7 +122,8 @@ struct EditTireView: View {
 		}
 	}
 
-	private func tireLocation(status: Bool) -> TireStatus {
+	private func loadTireLocation(status: Bool) -> TireStatus {
+		// To set value of Picker when loading this Edit View.
 		switch status {
 			case true:
 				return .inStorage
@@ -131,10 +132,21 @@ struct EditTireView: View {
 		}
 	}
 
+	private func saveTireLocation(status: TireStatus) -> Bool {
+		// To save the proper boolean value to CoreData
+		switch status {
+			case .onVehicle:
+				return false
+			case .inStorage:
+				return true
+		}
+	}
+
 
 	private func save() {
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
+		currentTire.isInStorage = saveTireLocation(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
 		currentTire.installMiles = Double(installMilage) ?? 0

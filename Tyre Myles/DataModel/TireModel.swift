@@ -58,7 +58,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		savedTires = fetchedRunEvents
 	}
 
-	func saveTireProfileWith(name: String, season: TireType, isInStorage: TireStatus, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
+	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
 
@@ -70,11 +70,11 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		entity.removalDate = removallDate
 		entity.id = UUID()
 
-		switch isInStorage {
-			case .onVehicle:
-				entity.isInStorage = false
+		switch status {
 			case .inStorage:
 				entity.isInStorage = true
+			case .onVehicle:
+				entity.isInStorage = false
 		}
 
 		saveToMOC()

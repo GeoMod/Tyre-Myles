@@ -48,9 +48,7 @@ struct DateMilageView: View {
 					Text(String(format: "%.0f", currentTire.removalMiles))
 						.padding(.leading, -10)
 				}
-			}
-
-			//.opacity(tireStatus == .inStorage ? 1.0 : 0.25)
+			}.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
 
 			HStack {
 				Text("Total Tyre Myles")
@@ -88,11 +86,6 @@ struct DateMilageView: View {
 		} else {
 			totalMilage = "On Vehicle"
 		}
-	}
-
-	private func updateTireStatus() {
-		// TODO: update tire status in coreData when toggle is changed.
-//		dataModel.saveTireProfileWith(name: currentTire.name, season: currentTire.seasonType, isInStorage: tireStatus, installMiles: <#T##String#>, removalMiles: <#T##String#>, installDate: <#T##Date#>, removallDate: <#T##Date#>)
 	}
 
 	

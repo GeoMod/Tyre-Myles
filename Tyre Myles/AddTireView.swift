@@ -123,11 +123,10 @@ struct AddTireView: View {
 				)
 		}
 		.padding([.leading, .trailing], 40)
-//		.shadow(color: .gray, radius: 2, x: 0, y: 1)
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: seasonType, isInStorage: tireStatus  ,installMiles: installMiles,
+		dataModel.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMiles,
 									  removalMiles: removalMiles, installDate: installDate,
 									  removallDate: removalDate)
 
