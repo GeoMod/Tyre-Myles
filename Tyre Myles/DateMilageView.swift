@@ -9,11 +9,13 @@ import SwiftUI
 
 
 struct DateMilageView: View {
+	@EnvironmentObject var dataModel: DataModel
 	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false
-	@State private var isOnVehicle = false
 	@State private var totalMilage = "---"
+
+	@State private var tireStatus: TireStatus = .inStorage
 
 
 	var body: some View {
@@ -32,15 +34,10 @@ struct DateMilageView: View {
 				Text(String(format: "%.0f", currentTire.installMiles))
 			}
 
-			
-			Toggle(isOn: $isOnVehicle) {
-				Text(isOnVehicle ? "In Storage" : "On Vehicle")
-					.foregroundColor(isOnVehicle ? .primary : .purple)
-					.font(.title3.bold())
-			}
-			if isOnVehicle {
+			Group {
 				Text("Removal")
 					.font(.title3.bold())
+					.padding(.top)
 				HStack {
 					Text("Date:")
 					Text(currentTire.removalDate ?? Date(), style: .date)
@@ -52,6 +49,8 @@ struct DateMilageView: View {
 						.padding(.leading, -10)
 				}
 			}
+
+			//.opacity(tireStatus == .inStorage ? 1.0 : 0.25)
 
 			HStack {
 				Text("Total Tyre Myles")
@@ -84,11 +83,16 @@ struct DateMilageView: View {
 
 	 private func totalMiles(installation: Double, removal: Double) {
 		let total = removal - installation
-		if total > 0 {
+		 if total > 0 {
 			totalMilage = String(Int(total))
 		} else {
 			totalMilage = "On Vehicle"
 		}
+	}
+
+	private func updateTireStatus() {
+		// TODO: update tire status in coreData when toggle is changed.
+//		dataModel.saveTireProfileWith(name: currentTire.name, season: currentTire.seasonType, isInStorage: tireStatus, installMiles: <#T##String#>, removalMiles: <#T##String#>, installDate: <#T##Date#>, removallDate: <#T##Date#>)
 	}
 
 	

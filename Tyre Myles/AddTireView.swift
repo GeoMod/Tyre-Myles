@@ -19,11 +19,11 @@ struct AddTireView: View {
 
 	@State private var name = ""
 	@State private var seasonType: TireType = .allSeason
+	@State private var tireStatus: TireStatus = .inStorage
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
 	@State private var installMiles = ""
 	@State private var removalMiles = ""
-	@State private var isOnVehicle = false
 
 	@FocusState private var focusedField: Field?
 
@@ -71,16 +71,18 @@ struct AddTireView: View {
 					.padding(.top, 40)
 				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 
-				Toggle(isOn: $isOnVehicle) {
-					Text(isOnVehicle ? "In Storage" : "On Vehicle")
-						.foregroundColor(isOnVehicle ? .black : .purple)
-						.font(.title3.bold())
+				Picker("Wheel Status", selection: $tireStatus) {
+					Text("On Vehicle").tag(TireStatus.onVehicle)
+					Text("In Storage").tag(TireStatus.inStorage)
 				}
-				if isOnVehicle {
+				.pickerStyle(.segmented)
+				.padding(.vertical)
+
+				if tireStatus == .inStorage {
 					DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
 				}
 
-			}.padding([.leading, .trailing])
+			}.padding(.horizontal)
 
 			Spacer()
 
@@ -113,7 +115,7 @@ struct AddTireView: View {
 			save()
 		} label: {
 			Capsule()
-				.stroke(linearGradient, lineWidth: 4)
+				.stroke(linearGradient, lineWidth: 2)
 				.frame(height: 50)
 				.overlay(Text("Save")
 							.font(.title.bold())
@@ -121,13 +123,14 @@ struct AddTireView: View {
 				)
 		}
 		.padding([.leading, .trailing], 40)
-		.shadow(color: .gray, radius: 2, x: 0, y: 1)
+//		.shadow(color: .gray, radius: 2, x: 0, y: 1)
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: seasonType, installMiles: installMiles,
+		dataModel.saveTireProfileWith(name: name, season: seasonType, isInStorage: tireStatus  ,installMiles: installMiles,
 									  removalMiles: removalMiles, installDate: installDate,
 									  removallDate: removalDate)
+
 		dismiss()
 	}
 

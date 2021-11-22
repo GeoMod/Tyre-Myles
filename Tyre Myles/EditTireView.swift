@@ -20,6 +20,7 @@ struct EditTireView: View {
 	@State private var installMilage = ""
 	@State private var removalMilage = ""
 	@State private var seasonType: TireType = .allSeason
+	@State private var tireStatus: TireStatus = .inStorage
 
 
 	var body: some View {
@@ -43,7 +44,15 @@ struct EditTireView: View {
 				.font(.headline)
 				.padding()
 			DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
+
+			Picker("Wheel Status", selection: $tireStatus) {
+				Text("In Storage").tag(TireStatus.inStorage)
+				Text("On Vehicle").tag(TireStatus.onVehicle)
+			}.pickerStyle(.segmented)
+				.padding(.vertical)
+
 			DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+				.disabled(tireStatus == .onVehicle)
 
 			Text("Enter Mileage Values")
 				.font(.headline)
@@ -85,11 +94,13 @@ struct EditTireView: View {
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
 		guard let loadedTireSeason = currentTire.seasonType else { return }
+		let loadedTireStatus = currentTire.isInStorage
 		let loadedInstallMilage = currentTire.installMiles
 		let loadedRemovalMilage = currentTire.removalMiles
 
 		name = loadedName
 		seasonType = checkTireSeason(type: loadedTireSeason)
+		tireStatus = tireLocation(status: loadedTireStatus)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
 		installMilage = String(loadedInstallMilage)
@@ -108,6 +119,15 @@ struct EditTireView: View {
 				return .winter
 			default:
 				return .allSeason
+		}
+	}
+
+	private func tireLocation(status: Bool) -> TireStatus {
+		switch status {
+			case true:
+				return .inStorage
+			case false:
+				return .onVehicle
 		}
 	}
 
