@@ -34,7 +34,7 @@ struct DateMilageView: View {
 
 			HStack {
 				Text("Mileage:")
-				Text(String(format: "%.0f", currentTire.installMiles))
+				Text(String(currentTire.installMiles))
 			}
 
 			Group {
@@ -48,7 +48,7 @@ struct DateMilageView: View {
 				HStack {
 					Text("Mileage:")
 						.padding(.trailing)
-					Text(String(format: "%.0f", currentTire.removalMiles))
+					Text(String(currentTire.removalMiles))
 						.padding(.leading, -10)
 				}
 			}.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
@@ -82,7 +82,8 @@ struct DateMilageView: View {
 	}
 
 
-	private func totalMiles(installation: Double, removal: Double) {
+	private func totalMiles(installation: Int16, removal: Int16) {
+		// Int16 because that is how it's defined in the CoreData model.
 		let total = removal - installation
 
 		if !currentTire.isInStorage {

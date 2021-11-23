@@ -63,8 +63,9 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		let entity = TireEntity(context: moc)
 
 		entity.name = name
-		entity.installMiles = Double(installMiles) ?? 0.0
-		entity.removalMiles = Double(removalMiles) ?? 0.0
+		// CoreData model defines these values as Int16
+		entity.installMiles = Int16(installMiles) ?? 0
+		entity.removalMiles = Int16(removalMiles) ?? 0
 		entity.seasonType = season.rawValue
 		entity.installDate = installDate
 		entity.removalDate = removallDate

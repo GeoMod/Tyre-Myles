@@ -3,11 +3,11 @@
     <entity name="TireEntity" representedClassName="TireEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="installDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="installMiles" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="installMiles" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="isInStorage" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="removalDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="removalMiles" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="removalMiles" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="seasonType" optional="YES" attributeType="String"/>
     </entity>
     <elements>

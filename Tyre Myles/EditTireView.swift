@@ -23,7 +23,10 @@ struct EditTireView: View {
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 
+	@State private var isShowingAlert = false
+
 	let currentTire: TireEntity
+	let tireLogic = TireMileageLogic()
 
 	var body: some View {
 		ScrollView {
@@ -66,7 +69,6 @@ struct EditTireView: View {
 				Group {
 					TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
 					TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
-						.disabled(tireStatus == .onVehicle)
 
 				}
 				.keyboardType(.numberPad)
@@ -81,14 +83,28 @@ struct EditTireView: View {
 					}.buttonStyle(.automatic)
 
 					Button {
-						save()
-						dismiss()
+						tireLogicCheck()
 					} label: {
 						Text("Save")
 							.foregroundColor(.white)
-					}.buttonStyle(.borderedProminent)
-						.padding()
+					}
+					.buttonStyle(.borderedProminent)
+					.disabled(removalMilage.isEmpty && tireStatus == .inStorage)
+					// Disabled to prevent poor UX logic.
+					.padding()
+					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
+						Button(role: .cancel) {
+							removalMilage = ""
+						} label: {
+							Text("I'll Fix It!")
+						}
+					} message: {
+						Text(tireLogic.errorMessage)
+					}
+
+
 				}
+
 			}
 			.padding()
 			.onAppear {
@@ -152,6 +168,15 @@ struct EditTireView: View {
 		}
 	}
 
+	private func tireLogicCheck() {
+		// MARK: Duplicated in AddNewTire View
+		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+
+		if !isShowingAlert {
+			save()
+		}
+	}
+
 
 	private func save() {
 		currentTire.name = name
@@ -159,10 +184,14 @@ struct EditTireView: View {
 		currentTire.isInStorage = saveTireLocation(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
-		currentTire.installMiles = Double(installMilage) ?? 0
-		currentTire.removalMiles = Double(removalMilage) ?? 0
+		// CoreData model defines these values as Int16
+		currentTire.installMiles = Int16(installMilage) ?? 0
+		currentTire.removalMiles = Int16(removalMilage) ?? 0
 
 		dataModel.saveToMOC()
+
+		// Dismiss View
+		dismiss()
 	}
 
 	private func checkLogicalMileageEntered(install: Double, removal: Double) {

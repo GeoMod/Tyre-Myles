@@ -22,13 +22,15 @@ struct AddTireView: View {
 	@State private var tireStatus: TireStatus = .inStorage
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
-	@State private var installMiles = ""
-	@State private var removalMiles = ""
+	@State private var installMilage = ""
+	@State private var removalMilage = ""
 
 	@State private var isShowingAlert = false
 
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
+
+	let tireLogic = TireMileageLogic()
 
 	// Save button outline.
 	let linearGradient = LinearGradient(gradient: Gradient(colors: [.gray, .white, .gray]), startPoint: .top, endPoint: .bottom)
@@ -55,12 +57,14 @@ struct AddTireView: View {
 						.keyboardType(.alphabet)
 						.submitLabel(.next)
 						.padding(.top, 10)
-					TextField("Install Mileage", text: $installMiles)
+					TextField("Install Mileage", text: $installMilage)
 						.focused($focusedField, equals: .install)
 						.focused($mileageIsFocused)
 						.keyboardType(.numberPad)
 //						.submitLabel(.next)
-					TextField("Removal Mileage (Optional)", text: $removalMiles)
+					TextField("Removal Mileage", text: $removalMilage)
+					// Causing this to be .disabled will result in a warning about updating the view while not on the main thread.
+					// Unsure why. 11/23/21
 						.focused($mileageIsFocused)
 //						.focused($focusedField, equals: .removal)
 						.keyboardType(.numberPad)
@@ -71,7 +75,8 @@ struct AddTireView: View {
 
 				HStack {
 					Button {
-						checkLogicalMileageValues(install: installMiles, removal: removalMiles)
+						isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+						mileageIsFocused = false
 					} label: {
 						Text("done")
 							.foregroundColor(.blue)
@@ -79,12 +84,14 @@ struct AddTireView: View {
 					}
 					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
 						Button(role: .cancel) {
-							removalMiles = ""
+							removalMilage = ""
 						} label: {
 							Text("OK")
 						}
-
+					} message: {
+						Text(tireLogic.errorMessage)
 					}
+
 					Spacer()
 				}
 
@@ -133,31 +140,9 @@ struct AddTireView: View {
 	}
 
 
-	private func checkLogicalMileageValues(install: String, removal: String) {
-		// removal mileage cannot be greater than 0 but less than installation mileage.
-		guard let convertedInstall = Int(install) else { return }
-		guard let convertedRemoval = Int(removal) else {
-			// No value was given for removal. Acceptable since tires may be on vehicle.
-			// Dismiss keyboard
-			mileageIsFocused = false
-			return
-		}
-
-		let result = convertedRemoval - convertedInstall
-
-		if result < 0 {
-			// a negative mileage value has resulted.
-			// trigger alert
-			isShowingAlert = true
-			return
-		} else {
-			mileageIsFocused = false
-		}
-	}
-
 	private var SaveButton: some View {
 		Button {
-			save()
+			tireLogicCheck()
 		} label: {
 			Capsule()
 				.stroke(linearGradient, lineWidth: 2)
@@ -168,13 +153,22 @@ struct AddTireView: View {
 				)
 		}
 		.padding()
-		.disabled(name.isEmpty)
-		.opacity(name.isEmpty ? 0.25 : 1.0)
+		.disabled(tireStatus == .inStorage && (name.isEmpty || removalMilage.isEmpty))
+		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage.isEmpty) ? 0.25 : 1.0)
+	}
+
+	private func tireLogicCheck() {
+		// MARK: Duplicated in EditTireView View
+		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+
+		if !isShowingAlert {
+			save()
+		}
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMiles,
-									  removalMiles: removalMiles, installDate: installDate,
+		dataModel.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMilage,
+									  removalMiles: removalMilage, installDate: installDate,
 									  removallDate: removalDate)
 
 		dismiss()
