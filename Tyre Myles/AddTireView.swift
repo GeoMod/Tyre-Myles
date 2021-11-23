@@ -34,63 +34,60 @@ struct AddTireView: View {
 	var body: some View {
 		ScrollView {
 
-		VStack {
-//			Text("Add New Tire")
-//				.padding([.top, .leading])
-//				.font(.title.bold())
-			Picker("Season", selection: $seasonType) {
-				Text("Summer")
-					.tag(TireType.summer)
-				Text("All Season")
-					.tag(TireType.allSeason)
-				Text("Winter")
-					.tag(TireType.winter)
-			}
-			.padding([.leading, .trailing])
-			.pickerStyle(.segmented)
-
-			Group {
-				TextField("Tire Name", text: $name)
-					.focused($focusedField, equals: .name)
-					.keyboardType(.alphabet)
-					.submitLabel(.next)
-					.padding(.top, 10)
-				TextField("Install Mileage", text: $installMiles)
-					.focused($focusedField, equals: .install)
-					.keyboardType(.numbersAndPunctuation)
-					.submitLabel(.next)
-				TextField("Removal Mileage", text: $removalMiles)
-					.focused($focusedField, equals: .removal)
-					.keyboardType(.numbersAndPunctuation)
-					.submitLabel(.done)
-			}
-			.textFieldStyle(.roundedBorder)
-			.padding([.leading, .trailing])
-
-			Group {
-				Text("Enter Date Values")
-					.font(.title2)
-					.padding(.top, 40)
-				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
-
-				Picker("Wheel Status", selection: $tireStatus) {
-					Text("On Vehicle").tag(TireStatus.onVehicle)
-					Text("In Storage").tag(TireStatus.inStorage)
+			VStack {
+				Picker("Season", selection: $seasonType) {
+					Text("Summer")
+						.tag(TireType.summer)
+					Text("All Season")
+						.tag(TireType.allSeason)
+					Text("Winter")
+						.tag(TireType.winter)
 				}
+				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
-				.padding(.vertical)
 
-				if tireStatus == .inStorage {
-					DatePicker(selection: $removalDate, in: installDate..., displayedComponents: .date) { Text("Removal Date") }
+				Group {
+					TextField("Tire Name", text: $name)
+						.focused($focusedField, equals: .name)
+						.keyboardType(.alphabet)
+						.submitLabel(.next)
+						.padding(.top, 10)
+					TextField("Install Mileage", text: $installMiles)
+						.focused($focusedField, equals: .install)
+						.keyboardType(.numbersAndPunctuation)
+						.submitLabel(.next)
+					TextField("Removal Mileage", text: $removalMiles)
+						.focused($focusedField, equals: .removal)
+						.keyboardType(.numbersAndPunctuation)
+						.submitLabel(.done)
 				}
-			}.padding(.horizontal)
+				.textFieldStyle(.roundedBorder)
+				.padding([.leading, .trailing])
 
-			Spacer()
+				Group {
+					Text("Enter Date Values")
+						.font(.title2)
+						.padding(.top, 40)
+					DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 
-			SaveButton
-		}
+					Picker("Wheel Status", selection: $tireStatus) {
+						Text("On Vehicle").tag(TireStatus.onVehicle)
+						Text("In Storage").tag(TireStatus.inStorage)
+					}
+					.pickerStyle(.segmented)
+					.padding(.vertical)
 
-	}// End of ScrollView
+					if tireStatus == .inStorage {
+						DatePicker(selection: $removalDate, in: installDate..., displayedComponents: .date) { Text("Removal Date") }
+					}
+				}.padding(.horizontal)
+
+				Spacer()
+
+				SaveButton
+			}
+
+		}// End of ScrollView
 		.navigationBarTitle(Text("Add New Tire"))
 
 
