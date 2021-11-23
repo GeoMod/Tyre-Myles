@@ -25,7 +25,10 @@ struct AddTireView: View {
 	@State private var installMiles = ""
 	@State private var removalMiles = ""
 
+	@State private var isShowingAlert = false
+
 	@FocusState private var focusedField: Field?
+	@FocusState private var mileageIsFocused: Bool
 
 	// Save button outline.
 	let linearGradient = LinearGradient(gradient: Gradient(colors: [.gray, .white, .gray]), startPoint: .top, endPoint: .bottom)
@@ -54,15 +57,36 @@ struct AddTireView: View {
 						.padding(.top, 10)
 					TextField("Install Mileage", text: $installMiles)
 						.focused($focusedField, equals: .install)
-						.keyboardType(.numbersAndPunctuation)
-						.submitLabel(.next)
-					TextField("Removal Mileage", text: $removalMiles)
-						.focused($focusedField, equals: .removal)
-						.keyboardType(.numbersAndPunctuation)
-						.submitLabel(.done)
+						.focused($mileageIsFocused)
+						.keyboardType(.numberPad)
+//						.submitLabel(.next)
+					TextField("Removal Mileage (Optional)", text: $removalMiles)
+						.focused($mileageIsFocused)
+//						.focused($focusedField, equals: .removal)
+						.keyboardType(.numberPad)
+//						.submitLabel(.done)
 				}
 				.textFieldStyle(.roundedBorder)
 				.padding([.leading, .trailing])
+
+				HStack {
+					Button {
+						checkLogicalMileageValues(install: installMiles, removal: removalMiles)
+					} label: {
+						Text("done")
+							.foregroundColor(.blue)
+							.padding(.leading)
+					}
+					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
+						Button(role: .cancel) {
+							removalMiles = ""
+						} label: {
+							Text("OK")
+						}
+
+					}
+					Spacer()
+				}
 
 				Group {
 					Text("Enter Date Values")
@@ -90,13 +114,13 @@ struct AddTireView: View {
 		}// End of ScrollView
 		.navigationBarTitle(Text("Add New Tire"))
 
-
 		.onSubmit {
 			// move text focus to next field upon entry.
 			switch focusedField {
 				case .name:
 					focusedField = .install
 				case .install:
+					// not used as of 11/23/21 but reserving logic for possible future use.
 					focusedField = .removal
 				case .removal:
 					focusedField = nil
@@ -108,6 +132,28 @@ struct AddTireView: View {
 
 	}
 
+
+	private func checkLogicalMileageValues(install: String, removal: String) {
+		// removal mileage cannot be greater than 0 but less than installation mileage.
+		guard let convertedInstall = Int(install) else { return }
+		guard let convertedRemoval = Int(removal) else {
+			// No value was given for removal. Acceptable since tires may be on vehicle.
+			// Dismiss keyboard
+			mileageIsFocused = false
+			return
+		}
+
+		let result = convertedRemoval - convertedInstall
+
+		if result < 0 {
+			// a negative mileage value has resulted.
+			// trigger alert
+			isShowingAlert = true
+			return
+		} else {
+			mileageIsFocused = false
+		}
+	}
 
 	private var SaveButton: some View {
 		Button {
@@ -122,8 +168,6 @@ struct AddTireView: View {
 				)
 		}
 		.padding()
-//		.padding(.horizontal, 40)
-//		.padding(.bottom)
 		.disabled(name.isEmpty)
 		.opacity(name.isEmpty ? 0.25 : 1.0)
 	}

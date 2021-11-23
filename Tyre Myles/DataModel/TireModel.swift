@@ -32,7 +32,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		var request: NSFetchRequest<TireEntity> {
 			let fetched = NSFetchRequest<TireEntity>(entityName: "TireEntity")
 			// Sorts the TireEnty by name. Change this to change sorting.
-			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.installDate, ascending: true)]
+			fetched.sortDescriptors = [NSSortDescriptor(keyPath: \TireEntity.installDate, ascending: false)]
 			return fetched
 		}
 		savedTireController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
