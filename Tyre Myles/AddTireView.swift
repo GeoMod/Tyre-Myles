@@ -86,7 +86,7 @@ struct AddTireView: View {
 						Button(role: .cancel) {
 							removalMilage = ""
 						} label: {
-							Text("OK")
+							Text(tireLogic.submitMessage)
 						}
 					} message: {
 						Text(tireLogic.errorMessage)

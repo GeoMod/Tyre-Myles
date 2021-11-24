@@ -82,15 +82,15 @@ struct DateMilageView: View {
 	}
 
 
-	private func totalMiles(installation: Int16, removal: Int16) {
-		// Int16 because that is how it's defined in the CoreData model.
+	private func totalMiles(installation: Int64, removal: Int64) {
+		// Int64 because that is how it's defined in the CoreData model.
 		let total = removal - installation
 
 		if !currentTire.isInStorage {
 			// Tires are on vehicle.
 			totalMilage = onVehicle
 		} else if total > 0 {
-			totalMilage = String(Int(total))
+			totalMilage = String(total)
 		}
 	}
 

@@ -53,8 +53,8 @@ struct EditTireView: View {
 				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 
 				Picker("Wheel Status", selection: $tireStatus) {
-					Text("In Storage").tag(TireStatus.inStorage)
 					Text("On Vehicle").tag(TireStatus.onVehicle)
+					Text("In Storage").tag(TireStatus.inStorage)
 				}.pickerStyle(.segmented)
 					.padding(.vertical)
 
@@ -96,7 +96,7 @@ struct EditTireView: View {
 						Button(role: .cancel) {
 							removalMilage = ""
 						} label: {
-							Text("I'll Fix It!")
+							Text(tireLogic.submitMessage)
 						}
 					} message: {
 						Text(tireLogic.errorMessage)
@@ -184,9 +184,9 @@ struct EditTireView: View {
 		currentTire.isInStorage = saveTireLocation(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
-		// CoreData model defines these values as Int16
-		currentTire.installMiles = Int16(installMilage) ?? 0
-		currentTire.removalMiles = Int16(removalMilage) ?? 0
+		// CoreData model defines these values as Int64
+		currentTire.installMiles = Int64(installMilage) ?? 0
+		currentTire.removalMiles = Int64(removalMilage) ?? 0
 
 		dataModel.saveToMOC()
 
