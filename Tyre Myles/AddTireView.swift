@@ -75,7 +75,7 @@ struct AddTireView: View {
 
 				HStack {
 					Button {
-						isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+						checkTireMileageValues()
 						mileageIsFocused = false
 					} label: {
 						Text("done")
@@ -142,7 +142,7 @@ struct AddTireView: View {
 
 	private var SaveButton: some View {
 		Button {
-			tireLogicCheck()
+			checkTireMileageValues()
 		} label: {
 			Capsule()
 				.stroke(linearGradient, lineWidth: 2)
@@ -157,8 +157,7 @@ struct AddTireView: View {
 		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage.isEmpty) ? 0.25 : 1.0)
 	}
 
-	private func tireLogicCheck() {
-		// MARK: Duplicated in EditTireView View
+	private func checkTireMileageValues() {
 		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
 		if !isShowingAlert {

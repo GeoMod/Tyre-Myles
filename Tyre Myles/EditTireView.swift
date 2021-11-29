@@ -83,7 +83,7 @@ struct EditTireView: View {
 					}.buttonStyle(.automatic)
 
 					Button {
-						tireLogicCheck()
+						checkTireMileageValues()
 					} label: {
 						Text("Save")
 							.foregroundColor(.white)
@@ -168,8 +168,7 @@ struct EditTireView: View {
 		}
 	}
 
-	private func tireLogicCheck() {
-		// MARK: Duplicated in AddNewTire View
+	private func checkTireMileageValues() {
 		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
 		if !isShowingAlert {

@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-class TireMileageLogic {
-	// MARK: More functionality should be added here to consolodate code from
-	// AddTireView and EditTireView. Those items are marked in those files.
+struct TireMileageLogic {
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
-	let submitMessage = "That Makes Sense"
+	let submitMessage = "OK"
 
 	func checkLogicalMileageValues(install: String, removal: String, status: TireStatus) -> Bool {
 		// removal mileage cannot be greater than 0 but less than installation mileage.
@@ -31,4 +29,8 @@ class TireMileageLogic {
 			return false
 		}
 	}
+
+
+
+
 }
