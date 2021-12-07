@@ -54,9 +54,8 @@ struct ContentView: View {
 						dataModel.deleteTire(at: index)
 					}
 				}.listStyle(.insetGrouped)
-			}.onAppear(perform: {
-				animatePlusButton()
-			})
+			}
+			.onAppear { animatePlusButton() }
 			.navigationTitle("Tyre Myles")
 		}
 

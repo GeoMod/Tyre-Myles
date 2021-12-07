@@ -193,10 +193,6 @@ struct EditTireView: View {
 		dismiss()
 	}
 
-	private func checkLogicalMileageEntered(install: Double, removal: Double) {
-		
-	}
-
 
 }
 

@@ -13,7 +13,7 @@ struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false
-	@State private var totalMilage = "---"
+	@State private var totalMilage = "-----"
 
 	@State private var tireStatus: TireStatus = .inStorage
 
