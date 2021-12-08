@@ -6,11 +6,12 @@
         <attribute name="installMiles" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="isInStorage" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="removalDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="removalMiles" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="seasonType" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="TireEntity" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="TireEntity" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

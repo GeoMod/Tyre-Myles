@@ -19,6 +19,7 @@
 		18C3A104271DADAE005EB3E9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A103271DADAE005EB3E9 /* Persistence.swift */; };
 		18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */; };
 		18C3A110271DBE37005EB3E9 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A10F271DBE37005EB3E9 /* StyleConstants.swift */; };
+		18DF102E276028A0001C0463 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF102D276028A0001C0463 /* NotesView.swift */; };
 		18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7797271F665A00905BE1 /* DateMilageView.swift */; };
 		18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7799271FB97100905BE1 /* EditTireView.swift */; };
 		18FB29852747E75E0099C58E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB29842747E75E0099C58E /* TestView.swift */; };
@@ -40,6 +41,7 @@
 		18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tyre-Myles-Info.plist"; sourceTree = SOURCE_ROOT; };
 		18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tyre Myles.entitlements"; sourceTree = "<group>"; };
 		18C3A10F271DBE37005EB3E9 /* StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
+		18DF102D276028A0001C0463 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		18EB7797271F665A00905BE1 /* DateMilageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMilageView.swift; sourceTree = "<group>"; };
 		18EB7799271FB97100905BE1 /* EditTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTireView.swift; sourceTree = "<group>"; };
 		18FB29842747E75E0099C58E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
 				18C0059C273DFA3A005492B7 /* SplashScreen.swift */,
+				18DF102D276028A0001C0463 /* NotesView.swift */,
 				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
 				18EB7797271F665A00905BE1 /* DateMilageView.swift */,
 				1853F0092725B111006A9CB5 /* AddTireView.swift */,
@@ -200,6 +203,7 @@
 				1853F00A2725B111006A9CB5 /* AddTireView.swift in Sources */,
 				185BC7CC27224FD700A8DD32 /* TireModel.swift in Sources */,
 				18C3A104271DADAE005EB3E9 /* Persistence.swift in Sources */,
+				18DF102E276028A0001C0463 /* NotesView.swift in Sources */,
 				18C3A110271DBE37005EB3E9 /* StyleConstants.swift in Sources */,
 				18C3A0FD271DADAD005EB3E9 /* ContentView.swift in Sources */,
 				18C3A0FB271DADAD005EB3E9 /* Tyre_MylesApp.swift in Sources */,

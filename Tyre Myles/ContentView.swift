@@ -10,11 +10,13 @@ import CoreData
 
 
 struct ContentView: View {
-	@Environment(\.colorScheme) var colorScheme
 	@EnvironmentObject var dataModel: DataModel
 
 	@State private var selectedTireSeason: TireType = .allSeason
 	@State private var editing: EditMode = .inactive
+
+	@State private var isShowingNotesView = false
+	@State private var selectedTire: TireEntity? = nil
 
 	// Animation
 	@State private var rotation: Double = 0
@@ -45,8 +47,21 @@ struct ContentView: View {
 									.foregroundColor(.gray)
 						) {
 							VStack {
-								Text(tire.name!)
-									.font(Font.title2.bold())
+
+								HStack {
+									Text(tire.name!)
+										.font(Font.title2.bold())
+
+									Spacer()
+
+									Button {
+										selectedTire = tire
+									} label: {
+										Image(systemName: "note.text.badge.plus")
+									}
+									.buttonStyle(.plain)
+								}
+
 								DateMilageView(currentTire: tire)
 							}
 						}.headerProminence(.increased)
@@ -58,6 +73,11 @@ struct ContentView: View {
 			.onAppear { animatePlusButton() }
 			.navigationTitle("Tyre Myles")
 		}
+
+		.sheet(item: $selectedTire, content: { selection in
+			NotesView(currentTire: selection)
+		})
+
 
 		.fullScreenCover(isPresented: $showIntroCard) {
 			// View only displays on first use.
@@ -97,9 +117,22 @@ struct ContentView_Previews: PreviewProvider {
 	static var animate = true
 
 	static var previews: some View {
-		Text("Tyre Myles")
-			.font(Font.system(size: 55).weight(.semibold))
-			.foregroundStyle(LinearGradient(colors: [.orange, .white, .orange], startPoint: .leading, endPoint: .trailing))
+		HStack {
+			Text("tire.name!")
+				.font(Font.title2.bold())
+			Button {
+				// open sheet to add notes
+			} label: {
+				Image(systemName: "note.text.badge.plus")
+			}
+			.buttonStyle(.plain)
+//			.controlSize(.large)
+//			.buttonBorderShape(.capsule)
+//			.tint(.gray)
+
+
+
+		}
 //		Image(systemName: "plus.circle")
 //			.font(.largeTitle)
 //			.foregroundStyle(.green)
