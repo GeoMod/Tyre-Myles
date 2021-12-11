@@ -58,11 +58,14 @@ struct ContentView: View {
 										selectedTire = tire
 									} label: {
 										Image(systemName: "note.text.badge.plus")
+											.font(.title2)
+											.symbolRenderingMode(.multicolor)
+											.foregroundStyle(.gray, .blue)
 									}
-									.buttonStyle(.plain)
 								}
 
 								DateMilageView(currentTire: tire)
+
 							}
 						}.headerProminence(.increased)
 					}.onDelete { index in
@@ -87,7 +90,6 @@ struct ContentView: View {
 		}
 
 
-
 	}
 
 	private func animatePlusButton() {
@@ -103,7 +105,8 @@ struct ContentView: View {
 	private var PlusButton: some View {
 		Image(systemName: "plus.circle")
 			.font(.title)
-			.foregroundColor(dataModel.savedTires.isEmpty ? .green : .blue)
+			.symbolRenderingMode(.palette)
+			.foregroundStyle(.primary, .blue)
 			.rotationEffect(.degrees(rotation))
 			.animation(Animation.easeInOut(duration: 1.0).repeatCount(4, autoreverses: true), value: rotation)
 	}
@@ -117,25 +120,15 @@ struct ContentView_Previews: PreviewProvider {
 	static var animate = true
 
 	static var previews: some View {
-		HStack {
-			Text("tire.name!")
-				.font(Font.title2.bold())
-			Button {
-				// open sheet to add notes
-			} label: {
-				Image(systemName: "note.text.badge.plus")
-			}
-			.buttonStyle(.plain)
-//			.controlSize(.large)
-//			.buttonBorderShape(.capsule)
-//			.tint(.gray)
-
-
-
+		Button {
+//			selectedTire = tire
+		} label: {
+			Image(systemName: "note.text.badge.plus")
+				.font(.title2)
+				.symbolRenderingMode(.multicolor)
+				.foregroundStyle(.gray, .blue)
 		}
-//		Image(systemName: "plus.circle")
-//			.font(.largeTitle)
-//			.foregroundStyle(.green)
+		.buttonStyle(.bordered)
 	}
 }
 #endif
