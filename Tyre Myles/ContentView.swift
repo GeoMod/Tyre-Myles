@@ -12,8 +12,8 @@ import CoreData
 struct ContentView: View {
 	@EnvironmentObject var dataModel: DataModel
 
-	@State private var selectedTireSeason: TireType = .allSeason
 	@State private var editing: EditMode = .inactive
+	@State private var selectedTireSeason: TireType = .allSeason
 
 	@State private var isShowingNotesView = false
 	@State private var selectedTire: TireEntity? = nil
@@ -46,28 +46,23 @@ struct ContentView: View {
 									.font(.largeTitle.bold())
 									.foregroundColor(.gray)
 						) {
-							VStack {
-
+							Button {
+								selectedTire = tire
+							} label: {
 								HStack {
 									Text(tire.name!)
 										.font(Font.title2.bold())
-
 									Spacer()
-
-									Button {
-										selectedTire = tire
-									} label: {
-										Image(systemName: "note.text.badge.plus")
-											.font(.title2)
-											.symbolRenderingMode(.multicolor)
-											.foregroundStyle(.gray, .blue)
-									}
+									Image(systemName: "note.text.badge.plus")
+										.font(.title2)
+										.symbolRenderingMode(.multicolor)
+										.foregroundStyle(.gray, .blue)
 								}
+							}.buttonStyle(.plain)
+							DateMilageView(currentTire: tire)
 
-								DateMilageView(currentTire: tire)
-
-							}
 						}.headerProminence(.increased)
+
 					}.onDelete { index in
 						dataModel.deleteTire(at: index)
 					}
@@ -88,7 +83,6 @@ struct ContentView: View {
 		} content: {
 			SplashScreen()
 		}
-
 
 	}
 
