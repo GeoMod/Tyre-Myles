@@ -17,6 +17,9 @@ struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 	@EnvironmentObject var dataModel: DataModel
 
+	#warning("Look at refactoring this out")
+		// This could likely be extracted to the `TireMileageLogic` struct.
+	// make it a class and put these properties in there as the ViewModel
 	@State private var name = ""
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
