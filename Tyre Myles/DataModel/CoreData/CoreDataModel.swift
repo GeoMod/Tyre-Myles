@@ -8,19 +8,21 @@
 import CoreData
 import SwiftUI
 
-enum TireType: String, CaseIterable, Identifiable {
-	// Identifiable for use in ForEach
-	var id: String { UUID().uuidString }
 
-	case summer = "Summer"
-	case allSeason = "All Season"
-	case winter = "Winter"
-}
-
-enum TireStatus {
-	case onVehicle
-	case inStorage
-}
+//#warning("See if you can incorportate these into the ViewModel")
+//enum TireType: String, CaseIterable, Identifiable {
+//	// Identifiable for use in ForEach
+//	var id: String { UUID().uuidString }
+//
+//	case summer = "Summer"
+//	case allSeason = "All Season"
+//	case winter = "Winter"
+//}
+//
+//enum TireStatus {
+//	case onVehicle
+//	case inStorage
+//}
 
 
 final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {

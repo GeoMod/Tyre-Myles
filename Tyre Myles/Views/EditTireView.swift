@@ -26,7 +26,7 @@ struct EditTireView: View {
 	@State private var isShowingAlert = false
 
 	let currentTire: TireEntity
-	let tireLogic = TireMileageLogic()
+	let tireLogic = TyreViewModel()
 
 	var body: some View {
 		ScrollView {
@@ -101,8 +101,6 @@ struct EditTireView: View {
 					} message: {
 						Text(tireLogic.errorMessage)
 					}
-
-
 				}
 
 			}

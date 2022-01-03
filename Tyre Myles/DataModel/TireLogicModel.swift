@@ -5,9 +5,24 @@
 //  Created by Daniel O'Leary on 11/23/21.
 //
 
-import SwiftUI
+import Foundation
 
-struct TireMileageLogic {
+enum TireType: String, CaseIterable, Identifiable {
+	// Identifiable for use in ForEach
+	var id: String { UUID().uuidString }
+
+	case summer = "Summer"
+	case allSeason = "All Season"
+	case winter = "Winter"
+}
+
+enum TireStatus {
+	case onVehicle
+	case inStorage
+}
+
+
+struct TyreViewModel {
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
 	let submitMessage = "OK"
 
@@ -29,8 +44,4 @@ struct TireMileageLogic {
 			return false
 		}
 	}
-
-
-
-
 }

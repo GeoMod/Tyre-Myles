@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct AddTireView: View {
-	enum Field {
-		case name
-		case install
-		case removal
-	}
-
 	@Environment(\.dismiss) var dismiss
+
 	@EnvironmentObject var dataModel: DataModel
 
-	#warning("Look at refactoring this out")
-		// This could likely be extracted to the `TireMileageLogic` struct.
-	// make it a class and put these properties in there as the ViewModel
+	let tireViewModel = TyreViewModel()
+
 	@State private var name = ""
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
@@ -33,7 +27,11 @@ struct AddTireView: View {
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
 
-	let tireLogic = TireMileageLogic()
+	enum Field {
+		case name
+		case install
+		case removal
+	}
 
 	// Save button outline.
 	let linearGradient = LinearGradient(gradient: Gradient(colors: [.gray, .white, .gray]), startPoint: .top, endPoint: .bottom)
@@ -64,39 +62,23 @@ struct AddTireView: View {
 						.focused($focusedField, equals: .install)
 						.focused($mileageIsFocused)
 						.keyboardType(.numberPad)
-//						.submitLabel(.next)
 					TextField("Removal Mileage", text: $removalMilage)
 					// Causing this to be .disabled will result in a warning about updating the view while not on the main thread.
 					// Unsure why. 11/23/21
 						.focused($mileageIsFocused)
-//						.focused($focusedField, equals: .removal)
 						.keyboardType(.numberPad)
-//						.submitLabel(.done)
 				}
 				.textFieldStyle(.roundedBorder)
 				.padding([.leading, .trailing])
 
 				HStack {
+					Spacer()
 					Button {
-						checkTireMileageValues()
 						mileageIsFocused = false
 					} label: {
-						Text("done")
-							.foregroundColor(.blue)
-							.padding(.leading)
+						Image(systemName: "keyboard.chevron.compact.down")
 					}
-					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
-						Button(role: .cancel) {
-							removalMilage = ""
-						} label: {
-							Text(tireLogic.submitMessage)
-						}
-					} message: {
-						Text(tireLogic.errorMessage)
-					}
-
-					Spacer()
-				}
+				}.padding(.trailing)
 
 				Group {
 					Text("Enter Date Values")
@@ -119,6 +101,15 @@ struct AddTireView: View {
 				Spacer()
 
 				SaveButton
+			}
+			.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
+				Button(role: .cancel) {
+					removalMilage = ""
+				} label: {
+					Text(tireViewModel.submitMessage)
+				}
+			} message: {
+				Text(tireViewModel.errorMessage)
 			}
 
 		}// End of ScrollView
@@ -161,7 +152,7 @@ struct AddTireView: View {
 	}
 
 	private func checkTireMileageValues() {
-		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+		isShowingAlert = tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
 		if !isShowingAlert {
 			save()
