@@ -60,14 +60,16 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		savedTires = fetchedRunEvents
 	}
 
-	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: String, removalMiles: String, installDate: Date, removallDate: Date) {
+	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: Double?, removalMiles: Double?, installDate: Date, removallDate: Date) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
 
 		entity.name = name
 		// CoreData model defines these values as Int64
-		entity.installMiles = Int64(installMiles) ?? 0
-		entity.removalMiles = Int64(removalMiles) ?? 0
+//		entity.installMiles = Int64(installMiles) ?? 0
+//		entity.removalMiles = Int64(removalMiles) ?? 0
+		entity.installMiles = installMiles ?? 0
+		entity.removalMiles = removalMiles ?? 0
 		entity.seasonType = season.rawValue
 		entity.installDate = installDate
 		entity.removalDate = removallDate
@@ -79,7 +81,6 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 			case .onVehicle:
 				entity.isInStorage = false
 		}
-
 		saveToMOC()
 	}
 

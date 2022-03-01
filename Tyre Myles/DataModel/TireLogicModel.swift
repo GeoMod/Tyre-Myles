@@ -26,16 +26,17 @@ struct TyreViewModel {
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
 	let submitMessage = "OK"
 
-	func checkLogicalMileageValues(install: String, removal: String, status: TireStatus) -> Bool {
-		// removal mileage cannot be greater than 0 but less than installation mileage.
-		guard let convertedInstall = Int(install) else { return false }
-		guard let convertedRemoval = Int(removal) else {
+	func checkLogicalMileageValues(install: Double?, removal: Double?, status: TireStatus) -> Bool {
+		guard let convertedInstall = install else { return false }
+		guard let convertedRemoval = removal else {
 			// No value was given for removal. Acceptable since tires may be on vehicle.
 			return false
 		}
 
 		let result = convertedRemoval - convertedInstall
+//		let result = removal - install
 
+		// removal mileage cannot be greater than 0 but less than installation mileage.
 		if status == .inStorage && result <= 0 {
 			// a negative mileage value has resulted.
 			// trigger alert

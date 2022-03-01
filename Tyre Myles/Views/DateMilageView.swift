@@ -13,7 +13,7 @@ struct DateMilageView: View {
 	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false
-	@State private var totalMilage = "-----"
+	@State private var totalMilage: Double = 0
 
 	@State private var tireStatus: TireStatus = .inStorage
 
@@ -34,13 +34,20 @@ struct DateMilageView: View {
 
 			HStack {
 				Text("Mileage:")
-				Text(String(currentTire.installMiles))
+				Text(currentTire.installMiles, format: .number)
 			}
 
 			Group {
-				Text(currentTire.isInStorage == true ? removed : onVehicle)
-					.font(.title3.bold())
-					.padding(.top)
+				if currentTire.isInStorage {
+					Text(removed)
+						.font(.title3.bold())
+						.padding(.top)
+				} else {
+					Text("On Vehcile")
+						.font(.title3.bold())
+						.padding(.top)
+						.opacity(0.5)
+				}
 				HStack {
 					Text("Date:")
 					Text(currentTire.removalDate ?? Date(), style: .date)
@@ -48,7 +55,7 @@ struct DateMilageView: View {
 				HStack {
 					Text("Mileage:")
 						.padding(.trailing)
-					Text(String(currentTire.removalMiles))
+					Text(currentTire.removalMiles, format: .number)
 						.padding(.leading, -10)
 				}
 			}.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
@@ -59,13 +66,24 @@ struct DateMilageView: View {
 
 				Spacer()
 
-				Text(totalMilage)
-					.underline()
-					.foregroundColor(.blue)
-					.padding([.top, .bottom])
-					.onTapGesture {
+				if !currentTire.isInStorage {
+					// Tires are on vehcile
+					Button {
 						isEditingDetails.toggle()
+					} label: {
+						Image(systemName: "car.fill")
+							.foregroundColor(.gray)
+							.padding([.top, .bottom])
 					}
+				} else {
+					Button {
+						isEditingDetails.toggle()
+					} label: {
+						Text(totalMilage, format: .number)
+							.foregroundColor(.primary)
+							.padding([.top, .bottom])
+					}
+				}
 			}.font(.title2)
 		}.font(.footnote.monospaced())
 			.onAppear {
@@ -82,15 +100,15 @@ struct DateMilageView: View {
 	}
 
 
-	private func totalMiles(installation: Int64, removal: Int64) {
-		// Int64 because that is how it's defined in the CoreData model.
+	private func totalMiles(installation: Double, removal: Double) {
+		// Double because that is how it's defined in the CoreData model.
 		let total = removal - installation
 
 		if !currentTire.isInStorage {
 			// Tires are on vehicle.
-			totalMilage = onVehicle
+			totalMilage = 0 //onVehicle
 		} else if total > 0 {
-			totalMilage = String(total)
+			totalMilage = total.rounded()
 		}
 	}
 

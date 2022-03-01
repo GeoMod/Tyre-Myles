@@ -19,8 +19,8 @@ struct AddTireView: View {
 	@State private var tireStatus: TireStatus = .inStorage
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
-	@State private var installMilage = ""
-	@State private var removalMilage = ""
+	@State private var installMilage: Double? = nil
+	@State private var removalMilage: Double? = nil
 
 	@State private var isShowingAlert = false
 
@@ -58,11 +58,11 @@ struct AddTireView: View {
 						.keyboardType(.alphabet)
 						.submitLabel(.next)
 						.padding(.top, 10)
-					TextField("Install Mileage", text: $installMilage)
+					TextField("Milage on Vehicle", value: $installMilage, format: .number)
 						.focused($focusedField, equals: .install)
 						.focused($mileageIsFocused)
 						.keyboardType(.numberPad)
-					TextField("Removal Mileage", text: $removalMilage)
+					TextField("Removal Mileage", value: $removalMilage, format: .number)
 					// Causing this to be .disabled will result in a warning about updating the view while not on the main thread.
 					// Unsure why. 11/23/21
 						.focused($mileageIsFocused)
@@ -104,7 +104,7 @@ struct AddTireView: View {
 			}
 			.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
 				Button(role: .cancel) {
-					removalMilage = ""
+					removalMilage = 0
 				} label: {
 					Text(tireViewModel.submitMessage)
 				}
@@ -147,8 +147,8 @@ struct AddTireView: View {
 				)
 		}
 		.padding()
-		.disabled(tireStatus == .inStorage && (name.isEmpty || removalMilage.isEmpty))
-		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage.isEmpty) ? 0.25 : 1.0)
+		.disabled(tireStatus == .inStorage && (name.isEmpty || removalMilage == 0))
+		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage == 0) ? 0.25 : 1.0)
 	}
 
 	private func checkTireMileageValues() {

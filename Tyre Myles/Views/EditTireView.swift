@@ -18,8 +18,8 @@ struct EditTireView: View {
 	@State private var removalDate = Date()
 
 	@State private var name = ""
-	@State private var installMilage = ""
-	@State private var removalMilage = ""
+	@State private var installMilage: Double = 0
+	@State private var removalMilage: Double = 0
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 
@@ -34,7 +34,7 @@ struct EditTireView: View {
 			VStack {
 				Text("Edit Tyre")
 					.font(.largeTitle)
-				TextField(currentTire.name ?? "Name", text: $name, prompt: nil)
+				TextField(currentTire.name ?? "Name", text: $name, prompt: Text("Name"))
 					.textFieldStyle(.roundedBorder)
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
@@ -67,8 +67,8 @@ struct EditTireView: View {
 					.padding()
 
 				Group {
-					TextField("Install Mileage", text: $installMilage, prompt: Text("Installation Mileage"))
-					TextField("Removal Mileage", text: $removalMilage, prompt: Text("Removal Mileage"))
+					TextField("Installation Mileage", value: $installMilage, format: .number)
+					TextField("Removal Mileage", value: $removalMilage, format: .number)
 
 				}
 				.keyboardType(.numberPad)
@@ -89,12 +89,12 @@ struct EditTireView: View {
 							.foregroundColor(.white)
 					}
 					.buttonStyle(.borderedProminent)
-					.disabled(removalMilage.isEmpty && tireStatus == .inStorage)
+					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
 					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
 						Button(role: .cancel) {
-							removalMilage = ""
+							removalMilage = 0
 						} label: {
 							Text(tireLogic.submitMessage)
 						}
@@ -127,8 +127,8 @@ struct EditTireView: View {
 		tireStatus = loadTireLocation(status: loadedTireStatus)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
-		installMilage = String(loadedInstallMilage)
-		removalMilage = String(loadedRemovalMilage)
+		installMilage = loadedInstallMilage
+		removalMilage = loadedRemovalMilage
 
 	}
 
@@ -181,9 +181,10 @@ struct EditTireView: View {
 		currentTire.isInStorage = saveTireLocation(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
-		// CoreData model defines these values as Int64
-		currentTire.installMiles = Int64(installMilage) ?? 0
-		currentTire.removalMiles = Int64(removalMilage) ?? 0
+
+		// CoreData model defines these values as Double
+		currentTire.installMiles = installMilage
+		currentTire.removalMiles = removalMilage
 
 		dataModel.saveToMOC()
 
