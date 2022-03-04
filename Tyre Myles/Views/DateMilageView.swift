@@ -17,14 +17,11 @@ struct DateMilageView: View {
 
 	@State private var tireStatus: TireStatus = .inStorage
 
-	private let installed = "Installed"
-	private let removed = "Removed"
-	private let onVehicle = "On Vehicle"
 
 	var body: some View {
 		VStack(alignment: .leading) {
 			HStack(alignment: .firstTextBaseline) {
-				Text(installed)
+				Text("Installed")
 					.font(.title3.bold())
 			}
 			HStack {
@@ -34,16 +31,16 @@ struct DateMilageView: View {
 
 			HStack {
 				Text("Mileage:")
-				Text(currentTire.installMiles, format: .number)
+				Text(currentTire.installMiles.rounded(), format: .number)
 			}
 
 			Group {
 				if currentTire.isInStorage {
-					Text(removed)
+					Text("Removed")
 						.font(.title3.bold())
 						.padding(.top)
 				} else {
-					Text("On Vehcile")
+					Text("On Vehicle")
 						.font(.title3.bold())
 						.padding(.top)
 						.opacity(0.5)
@@ -55,7 +52,7 @@ struct DateMilageView: View {
 				HStack {
 					Text("Mileage:")
 						.padding(.trailing)
-					Text(currentTire.removalMiles, format: .number)
+					Text(currentTire.removalMiles.rounded(), format: .number)
 						.padding(.leading, -10)
 				}
 			}.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
@@ -63,16 +60,18 @@ struct DateMilageView: View {
 			HStack {
 				Text("Total Tyre Myles")
 					.bold()
+					.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
 
 				Spacer()
 
-				if !currentTire.isInStorage {
+				if currentTire.isInStorage == false {
 					// Tires are on vehcile
 					Button {
 						isEditingDetails.toggle()
 					} label: {
-						Image(systemName: "car.fill")
-							.foregroundColor(.gray)
+						Text(totalMilage, format: .number)
+							.opacity(0.25)
+							.foregroundColor(.primary)
 							.padding([.top, .bottom])
 					}
 				} else {
@@ -102,14 +101,7 @@ struct DateMilageView: View {
 
 	private func totalMiles(installation: Double, removal: Double) {
 		// Double because that is how it's defined in the CoreData model.
-		let total = removal - installation
-
-		if !currentTire.isInStorage {
-			// Tires are on vehicle.
-			totalMilage = 0 //onVehicle
-		} else if total > 0 {
-			totalMilage = total.rounded()
-		}
+		totalMilage = (removal - installation).rounded()
 	}
 
 

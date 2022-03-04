@@ -59,6 +59,7 @@ struct ContentView: View {
 										.foregroundStyle(.gray, .blue)
 								}
 							}.buttonStyle(.plain)
+
 							DateMilageView(currentTire: tire)
 
 						}.headerProminence(.increased)
