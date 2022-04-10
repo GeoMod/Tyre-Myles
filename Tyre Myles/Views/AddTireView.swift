@@ -10,9 +10,8 @@ import SwiftUI
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 
-	@EnvironmentObject var dataModel: DataModel
-
-	let tireViewModel = TyreViewModel()
+	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var tireViewModel: TyreViewModel
 
 	@State private var name = ""
 	@State private var seasonType: TireType = .allSeason
@@ -22,7 +21,6 @@ struct AddTireView: View {
 	@State private var installMilage: Double? = nil
 	@State private var removalMilage: Double? = nil
 
-	@State private var isShowingAlert = false
 
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
@@ -102,11 +100,11 @@ struct AddTireView: View {
 
 				SaveButton
 			}
-			.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
+			.alert("Mileage Entry Error", isPresented: $tireViewModel.isShowingAlert) {
 				Button(role: .cancel) {
 					removalMilage = 0
 				} label: {
-					Text(tireViewModel.submitMessage)
+					Text("OK")
 				}
 			} message: {
 				Text(tireViewModel.errorMessage)
@@ -151,10 +149,11 @@ struct AddTireView: View {
 		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage == 0) ? 0.25 : 1.0)
 	}
 
-	private func checkTireMileageValues() {
-		isShowingAlert = tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
-		if !isShowingAlert {
+	private func checkTireMileageValues() {
+		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+
+		if !tireViewModel.isShowingAlert {
 			save()
 		}
 	}

@@ -10,9 +10,9 @@ import CoreData
 
 struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
-	@EnvironmentObject var dataModel: DataModel
-
-	@FocusState private var fieldIsFocused: Bool
+	
+	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var tireViewModel: TyreViewModel
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -23,10 +23,9 @@ struct EditTireView: View {
 	@State private var seasonType: TireType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 
-	@State private var isShowingAlert = false
+	@FocusState private var fieldIsFocused: Bool
 
 	let currentTire: TireEntity
-	let tireLogic = TyreViewModel()
 
 	var body: some View {
 		ScrollView {
@@ -69,7 +68,6 @@ struct EditTireView: View {
 				Group {
 					TextField("Installation Mileage", value: $installMilage, format: .number)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
-
 				}
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
@@ -92,14 +90,14 @@ struct EditTireView: View {
 					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
-					.alert("Mileage Entry Error", isPresented: $isShowingAlert) {
+					.alert("Mileage Entry Error", isPresented: $tireViewModel.isShowingAlert) {
 						Button(role: .cancel) {
 							removalMilage = 0
 						} label: {
-							Text(tireLogic.submitMessage)
+							Text("OK")
 						}
 					} message: {
-						Text(tireLogic.errorMessage)
+						Text(tireViewModel.errorMessage)
 					}
 				}
 
@@ -123,8 +121,8 @@ struct EditTireView: View {
 		let loadedRemovalMilage = currentTire.removalMiles
 
 		name = loadedName
-		seasonType = checkTireSeason(type: loadedTireSeason)
-		tireStatus = loadTireLocation(status: loadedTireStatus)
+		seasonType = tireViewModel.checkSeason(type: loadedTireSeason)
+		tireStatus = tireViewModel.loadTireLocation(status: loadedTireStatus)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
 		installMilage = loadedInstallMilage
@@ -132,44 +130,11 @@ struct EditTireView: View {
 
 	}
 
-	// Takes the enum used to create the tire when it was initially saved, and works it backwards.
-	private func checkTireSeason(type: String) -> TireType {
-		switch type {
-			case "Summer":
-				return .summer
-			case "All Season":
-				return .allSeason
-			case "Winter":
-				return .winter
-			default:
-				return .allSeason
-		}
-	}
-
-	private func loadTireLocation(status: Bool) -> TireStatus {
-		// To set value of Picker when loading this Edit View.
-		switch status {
-			case true:
-				return .inStorage
-			case false:
-				return .onVehicle
-		}
-	}
-
-	private func saveTireLocation(status: TireStatus) -> Bool {
-		// To save the proper boolean value to CoreData
-		switch status {
-			case .onVehicle:
-				return false
-			case .inStorage:
-				return true
-		}
-	}
 
 	private func checkTireMileageValues() {
-		isShowingAlert = tireLogic.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
-		if !isShowingAlert {
+		if !tireViewModel.isShowingAlert {
 			save()
 		}
 	}
@@ -178,7 +143,7 @@ struct EditTireView: View {
 	private func save() {
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
-		currentTire.isInStorage = saveTireLocation(status: tireStatus)
+		currentTire.isInStorage = tireViewModel.saveTireLocation(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
 

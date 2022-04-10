@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotesView: View {
 	@Environment(\.dismiss) var dismiss
-	@EnvironmentObject var dataModel: DataModel
+	@EnvironmentObject var dataModel: CoreDataModel
 
 	@ObservedObject var currentTire: TireEntity
 

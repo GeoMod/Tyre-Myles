@@ -60,8 +60,8 @@ struct SceneTwo: View {
 					.clipShape(RoundedRectangle(cornerRadius: 25))
 					.frame(width: 300, height: 300)
 				GroupBox {
-					Text("Enter tire type, name,")
-					Text("and miles on the vehicle")
+					Text("Enter tire type, name, and")
+					Text("kilometers/miles on the vehicle")
 					Text("when your tires were installed.")
 				}.font(.title2.bold())
 					.padding([.top, .bottom], 50)

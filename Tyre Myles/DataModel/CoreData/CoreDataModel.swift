@@ -9,23 +9,7 @@ import CoreData
 import SwiftUI
 
 
-//#warning("See if you can incorportate these into the ViewModel")
-//enum TireType: String, CaseIterable, Identifiable {
-//	// Identifiable for use in ForEach
-//	var id: String { UUID().uuidString }
-//
-//	case summer = "Summer"
-//	case allSeason = "All Season"
-//	case winter = "Winter"
-//}
-//
-//enum TireStatus {
-//	case onVehicle
-//	case inStorage
-//}
-
-
-final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
+final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var savedTires: [TireEntity] = []
 
 	let savedTireController: NSFetchedResultsController<TireEntity>
@@ -54,10 +38,10 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 	}
 
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-	  guard let fetchedRunEvents = controller.fetchedObjects as? [TireEntity]
+	  guard let fetchedTires = controller.fetchedObjects as? [TireEntity]
 		else { return }
 
-		savedTires = fetchedRunEvents
+		savedTires = fetchedTires
 	}
 
 	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: Double?, removalMiles: Double?, installDate: Date, removallDate: Date) {
@@ -65,9 +49,7 @@ final class DataModel: NSObject, ObservableObject, NSFetchedResultsControllerDel
 		let entity = TireEntity(context: moc)
 
 		entity.name = name
-		// CoreData model defines these values as Int64
-//		entity.installMiles = Int64(installMiles) ?? 0
-//		entity.removalMiles = Int64(removalMiles) ?? 0
+		
 		entity.installMiles = installMiles ?? 0
 		entity.removalMiles = removalMiles ?? 0
 		entity.seasonType = season.rawValue

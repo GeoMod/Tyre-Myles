@@ -10,7 +10,7 @@ import CoreData
 
 
 struct ContentView: View {
-	@EnvironmentObject var dataModel: DataModel
+	@EnvironmentObject var dataModel: CoreDataModel
 
 	@State private var editing: EditMode = .inactive
 	@State private var selectedTireSeason: TireType = .allSeason
