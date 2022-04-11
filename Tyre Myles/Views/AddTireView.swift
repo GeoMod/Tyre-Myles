@@ -10,7 +10,7 @@ import SwiftUI
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 
-	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var model: CoreDataModel
 	@EnvironmentObject var tireViewModel: TyreViewModel
 
 	@State private var name = ""
@@ -159,7 +159,7 @@ struct AddTireView: View {
 	}
 
 	private func save() {
-		dataModel.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMilage,
+		model.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMilage,
 									  removalMiles: removalMilage, installDate: installDate,
 									  removallDate: removalDate)
 

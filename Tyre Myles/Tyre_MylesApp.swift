@@ -9,14 +9,14 @@ import SwiftUI
 
 @main
 struct Tyre_MylesApp: App {
-	@StateObject var savedTiresData = CoreDataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
-	@StateObject var tireModel = TyreViewModel()
+	@StateObject var model = CoreDataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
+	@StateObject var viewModel = TyreViewModel()
 
     var body: some Scene {
 		WindowGroup {
             ContentView()
-				.environmentObject(savedTiresData)
-				.environmentObject(tireModel)
+				.environmentObject(model)
+				.environmentObject(viewModel)
         }
     }
 }

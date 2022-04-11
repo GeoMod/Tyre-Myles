@@ -57,7 +57,7 @@ struct EditTireView: View {
 				}.pickerStyle(.segmented)
 					.padding(.vertical)
 
-				DatePicker("Removal Date", selection: $removalDate, displayedComponents: .date)
+				DatePicker("Removal Date", selection: $removalDate, in: installDate..., displayedComponents: .date)
 					.opacity(tireStatus == .onVehicle ? 0.25 : 1.0)
 					.disabled(tireStatus == .onVehicle)
 

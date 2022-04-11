@@ -5,7 +5,7 @@
 //  Created by Daniel O'Leary on 11/23/21.
 //
 
-import Foundation
+import SwiftUI
 
 enum TireType: String, CaseIterable, Identifiable {
 	// Identifiable for use in ForEach
@@ -25,7 +25,6 @@ enum TireStatus {
 class TyreViewModel: ObservableObject {
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
 
-
 	@Published var isShowingAlert = false
 
 	func checkLogicalMileageValues(install: Double?, removal: Double?, status: TireStatus) {
@@ -40,11 +39,9 @@ class TyreViewModel: ObservableObject {
 			// a negative mileage value has resulted.
 			// trigger alert
 			isShowingAlert = true
-//			return true
 		} else {
-			// save
+			// TODO: Save to CoreData from here?
 			return
-//			return false
 		}
 	}
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 
 final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-	@Published var savedTires: [TireEntity] = []
+	@Published var tires: [TireEntity] = []
 
 	let savedTireController: NSFetchedResultsController<TireEntity>
 
@@ -31,7 +31,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 
 		do {
 			try savedTireController.performFetch()
-			savedTires = savedTireController.fetchedObjects ?? []
+			tires = savedTireController.fetchedObjects ?? []
 		} catch {
 			print("failed to fetch items!")
 		}
@@ -41,7 +41,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 	  guard let fetchedTires = controller.fetchedObjects as? [TireEntity]
 		else { return }
 
-		savedTires = fetchedTires
+		tires = fetchedTires
 	}
 
 	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: Double?, removalMiles: Double?, installDate: Date, removallDate: Date) {
@@ -70,7 +70,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		withAnimation {
 			let moc = savedTireController.managedObjectContext
 			index.forEach { item in
-				let tire = savedTires[item]
+				let tire = tires[item]
 				moc.delete(tire)
 			}
 		}

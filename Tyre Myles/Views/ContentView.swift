@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
-import CoreData
 
 
 struct ContentView: View {
-	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var model: CoreDataModel
 
 	@State private var editing: EditMode = .inactive
 	@State private var selectedTireSeason: TireType = .allSeason
@@ -41,7 +40,7 @@ struct ContentView: View {
 				}
 
 				List {
-					ForEach(dataModel.savedTires, id: \.id) { tire in
+					ForEach(model.tires, id: \.id) { tire in
 						Section(header: Text(tire.seasonType!)
 									.font(.largeTitle.bold())
 									.foregroundColor(.gray)
@@ -65,7 +64,7 @@ struct ContentView: View {
 						}.headerProminence(.increased)
 
 					}.onDelete { index in
-						dataModel.deleteTire(at: index)
+						model.deleteTire(at: index)
 					}
 				}.listStyle(.insetGrouped)
 			}
@@ -88,7 +87,7 @@ struct ContentView: View {
 	}
 
 	private func animatePlusButton() {
-		if dataModel.savedTires.isEmpty {
+		if model.tires.isEmpty {
 			withAnimation {
 				rotation = 360
 			}
