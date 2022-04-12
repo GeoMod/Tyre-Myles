@@ -92,7 +92,7 @@ struct AddTireView: View {
 					.padding(.vertical)
 
 					if tireStatus == .inStorage {
-						DatePicker(selection: $removalDate, in: installDate..., displayedComponents: .date) { Text("Removal Date") }
+						DatePicker("Removal Date", selection: $removalDate, in: installDate..., displayedComponents: .date)
 					}
 				}.padding(.horizontal)
 
