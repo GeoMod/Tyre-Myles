@@ -18,6 +18,7 @@
 		18C3A102271DADAE005EB3E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C3A101271DADAE005EB3E9 /* Preview Assets.xcassets */; };
 		18C3A104271DADAE005EB3E9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A103271DADAE005EB3E9 /* Persistence.swift */; };
 		18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */; };
+		18DB4B8F280CB8500036A017 /* TyreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB4B8E280CB8500036A017 /* TyreModel.swift */; };
 		18DF102E276028A0001C0463 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF102D276028A0001C0463 /* NotesView.swift */; };
 		18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7797271F665A00905BE1 /* DateMilageView.swift */; };
 		18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7799271FB97100905BE1 /* EditTireView.swift */; };
@@ -38,6 +39,7 @@
 		18C3A106271DADAE005EB3E9 /* Tyre_Myles.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tyre_Myles.xcdatamodel; sourceTree = "<group>"; };
 		18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tyre-Myles-Info.plist"; sourceTree = SOURCE_ROOT; };
 		18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tyre Myles.entitlements"; sourceTree = "<group>"; };
+		18DB4B8E280CB8500036A017 /* TyreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TyreModel.swift; sourceTree = "<group>"; };
 		18DF102D276028A0001C0463 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		18EB7797271F665A00905BE1 /* DateMilageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMilageView.swift; sourceTree = "<group>"; };
 		18EB7799271FB97100905BE1 /* EditTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTireView.swift; sourceTree = "<group>"; };
@@ -55,12 +57,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1850E7BF272AED0100224BE5 /* DataModel */ = {
+		1850E7BF272AED0100224BE5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				18DB4B8E280CB8500036A017 /* TyreModel.swift */,
 				18FC15FF27833495006E707B /* CoreData */,
 			);
-			path = DataModel;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		1850E7C0272AEDD200224BE5 /* Frameworks */ = {
@@ -94,9 +97,9 @@
 				18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */,
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
-				18F1D4AC27FFCB60007C8768 /* View Model */,
+				1850E7BF272AED0100224BE5 /* Model */,
 				18E2E390276FAF45006E2200 /* Views */,
-				1850E7BF272AED0100224BE5 /* DataModel */,
+				18F1D4AC27FFCB60007C8768 /* View Model */,
 				18C3A0FE271DADAE005EB3E9 /* Assets.xcassets */,
 				18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */,
 				18C3A100271DADAE005EB3E9 /* Preview Content */,
@@ -223,6 +226,7 @@
 				18DF102E276028A0001C0463 /* NotesView.swift in Sources */,
 				18C3A0FD271DADAD005EB3E9 /* ContentView.swift in Sources */,
 				18C3A0FB271DADAD005EB3E9 /* Tyre_MylesApp.swift in Sources */,
+				18DB4B8F280CB8500036A017 /* TyreModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

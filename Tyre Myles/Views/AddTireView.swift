@@ -10,11 +10,11 @@ import SwiftUI
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 
-	@EnvironmentObject var model: CoreDataModel
-	@EnvironmentObject var tireViewModel: TyreViewModel
+//	@EnvironmentObject var model: CoreDataModel
+	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var name = ""
-	@State private var seasonType: TireType = .allSeason
+	@State private var seasonType: SeasonType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -41,11 +41,11 @@ struct AddTireView: View {
 			VStack {
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
-						.tag(TireType.summer)
+						.tag(SeasonType.summer)
 					Text("All Season")
-						.tag(TireType.allSeason)
+						.tag(SeasonType.allSeason)
 					Text("Winter")
-						.tag(TireType.winter)
+						.tag(SeasonType.winter)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -100,14 +100,14 @@ struct AddTireView: View {
 
 				SaveButton
 			}
-			.alert("Mileage Entry Error", isPresented: $tireViewModel.isShowingAlert) {
+			.alert("Mileage Entry Error", isPresented: $vm.isShowingAlert) {
 				Button(role: .cancel) {
 					removalMilage = 0
 				} label: {
 					Text("OK")
 				}
 			} message: {
-				Text(tireViewModel.errorMessage)
+				Text(vm.errorMessage)
 			}
 
 		}// End of ScrollView
@@ -134,7 +134,7 @@ struct AddTireView: View {
 
 	private var SaveButton: some View {
 		Button {
-			checkTireMileageValues()
+			save()
 		} label: {
 			Capsule()
 				.stroke(linearGradient, lineWidth: 2)
@@ -149,19 +149,10 @@ struct AddTireView: View {
 		.opacity(tireStatus == .inStorage && (name.isEmpty || removalMilage == 0) ? 0.25 : 1.0)
 	}
 
-
-	private func checkTireMileageValues() {
-		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
-
-		if !tireViewModel.isShowingAlert {
-			save()
-		}
-	}
-
 	private func save() {
-		model.saveTireProfileWith(name: name, season: seasonType, status: tireStatus, installMiles: installMilage,
-									  removalMiles: removalMilage, installDate: installDate,
-									  removallDate: removalDate)
+		let newTire = TyreModel(installMiles: installMilage ?? 0, removalMiles: removalMilage ?? 0, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
+
+		vm.checkLogicalMileageValues(with: newTire)
 
 		dismiss()
 	}

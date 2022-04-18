@@ -44,26 +44,26 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		tires = fetchedTires
 	}
 
-	func saveTireProfileWith(name: String, season: TireType, status: TireStatus, installMiles: Double?, removalMiles: Double?, installDate: Date, removallDate: Date) {
+	func saveTireProfileWith(tire: TyreModel) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
 
-		entity.name = name
-		
-		entity.installMiles = installMiles ?? 0
-		entity.removalMiles = removalMiles ?? 0
-		entity.seasonType = season.rawValue
-		entity.installDate = installDate
-		entity.removalDate = removallDate
+		entity.name = tire.name
+		entity.installMiles = tire.installMiles
+		entity.removalMiles = tire.removalMiles
+		entity.seasonType = tire.type.rawValue
+		entity.installDate = tire.installDate
+		entity.removalDate = tire.removalDate
 		entity.id = UUID()
 
-		switch status {
+		switch tire.status {
 			case .inStorage:
 				entity.isInStorage = true
 			case .onVehicle:
 				entity.isInStorage = false
 		}
 		saveToMOC()
+
 	}
 
 	func deleteTire(at index: IndexSet) {

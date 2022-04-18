@@ -9,10 +9,11 @@ import SwiftUI
 
 
 struct ContentView: View {
-	@EnvironmentObject var model: CoreDataModel
+//	@EnvironmentObject var model: CoreDataModel
+	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var editing: EditMode = .inactive
-	@State private var selectedTireSeason: TireType = .allSeason
+	@State private var selectedTireSeason: SeasonType = .allSeason
 
 	@State private var isShowingNotesView = false
 	@State private var selectedTire: TireEntity? = nil
@@ -40,7 +41,7 @@ struct ContentView: View {
 				}
 
 				List {
-					ForEach(model.tires, id: \.id) { tire in
+					ForEach(vm.model.tires, id: \.id) { tire in
 						Section(header: Text(tire.seasonType!)
 									.font(.largeTitle.bold())
 									.foregroundColor(.gray)
@@ -52,6 +53,9 @@ struct ContentView: View {
 									Text(tire.name!)
 										.font(Font.title2.bold())
 									Spacer()
+									Text(tire.totalTyreMyles, format: .number)
+										.bold()
+										.padding(.trailing)
 									Image(systemName: "note.text.badge.plus")
 										.font(.title2)
 										.symbolRenderingMode(.multicolor)
@@ -64,18 +68,18 @@ struct ContentView: View {
 						}.headerProminence(.increased)
 
 					}.onDelete { index in
-						model.deleteTire(at: index)
+//							model.deleteTire(at: index)
+						vm.delete(at: index)
 					}
 				}.listStyle(.insetGrouped)
 			}
-			.onAppear { animatePlusButton() }
+			.onAppear { refreshList() }
 			.navigationTitle("Tyre Myles")
 		}
 
 		.sheet(item: $selectedTire, content: { selection in
 			NotesView(currentTire: selection)
 		})
-
 
 		.fullScreenCover(isPresented: $showIntroCard) {
 			// View only displays on first use.
@@ -86,13 +90,12 @@ struct ContentView: View {
 
 	}
 
-	private func animatePlusButton() {
-		if model.tires.isEmpty {
+	private func refreshList() {
+		vm.fetchTires()
+		if vm.noTires {
 			withAnimation {
 				rotation = 360
 			}
-		} else {
-			 return
 		}
 	}
 

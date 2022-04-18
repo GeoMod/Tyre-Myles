@@ -20,7 +20,7 @@ struct EditTireView: View {
 	@State private var name = ""
 	@State private var installMilage: Double = 0
 	@State private var removalMilage: Double = 0
-	@State private var seasonType: TireType = .allSeason
+	@State private var seasonType: SeasonType = .allSeason
 	@State private var tireStatus: TireStatus = .inStorage
 
 	@FocusState private var fieldIsFocused: Bool
@@ -37,11 +37,11 @@ struct EditTireView: View {
 					.textFieldStyle(.roundedBorder)
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
-						.tag(TireType.summer)
+						.tag(SeasonType.summer)
 					Text("All Season")
-						.tag(TireType.allSeason)
+						.tag(SeasonType.allSeason)
 					Text("Winter")
-						.tag(TireType.winter)
+						.tag(SeasonType.winter)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -131,8 +131,13 @@ struct EditTireView: View {
 	}
 
 
+	#warning("Working here")
+	// update EditView to work with new logic/MVVM structure.
+	// deleting also doesn't work at this time.
+	// Still need to implement the total tire milage using the temporary milage calucation, which was the start of all of this.
+
 	private func checkTireMileageValues() {
-		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+//		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
 
 		if !tireViewModel.isShowingAlert {
 			save()

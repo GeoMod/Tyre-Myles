@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TireType: String, CaseIterable, Identifiable {
+enum SeasonType: String, CaseIterable, Identifiable {
 	// Identifiable for use in ForEach
 	var id: String { UUID().uuidString }
 
@@ -23,30 +23,31 @@ enum TireStatus {
 
 
 class TyreViewModel: ObservableObject {
+	let model = CoreDataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
+	
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
 
+	@Published var tires = [TireEntity]()
 	@Published var isShowingAlert = false
 
-	func checkLogicalMileageValues(install: Double?, removal: Double?, status: TireStatus) {
-		guard let convertedInstall = install else { return }
-		// No value was given for removal. Acceptable since tires may be on vehicle.
-		guard let convertedRemoval = removal else { return }
+	var noTires: Bool {
+		return model.tires.isEmpty
+	}
 
-		let result = convertedRemoval - convertedInstall
+	func checkLogicalMileageValues(with tire: TyreModel) {
+		let result = tire.removalMiles - tire.installMiles
 
-		// removal mileage cannot be greater than 0 but less than installation mileage.
-		if status == .inStorage && result <= 0 {
+		if tire.status == .inStorage && result <= 0 {
 			// a negative mileage value has resulted.
 			// trigger alert
 			isShowingAlert = true
 		} else {
-			// TODO: Save to CoreData from here?
-			return
+			model.saveTireProfileWith(tire: tire)
 		}
 	}
 
 	// Takes the enum used to create the tire when it was initially saved, and works it backwards.
-	func checkSeason(type: String) -> TireType {
+	func checkSeason(type: String) -> SeasonType {
 		switch type {
 			case "Summer":
 				return .summer
@@ -77,6 +78,14 @@ class TyreViewModel: ObservableObject {
 			case .inStorage:
 				return true
 		}
+	}
+
+	func delete(at index: IndexSet) {
+		model.deleteTire(at: index)
+	}
+
+	func fetchTires() {
+		tires = model.tires
 	}
 
 
