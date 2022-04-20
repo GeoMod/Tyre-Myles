@@ -11,8 +11,8 @@ import CoreData
 struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
 	
-	@EnvironmentObject var dataModel: CoreDataModel
-	@EnvironmentObject var tireViewModel: TyreViewModel
+//	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -81,7 +81,7 @@ struct EditTireView: View {
 					}.buttonStyle(.automatic)
 
 					Button {
-						checkTireMileageValues()
+						saveEdit()
 					} label: {
 						Text("Save")
 							.foregroundColor(.white)
@@ -90,14 +90,14 @@ struct EditTireView: View {
 					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
-					.alert("Mileage Entry Error", isPresented: $tireViewModel.isShowingAlert) {
+					.alert("Mileage Entry Error", isPresented: $vm.isShowingAlert) {
 						Button(role: .cancel) {
 							removalMilage = 0
 						} label: {
 							Text("OK")
 						}
 					} message: {
-						Text(tireViewModel.errorMessage)
+						Text(vm.errorMessage)
 					}
 				}
 
@@ -115,52 +115,89 @@ struct EditTireView: View {
 		guard let loadedName = currentTire.name else { return }
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
-		guard let loadedTireSeason = currentTire.seasonType else { return }
-		let loadedTireStatus = currentTire.isInStorage
+		guard let loadedTireSeason = SeasonType(rawValue: currentTire.seasonType!) else { return }
 		let loadedInstallMilage = currentTire.installMiles
 		let loadedRemovalMilage = currentTire.removalMiles
 
 		name = loadedName
-		seasonType = tireViewModel.checkSeason(type: loadedTireSeason)
-		tireStatus = tireViewModel.loadTireLocation(status: loadedTireStatus)
+		seasonType = loadedTireSeason
+		tireStatus = loadingTire(status: currentTire.isInStorage)
 		installDate = loadedInstallDate
 		removalDate = loadedRemovalDate
 		installMilage = loadedInstallMilage
 		removalMilage = loadedRemovalMilage
-
 	}
 
-
-	#warning("Working here")
-	// update EditView to work with new logic/MVVM structure.
-	// deleting also doesn't work at this time.
-	// Still need to implement the total tire milage using the temporary milage calucation, which was the start of all of this.
-
-	private func checkTireMileageValues() {
-//		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
-
-		if !tireViewModel.isShowingAlert {
-			save()
-		}
-	}
-
-
-	private func save() {
+	private func saveEdit() {
+		// saves to CoreData from there.
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
-		currentTire.isInStorage = tireViewModel.saveTireLocation(status: tireStatus)
+		currentTire.isInStorage = editingTire(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
-
-		// CoreData model defines these values as Double
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
-		dataModel.saveToMOC()
+		vm.updateCurrentTire(with: currentTire)
 
 		// Dismiss View
 		dismiss()
 	}
+
+	private func loadingTire(status: Bool) -> TireStatus {
+		// To set value of Picker when loading Edit View.
+		switch status {
+			case true:
+				return .inStorage
+			case false:
+				return .onVehicle
+		}
+	}
+
+	private func editingTire(status: TireStatus) -> Bool {
+		switch status {
+			case .onVehicle:
+				return false
+			case .inStorage:
+				return true
+		}
+	}
+
+
+
+	// update EditView to work with new logic/MVVM structure.
+	// deleting also doesn't work at this time.
+	// Still need to implement the total tire milage using the temporary milage calucation, which was the start of all of this.
+
+//	private func checkTireMileageValues() {
+////		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
+//
+//		if !vm.isShowingAlert {
+//			save()
+//		}
+//	}
+//
+//
+//	private func save() {
+//		currentTire.name = name
+//		currentTire.seasonType = seasonType.rawValue
+//		currentTire.isInStorage = vm.saveTireLocation(status: tireStatus)
+//		currentTire.installDate = installDate
+//		currentTire.removalDate = removalDate
+//
+//		// CoreData model defines these values as Double
+//		currentTire.installMiles = installMilage
+//		currentTire.removalMiles = removalMilage
+//
+//		dataModel.saveToMOC()
+//
+//		// Dismiss View
+//		dismiss()
+//	}
+
+
+
+
 
 
 }

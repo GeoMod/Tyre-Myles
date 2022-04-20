@@ -63,7 +63,6 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 				entity.isInStorage = false
 		}
 		saveToMOC()
-
 	}
 
 	func deleteTire(at index: IndexSet) {

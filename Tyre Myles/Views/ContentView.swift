@@ -27,7 +27,6 @@ struct ContentView: View {
 	var body: some View {
 		NavigationView {
 			VStack {
-
 				HStack(alignment: .firstTextBaseline) {
 					EditButton()
 						.padding(.leading)
@@ -41,7 +40,8 @@ struct ContentView: View {
 				}
 
 				List {
-					ForEach(vm.model.tires, id: \.id) { tire in
+//					ForEach(vm.model.tires) { tire in
+					ForEach(vm.tires) { tire in
 						Section(header: Text(tire.seasonType!)
 									.font(.largeTitle.bold())
 									.foregroundColor(.gray)
@@ -68,7 +68,7 @@ struct ContentView: View {
 						}.headerProminence(.increased)
 
 					}.onDelete { index in
-//							model.deleteTire(at: index)
+						#warning("Will Crash")
 						vm.delete(at: index)
 					}
 				}.listStyle(.insetGrouped)
