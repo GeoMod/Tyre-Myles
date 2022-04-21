@@ -39,34 +39,16 @@ struct ContentView: View {
 				}
 
 				List {
-					ForEach(vm.tires) { tire in
+					ForEach(vm.model.tires) { tire in
 						Section(header: Text(tire.seasonType!)
-									.font(.largeTitle.bold())
-									.foregroundColor(.gray)
+							.font(.largeTitle.bold())
+							.foregroundColor(.gray)
 						) {
-							Button {
-								selectedTire = tire
-							} label: {
-								HStack {
-									Text(tire.name!)
-										.font(Font.title2.bold())
-									Spacer()
-									Text(tire.totalTyreMyles, format: .number)
-										.bold()
-										.padding(.trailing)
-									Image(systemName: "note.text.badge.plus")
-										.font(.title2)
-										.symbolRenderingMode(.multicolor)
-										.foregroundStyle(.gray, .blue)
-								}
-							}.buttonStyle(.plain)
-
 							DateMilageView(currentTire: tire)
 
 						}.headerProminence(.increased)
 
 					}.onDelete { index in
-						#warning("Will Crash")
 						vm.delete(at: index)
 					}
 				}.listStyle(.insetGrouped)
@@ -89,7 +71,6 @@ struct ContentView: View {
 	}
 
 	private func refreshList() {
-		vm.fetchTires()
 		if vm.noTires {
 			withAnimation {
 				rotation = 360

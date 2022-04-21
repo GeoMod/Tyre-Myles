@@ -13,7 +13,6 @@ final class TyreViewModel: ObservableObject {
 
 	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
 
-	@Published var tires = [TireEntity]()
 	@Published var isShowingAlert = false
 
 	var noTires: Bool {
@@ -46,12 +45,6 @@ final class TyreViewModel: ObservableObject {
 	func delete(at index: IndexSet) {
 		model.deleteTire(at: index)
 	}
-
-	func fetchTires() {
-		tires = model.tires
-	}
-
-
 
 
 

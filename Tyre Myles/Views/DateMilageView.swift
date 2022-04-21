@@ -19,6 +19,24 @@ struct DateMilageView: View {
 
 	var body: some View {
 		VStack(alignment: .leading) {
+			HStack {
+				Text(currentTire.name!)
+					.font(Font.title2.bold())
+					.minimumScaleFactor(0.5)
+					.lineLimit(2)
+					.fixedSize(horizontal: false, vertical: true)
+				Spacer()
+				Text(currentTire.totalTyreMyles, format: .number)
+					.bold()
+					.padding(.trailing)
+				Image(systemName: "note.text.badge.plus")
+					.font(.title)
+					.symbolRenderingMode(.multicolor)
+					.foregroundStyle(.gray, .blue)
+			}
+
+			Divider()
+
 			HStack(alignment: .firstTextBaseline) {
 				Text("Installed")
 					.font(.title3.bold())
@@ -94,12 +112,10 @@ struct DateMilageView: View {
 			} content: {
 				EditTireView(currentTire: currentTire)
 			}
-
 	}
 
 
 	private func totalMiles(installation: Double, removal: Double) {
-		// Double because that is how it's defined in the CoreData model.
 		totalMilage = (removal - installation).rounded()
 	}
 
@@ -107,8 +123,9 @@ struct DateMilageView: View {
 }
 
 //struct DateMilageView_Previews: PreviewProvider {
+//
 //    static var previews: some View {
-//		DateMilageView()
+//		DateMilageView(currentTire: entity.tires.first)
 //			.preferredColorScheme(.dark)
 //    }
 //}
