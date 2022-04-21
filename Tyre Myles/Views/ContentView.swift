@@ -9,7 +9,6 @@ import SwiftUI
 
 
 struct ContentView: View {
-//	@EnvironmentObject var model: CoreDataModel
 	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var editing: EditMode = .inactive
@@ -40,7 +39,6 @@ struct ContentView: View {
 				}
 
 				List {
-//					ForEach(vm.model.tires) { tire in
 					ForEach(vm.tires) { tire in
 						Section(header: Text(tire.seasonType!)
 									.font(.largeTitle.bold())

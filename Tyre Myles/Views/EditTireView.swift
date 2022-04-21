@@ -11,7 +11,7 @@ import CoreData
 struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
 	
-//	@EnvironmentObject var dataModel: CoreDataModel
+	@EnvironmentObject var dataModel: CoreDataModel
 	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var installDate = Date()
@@ -162,41 +162,6 @@ struct EditTireView: View {
 				return true
 		}
 	}
-
-
-
-	// update EditView to work with new logic/MVVM structure.
-	// deleting also doesn't work at this time.
-	// Still need to implement the total tire milage using the temporary milage calucation, which was the start of all of this.
-
-//	private func checkTireMileageValues() {
-////		tireViewModel.checkLogicalMileageValues(install: installMilage, removal: removalMilage, status: tireStatus)
-//
-//		if !vm.isShowingAlert {
-//			save()
-//		}
-//	}
-//
-//
-//	private func save() {
-//		currentTire.name = name
-//		currentTire.seasonType = seasonType.rawValue
-//		currentTire.isInStorage = vm.saveTireLocation(status: tireStatus)
-//		currentTire.installDate = installDate
-//		currentTire.removalDate = removalDate
-//
-//		// CoreData model defines these values as Double
-//		currentTire.installMiles = installMilage
-//		currentTire.removalMiles = removalMilage
-//
-//		dataModel.saveToMOC()
-//
-//		// Dismiss View
-//		dismiss()
-//	}
-
-
-
 
 
 

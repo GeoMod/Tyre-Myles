@@ -9,7 +9,6 @@ import SwiftUI
 
 
 struct DateMilageView: View {
-//	@EnvironmentObject var dataModel: CoreDataModel
 	@ObservedObject var currentTire: TireEntity
 
 	@State private var isEditingDetails = false

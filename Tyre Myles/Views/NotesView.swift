@@ -61,7 +61,6 @@ struct NotesView: View {
 
 #if DEBUG
 struct NotesView_Previews: PreviewProvider {
-//	static var notes = ""
 	static let defaultNote = "Save notes for this set of tires."
 
 	@State static var notes = ""

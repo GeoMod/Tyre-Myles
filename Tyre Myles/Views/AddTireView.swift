@@ -10,7 +10,6 @@ import SwiftUI
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 
-//	@EnvironmentObject var model: CoreDataModel
 	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var name = ""
