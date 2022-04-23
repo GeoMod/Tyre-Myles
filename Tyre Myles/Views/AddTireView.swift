@@ -19,7 +19,7 @@ struct AddTireView: View {
 	@State private var removalDate = Date()
 	@State private var installMilage: Double? = nil
 	@State private var removalMilage: Double? = nil
-
+	@State private var totalTyreMiles: Double? = nil
 
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
@@ -106,7 +106,7 @@ struct AddTireView: View {
 					Text("OK")
 				}
 			} message: {
-				Text(vm.errorMessage)
+				Text(ErrorMessage.negativeNumber)
 			}
 
 		}// End of ScrollView
@@ -149,9 +149,9 @@ struct AddTireView: View {
 	}
 
 	private func save() {
-		let newTire = TyreModel(installMiles: installMilage ?? 0, removalMiles: removalMilage ?? 0, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
+		let newTire = TyreModel(installMiles: installMilage ??  0, removalMiles: removalMilage ?? 0, totalTyreMiles: 0, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
 
-		vm.checkLogicalMileageValues(with: newTire)
+		vm.checkLogicalSeasonalMileageValues(with: newTire)
 
 		dismiss()
 	}

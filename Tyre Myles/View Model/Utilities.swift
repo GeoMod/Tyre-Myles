@@ -20,3 +20,7 @@ enum TireStatus {
 	case onVehicle
 	case inStorage
 }
+
+enum ErrorMessage {
+	static let negativeNumber = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
+}

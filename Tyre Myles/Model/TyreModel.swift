@@ -11,6 +11,7 @@ import Foundation
 struct TyreModel {
 	let installMiles: Double
 	let removalMiles: Double
+	let totalTyreMiles: Double
 	let name: String
 	let type: SeasonType
 	let status: TireStatus

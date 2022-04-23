@@ -21,6 +21,7 @@
 		18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */; };
 		18DB4B8F280CB8500036A017 /* TyreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB4B8E280CB8500036A017 /* TyreModel.swift */; };
 		18DF102E276028A0001C0463 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF102D276028A0001C0463 /* NotesView.swift */; };
+		18EB071528124D8C0098859E /* EditTyreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB071428124D8C0098859E /* EditTyreViewModel.swift */; };
 		18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7797271F665A00905BE1 /* DateMilageView.swift */; };
 		18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB7799271FB97100905BE1 /* EditTireView.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 		18C3A10E271DADE0005EB3E9 /* Tyre Myles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tyre Myles.entitlements"; sourceTree = "<group>"; };
 		18DB4B8E280CB8500036A017 /* TyreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TyreModel.swift; sourceTree = "<group>"; };
 		18DF102D276028A0001C0463 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		18EB071428124D8C0098859E /* EditTyreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTyreViewModel.swift; sourceTree = "<group>"; };
 		18EB7797271F665A00905BE1 /* DateMilageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMilageView.swift; sourceTree = "<group>"; };
 		18EB7799271FB97100905BE1 /* EditTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTireView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				189EF947274D9A990044D924 /* TyreViewModel.swift */,
+				18EB071428124D8C0098859E /* EditTyreViewModel.swift */,
 				1866203D280EEEDC0035DF4D /* Utilities.swift */,
 			);
 			path = "View Model";
@@ -220,6 +223,7 @@
 			files = (
 				18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */,
 				18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */,
+				18EB071528124D8C0098859E /* EditTyreViewModel.swift in Sources */,
 				189EF948274D9A990044D924 /* TyreViewModel.swift in Sources */,
 				18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */,
 				1866203E280EEEDC0035DF4D /* Utilities.swift in Sources */,

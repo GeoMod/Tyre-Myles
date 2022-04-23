@@ -14,7 +14,6 @@ struct ContentView: View {
 	@State private var editing: EditMode = .inactive
 	@State private var selectedTireSeason: SeasonType = .allSeason
 
-	@State private var isShowingNotesView = false
 	@State private var selectedTire: TireEntity? = nil
 
 	// Animation
@@ -56,10 +55,6 @@ struct ContentView: View {
 			.onAppear { refreshList() }
 			.navigationTitle("Tyre Myles")
 		}
-
-		.sheet(item: $selectedTire, content: { selection in
-			NotesView(currentTire: selection)
-		})
 
 		.fullScreenCover(isPresented: $showIntroCard) {
 			// View only displays on first use.

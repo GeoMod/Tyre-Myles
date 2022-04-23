@@ -97,7 +97,7 @@ struct EditTireView: View {
 							Text("OK")
 						}
 					} message: {
-						Text(vm.errorMessage)
+						Text(ErrorMessage.negativeNumber)
 					}
 				}
 
@@ -112,6 +112,7 @@ struct EditTireView: View {
 	}
 
 	private func loadInitialValues() {
+		// TODO: Move to ViewModel?
 		guard let loadedName = currentTire.name else { return }
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
@@ -129,7 +130,7 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
-		// saves to CoreData from there.
+		// TODO: Move to ViewModel?
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
 		currentTire.isInStorage = editingTire(status: tireStatus)

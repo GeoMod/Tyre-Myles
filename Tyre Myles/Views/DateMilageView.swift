@@ -9,13 +9,14 @@ import SwiftUI
 
 
 struct DateMilageView: View {
-	@ObservedObject var currentTire: TireEntity
 
-	@State private var isEditingDetails = false
+	@State private var showEditingSheet = false
+	@State private var showNotesView = false
 	@State private var totalMilage: Double = 0
 
 	@State private var tireStatus: TireStatus = .inStorage
 
+	@ObservedObject var currentTire: TireEntity
 
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -29,10 +30,16 @@ struct DateMilageView: View {
 				Text(currentTire.totalTyreMyles, format: .number)
 					.bold()
 					.padding(.trailing)
-				Image(systemName: "note.text.badge.plus")
-					.font(.title)
-					.symbolRenderingMode(.multicolor)
-					.foregroundStyle(.gray, .blue)
+
+				Button {
+					showNotesView.toggle()
+				} label: {
+					Image(systemName: "note.text.badge.plus")
+						.font(.title)
+						.symbolRenderingMode(.multicolor)
+						.foregroundStyle(.gray, .blue)
+				}
+
 			}
 
 			Divider()
@@ -81,37 +88,50 @@ struct DateMilageView: View {
 
 				Spacer()
 
-				if currentTire.isInStorage == false {
-					// Tires are on vehcile
-					Button {
-						isEditingDetails.toggle()
-					} label: {
-						Text(totalMilage, format: .number)
-							.opacity(0.25)
-							.foregroundColor(.primary)
-							.padding([.top, .bottom])
-					}
-				} else {
-					Button {
-						isEditingDetails.toggle()
-					} label: {
-						Text(totalMilage, format: .number)
-							.foregroundColor(.primary)
-							.padding([.top, .bottom])
-					}
+				Button {
+					showEditingSheet.toggle()
+				} label: {
+					Text(totalMilage, format: .number)
+						.opacity(!currentTire.isInStorage ? 0.25 : 1.0)
+						.foregroundColor(.primary)
+						.padding([.top, .bottom])
 				}
+
+//				if currentTire.isInStorage == false {
+//					// Tires are on vehcile
+//					Button {
+//						showEditingSheet.toggle()
+//					} label: {
+//						Text(totalMilage, format: .number)
+//							.opacity(0.25)
+//							.foregroundColor(.primary)
+//							.padding([.top, .bottom])
+//					}
+//				} else {
+//					Button {
+//						showEditingSheet.toggle()
+//					} label: {
+//						Text(totalMilage, format: .number)
+//							.foregroundColor(.primary)
+//							.padding([.top, .bottom])
+//					}
+//				}
 			}.font(.title2)
 		}.font(.footnote.monospaced())
 			.onAppear {
 				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			}
 
-			.sheet(isPresented: $isEditingDetails) {
+			.sheet(isPresented: $showEditingSheet) {
 				// on dismiss
 				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			} content: {
 				EditTireView(currentTire: currentTire)
 			}
+
+//			.sheet(isPresented: $showNotesView) {
+//				NotesView(currentTire: currentTire)
+//			}
 	}
 
 
@@ -123,7 +143,6 @@ struct DateMilageView: View {
 }
 
 //struct DateMilageView_Previews: PreviewProvider {
-//
 //    static var previews: some View {
 //		DateMilageView(currentTire: entity.tires.first)
 //			.preferredColorScheme(.dark)

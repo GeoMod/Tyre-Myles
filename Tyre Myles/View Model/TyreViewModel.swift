@@ -10,16 +10,13 @@ import SwiftUI
 
 final class TyreViewModel: ObservableObject {
 	@ObservedObject var model = CoreDataModel(managedObjectContext: PersistenceController.shared.container.viewContext)
-
-	let errorMessage = "Unless the tires are still on your vehicle, removal mileage must not be less than installation mileage."
-
 	@Published var isShowingAlert = false
 
 	var noTires: Bool {
 		return model.tires.isEmpty
 	}
 
-	func checkLogicalMileageValues(with tire: TyreModel) {
+	func checkLogicalSeasonalMileageValues(with tire: TyreModel) {
 		let result = tire.removalMiles - tire.installMiles
 
 		if tire.status == .inStorage && result <= 0 {
@@ -33,13 +30,22 @@ final class TyreViewModel: ObservableObject {
 
 	func updateCurrentTire(with currentTire: TireEntity) {
 		let result = currentTire.removalMiles - currentTire.installMiles
-
 		if currentTire.isInStorage == true && result <= 0 {
 			isShowingAlert = true
 		} else {
+			#warning("be careful of this logic.")
+			//  Make sure the total mileage only updates
+			// when additions to mileage are made.
+			// also make sure value persists with change of seasonal tires.
+			updateGrandTotalTyreMiles(for: currentTire, using: result)
 			// save
 			model.saveToMOC()
 		}
+	}
+
+	func updateGrandTotalTyreMiles(for currentTire: TireEntity, using result: Double) {
+		let updatedMileage = currentTire.totalTyreMyles + result
+		currentTire.totalTyreMyles = updatedMileage
 	}
 
 	func delete(at index: IndexSet) {
