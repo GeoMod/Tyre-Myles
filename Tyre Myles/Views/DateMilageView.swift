@@ -9,9 +9,7 @@ import SwiftUI
 
 
 struct DateMilageView: View {
-
 	@State private var showEditingSheet = false
-	@State private var showNotesView = false
 	@State private var totalMilage: Double = 0
 
 	@State private var tireStatus: TireStatus = .inStorage
@@ -30,16 +28,6 @@ struct DateMilageView: View {
 				Text(currentTire.totalTyreMyles, format: .number)
 					.bold()
 					.padding(.trailing)
-
-				Button {
-					showNotesView.toggle()
-				} label: {
-					Image(systemName: "note.text.badge.plus")
-						.font(.title)
-						.symbolRenderingMode(.multicolor)
-						.foregroundStyle(.gray, .blue)
-				}
-
 			}
 
 			Divider()
@@ -92,30 +80,11 @@ struct DateMilageView: View {
 					showEditingSheet.toggle()
 				} label: {
 					Text(totalMilage, format: .number)
-						.opacity(!currentTire.isInStorage ? 0.25 : 1.0)
+						.opacity(currentTire.isInStorage == false ? 0.25 : 1.0)
 						.foregroundColor(.primary)
 						.padding([.top, .bottom])
 				}
 
-//				if currentTire.isInStorage == false {
-//					// Tires are on vehcile
-//					Button {
-//						showEditingSheet.toggle()
-//					} label: {
-//						Text(totalMilage, format: .number)
-//							.opacity(0.25)
-//							.foregroundColor(.primary)
-//							.padding([.top, .bottom])
-//					}
-//				} else {
-//					Button {
-//						showEditingSheet.toggle()
-//					} label: {
-//						Text(totalMilage, format: .number)
-//							.foregroundColor(.primary)
-//							.padding([.top, .bottom])
-//					}
-//				}
 			}.font(.title2)
 		}.font(.footnote.monospaced())
 			.onAppear {

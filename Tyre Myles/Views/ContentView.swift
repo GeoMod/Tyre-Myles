@@ -44,9 +44,7 @@ struct ContentView: View {
 							.foregroundColor(.gray)
 						) {
 							DateMilageView(currentTire: tire)
-
 						}.headerProminence(.increased)
-
 					}.onDelete { index in
 						vm.delete(at: index)
 					}
