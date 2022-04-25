@@ -14,7 +14,8 @@ struct DateMilageView: View {
 
 	@State private var tireStatus: TireStatus = .inStorage
 
-	@ObservedObject var currentTire: TireEntity
+//	@ObservedObject
+	var currentTire: TireEntity
 
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -46,17 +47,11 @@ struct DateMilageView: View {
 				Text(currentTire.installMiles.rounded(), format: .number)
 			}
 
+			Text(currentTire.isInStorage ? "Removed" : "On Vehicle")
+				.font(.title3.bold())
+				.padding(.top)
+
 			Group {
-				if currentTire.isInStorage {
-					Text("Removed")
-						.font(.title3.bold())
-						.padding(.top)
-				} else {
-					Text("On Vehicle")
-						.font(.title3.bold())
-						.padding(.top)
-						.opacity(0.5)
-				}
 				HStack {
 					Text("Date:")
 					Text(currentTire.removalDate ?? Date(), style: .date)
@@ -67,12 +62,12 @@ struct DateMilageView: View {
 					Text(currentTire.removalMiles.rounded(), format: .number)
 						.padding(.leading, -10)
 				}
-			}.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
+			}.opacity(currentTire.isInStorage ? 1.0 : 0.25)
 
 			HStack {
 				Text("Total Tyre Myles")
 					.bold()
-					.opacity(currentTire.isInStorage == true ? 1.0 : 0.25)
+					.opacity(currentTire.isInStorage ? 1.0 : 0.25)
 
 				Spacer()
 
@@ -98,9 +93,13 @@ struct DateMilageView: View {
 				EditTireView(currentTire: currentTire)
 			}
 
-//			.sheet(isPresented: $showNotesView) {
-//				NotesView(currentTire: currentTire)
-//			}
+			.background {
+				if currentTire.isInStorage {
+					Text("In Storage")
+						.font(.largeTitle.bold())
+						.opacity(0.08)
+				}
+			}
 	}
 
 

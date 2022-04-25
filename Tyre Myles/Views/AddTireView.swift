@@ -58,13 +58,11 @@ struct AddTireView: View {
 					TextField("Milage on Vehicle", value: $installMilage, format: .number)
 						.focused($focusedField, equals: .install)
 						.focused($mileageIsFocused)
-						.keyboardType(.numberPad)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
-					// Causing this to be .disabled will result in a warning about updating the view while not on the main thread.
-					// Unsure why. 11/23/21
+						.focused($focusedField, equals: .removal)
 						.focused($mileageIsFocused)
-						.keyboardType(.numberPad)
 				}
+				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
 				.padding([.leading, .trailing])
 
@@ -74,7 +72,7 @@ struct AddTireView: View {
 						mileageIsFocused = false
 					} label: {
 						Image(systemName: "keyboard.chevron.compact.down")
-					}
+					}.disabled(focusedField == .name || focusedField == nil)
 				}.padding(.trailing)
 
 				Group {
