@@ -10,7 +10,7 @@ import Foundation
 
 final class EditTyreViewModel: ObservableObject {
 
-	#warning("A dedicated VM might be ideal for editing the current tire")
+	// "A dedicated VM might be ideal for editing the current tire"
 
 	init() {
 		// No current tire, so we're adding a new set.

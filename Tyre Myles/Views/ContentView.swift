@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct ContentView: View {
-	@EnvironmentObject var vm: TyreViewModel
+	@EnvironmentObject var model: CoreDataModel
 
 	@State private var editing: EditMode = .inactive
 	@State private var selectedTireSeason: SeasonType = .allSeason
@@ -38,7 +38,7 @@ struct ContentView: View {
 				}
 
 				List {
-					ForEach(vm.model.tires) { tire in
+					ForEach(model.tires) { tire in
 						Section(header: Text(tire.seasonType!)
 							.font(.largeTitle.bold())
 							.foregroundColor(.gray)
@@ -46,7 +46,7 @@ struct ContentView: View {
 							DateMilageView(currentTire: tire)
 						}.headerProminence(.increased)
 					}.onDelete { index in
-						vm.delete(at: index)
+						model.deleteTire(at: index)
 					}
 				}.listStyle(.insetGrouped)
 			}
@@ -64,7 +64,7 @@ struct ContentView: View {
 	}
 
 	private func refreshList() {
-		if vm.noTires {
+		if model.noTires {
 			withAnimation {
 				rotation = 360
 			}

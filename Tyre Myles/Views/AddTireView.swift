@@ -10,7 +10,7 @@ import SwiftUI
 struct AddTireView: View {
 	@Environment(\.dismiss) var dismiss
 
-	@EnvironmentObject var vm: TyreViewModel
+	@EnvironmentObject var model: CoreDataModel
 
 	@State private var name = ""
 	@State private var seasonType: SeasonType = .allSeason
@@ -97,7 +97,7 @@ struct AddTireView: View {
 
 				SaveButton
 			}
-			.alert("Mileage Entry Error", isPresented: $vm.isShowingAlert) {
+			.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
 				Button(role: .cancel) {
 					removalMilage = 0
 				} label: {
@@ -149,7 +149,7 @@ struct AddTireView: View {
 	private func save() {
 		let newTire = TyreModel(installMiles: installMilage ??  0, removalMiles: removalMilage ?? 0, totalTyreMiles: 0, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
 
-		vm.checkLogicalSeasonalMileageValues(with: newTire)
+		model.checkLogicalSeasonalMileageValues(with: newTire)
 
 		dismiss()
 	}

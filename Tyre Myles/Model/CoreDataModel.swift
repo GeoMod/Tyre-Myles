@@ -11,6 +11,7 @@ import SwiftUI
 
 final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var tires: [TireEntity] = []
+	@Published var isShowingAlert = false
 
 	let savedTireController: NSFetchedResultsController<TireEntity>
 
@@ -102,5 +103,41 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		 }
 	 }
 	 */
+
+	var noTires: Bool {
+		return tires.isEmpty
+	}
+
+	func checkLogicalSeasonalMileageValues(with tire: TyreModel) {
+		let result = tire.removalMiles - tire.installMiles
+
+		if tire.status == .inStorage && result <= 0 {
+			// a negative or 0 mileage value has resulted.
+			// trigger alert
+			isShowingAlert = true
+		} else {
+			saveTireProfileWith(tire: tire)
+		}
+	}
+
+	func updateCurrentTire(with currentTire: TireEntity) {
+		let result = currentTire.removalMiles - currentTire.installMiles
+		if currentTire.isInStorage == true && result <= 0 {
+			isShowingAlert = true
+		} else {
+			#warning("be careful of this logic.")
+			//  Make sure the total mileage only updates
+			// when additions to mileage are made.
+			// also make sure value persists with change of seasonal tires.
+			updateGrandTotalTyreMiles(for: currentTire, using: result)
+			// save
+			saveToMOC()
+		}
+	}
+
+	func updateGrandTotalTyreMiles(for currentTire: TireEntity, using result: Double) {
+		let updatedMileage = currentTire.totalTyreMyles + result
+		currentTire.totalTyreMyles = updatedMileage
+	}
 
 }

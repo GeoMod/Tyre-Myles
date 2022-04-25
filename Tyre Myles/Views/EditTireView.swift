@@ -11,8 +11,8 @@ import CoreData
 struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
 	
-	@EnvironmentObject var dataModel: CoreDataModel
-	@EnvironmentObject var vm: TyreViewModel
+	@EnvironmentObject var model: CoreDataModel
+//	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -90,7 +90,7 @@ struct EditTireView: View {
 					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
-					.alert("Mileage Entry Error", isPresented: $vm.isShowingAlert) {
+					.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
 						Button(role: .cancel) {
 							removalMilage = 0
 						} label: {
@@ -139,7 +139,7 @@ struct EditTireView: View {
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
-		vm.updateCurrentTire(with: currentTire)
+		model.updateCurrentTire(with: currentTire)
 
 		// Dismiss View
 		dismiss()

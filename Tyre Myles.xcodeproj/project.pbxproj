@@ -11,7 +11,6 @@
 		1853F00A2725B111006A9CB5 /* AddTireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1853F0092725B111006A9CB5 /* AddTireView.swift */; };
 		185BC7CC27224FD700A8DD32 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BC7CB27224FD700A8DD32 /* CoreDataModel.swift */; };
 		1866203E280EEEDC0035DF4D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1866203D280EEEDC0035DF4D /* Utilities.swift */; };
-		189EF948274D9A990044D924 /* TyreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF947274D9A990044D924 /* TyreViewModel.swift */; };
 		18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0059C273DFA3A005492B7 /* SplashScreen.swift */; };
 		18C3A0FB271DADAD005EB3E9 /* Tyre_MylesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */; };
 		18C3A0FD271DADAD005EB3E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3A0FC271DADAD005EB3E9 /* ContentView.swift */; };
@@ -31,7 +30,6 @@
 		1853F0092725B111006A9CB5 /* AddTireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTireView.swift; sourceTree = "<group>"; };
 		185BC7CB27224FD700A8DD32 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		1866203D280EEEDC0035DF4D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		189EF947274D9A990044D924 /* TyreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TyreViewModel.swift; sourceTree = "<group>"; };
 		18C0059C273DFA3A005492B7 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		18C3A0F7271DADAD005EB3E9 /* Tyre Myles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tyre Myles.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tyre_MylesApp.swift; sourceTree = "<group>"; };
@@ -65,7 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				18DB4B8E280CB8500036A017 /* TyreModel.swift */,
-				18FC15FF27833495006E707B /* CoreData */,
+				185BC7CB27224FD700A8DD32 /* CoreDataModel.swift */,
+				18C3A103271DADAE005EB3E9 /* Persistence.swift */,
+				1866203D280EEEDC0035DF4D /* Utilities.swift */,
+				18EB071428124D8C0098859E /* EditTyreViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -103,7 +104,6 @@
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
 				1850E7BF272AED0100224BE5 /* Model */,
 				18E2E390276FAF45006E2200 /* Views */,
-				18F1D4AC27FFCB60007C8768 /* View Model */,
 				18C3A0FE271DADAE005EB3E9 /* Assets.xcassets */,
 				18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */,
 				18C3A100271DADAE005EB3E9 /* Preview Content */,
@@ -130,25 +130,6 @@
 				18C0059C273DFA3A005492B7 /* SplashScreen.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		18F1D4AC27FFCB60007C8768 /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				189EF947274D9A990044D924 /* TyreViewModel.swift */,
-				18EB071428124D8C0098859E /* EditTyreViewModel.swift */,
-				1866203D280EEEDC0035DF4D /* Utilities.swift */,
-			);
-			path = "View Model";
-			sourceTree = "<group>";
-		};
-		18FC15FF27833495006E707B /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				185BC7CB27224FD700A8DD32 /* CoreDataModel.swift */,
-				18C3A103271DADAE005EB3E9 /* Persistence.swift */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,7 +205,6 @@
 				18C0059D273DFA3A005492B7 /* SplashScreen.swift in Sources */,
 				18C3A107271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld in Sources */,
 				18EB071528124D8C0098859E /* EditTyreViewModel.swift in Sources */,
-				189EF948274D9A990044D924 /* TyreViewModel.swift in Sources */,
 				18EB779A271FB97100905BE1 /* EditTireView.swift in Sources */,
 				1866203E280EEEDC0035DF4D /* Utilities.swift in Sources */,
 				18EB7798271F665A00905BE1 /* DateMilageView.swift in Sources */,
