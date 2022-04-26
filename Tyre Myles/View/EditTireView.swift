@@ -12,7 +12,6 @@ struct EditTireView: View {
 	@Environment(\.dismiss) var dismiss
 	
 	@EnvironmentObject var model: CoreDataModel
-//	@EnvironmentObject var vm: TyreViewModel
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -112,7 +111,6 @@ struct EditTireView: View {
 	}
 
 	private func loadInitialValues() {
-		// TODO: Move to ViewModel?
 		guard let loadedName = currentTire.name else { return }
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
@@ -130,7 +128,6 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
-		// TODO: Move to ViewModel?
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
 		currentTire.isInStorage = editingTire(status: tireStatus)
@@ -139,7 +136,7 @@ struct EditTireView: View {
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
-		model.updateCurrentTire(with: currentTire)
+		model.update(tire: currentTire)
 
 		// Dismiss View
 		dismiss()

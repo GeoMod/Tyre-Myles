@@ -103,7 +103,7 @@
 				18C3A10D271DADD9005EB3E9 /* Tyre-Myles-Info.plist */,
 				18C3A0FA271DADAD005EB3E9 /* Tyre_MylesApp.swift */,
 				1850E7BF272AED0100224BE5 /* Model */,
-				18E2E390276FAF45006E2200 /* Views */,
+				18E2E390276FAF45006E2200 /* View */,
 				18C3A0FE271DADAE005EB3E9 /* Assets.xcassets */,
 				18C3A105271DADAE005EB3E9 /* Tyre_Myles.xcdatamodeld */,
 				18C3A100271DADAE005EB3E9 /* Preview Content */,
@@ -119,7 +119,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		18E2E390276FAF45006E2200 /* Views */ = {
+		18E2E390276FAF45006E2200 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				18C3A0FC271DADAD005EB3E9 /* ContentView.swift */,
@@ -129,7 +129,7 @@
 				18DF102D276028A0001C0463 /* NotesView.swift */,
 				18C0059C273DFA3A005492B7 /* SplashScreen.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

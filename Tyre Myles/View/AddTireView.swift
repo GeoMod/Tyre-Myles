@@ -149,7 +149,7 @@ struct AddTireView: View {
 	private func save() {
 		let newTire = TyreModel(installMiles: installMilage ??  0, removalMiles: removalMilage ?? 0, totalTyreMiles: 0, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
 
-		model.checkLogicalSeasonalMileageValues(with: newTire)
+		model.addNew(tire: newTire)
 
 		dismiss()
 	}

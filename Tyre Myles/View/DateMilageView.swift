@@ -14,21 +14,21 @@ struct DateMilageView: View {
 
 	@State private var tireStatus: TireStatus = .inStorage
 
-//	@ObservedObject
-	var currentTire: TireEntity
+	@ObservedObject var currentTire: TireEntity
 
 	var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
-				Text(currentTire.name!)
+				Spacer()
+				Text(currentTire.name ?? "")
 					.font(Font.title2.bold())
 					.minimumScaleFactor(0.5)
 					.lineLimit(2)
 					.fixedSize(horizontal: false, vertical: true)
 				Spacer()
-				Text(currentTire.totalTyreMyles, format: .number)
-					.bold()
-					.padding(.trailing)
+//				Text(currentTire.totalTyreMyles, format: .number)
+//					.bold()
+//					.padding(.trailing)
 			}
 
 			Divider()
@@ -74,7 +74,11 @@ struct DateMilageView: View {
 				Button {
 					showEditingSheet.toggle()
 				} label: {
-					Text(totalMilage, format: .number)
+//					Text(totalMilage, format: .number)
+//						.opacity(currentTire.isInStorage == false ? 0.25 : 1.0)
+//						.foregroundColor(.primary)
+//						.padding([.top, .bottom])
+					Text(currentTire.totalTyreMyles, format: .number)
 						.opacity(currentTire.isInStorage == false ? 0.25 : 1.0)
 						.foregroundColor(.primary)
 						.padding([.top, .bottom])
