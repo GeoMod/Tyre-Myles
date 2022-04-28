@@ -9,12 +9,11 @@ import SwiftUI
 
 
 struct DateMilageView: View {
-	@State private var showEditingSheet = false
-//	@State private var totalMilage: Double = 0
+	@ObservedObject var currentTire: TireEntity
 
+	@State private var showEditingSheet = false
 	@State private var tireStatus: TireStatus = .inStorage
 
-	@ObservedObject var currentTire: TireEntity
 
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -26,9 +25,6 @@ struct DateMilageView: View {
 					.lineLimit(2)
 					.fixedSize(horizontal: false, vertical: true)
 				Spacer()
-//				Text(currentTire.totalTyreMyles, format: .number)
-//					.bold()
-//					.padding(.trailing)
 			}
 
 			Divider()
@@ -79,13 +75,9 @@ struct DateMilageView: View {
 				}.font(.title2)
 			}.opacity(currentTire.isInStorage ? 1.0 : 0.25)
 		}.font(.footnote.monospaced())
-//			.onAppear {
-//				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
-//			}
 
 			.sheet(isPresented: $showEditingSheet) {
 				// on dismiss
-//				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			} content: {
 				EditTireView(currentTire: currentTire, previousInstallMileage: currentTire.installMiles, previousRemovalMilage: currentTire.removalMiles)
 			}
@@ -98,11 +90,6 @@ struct DateMilageView: View {
 				}
 			}
 	}
-
-//	private func totalMiles(installation: Double, removal: Double) {
-//		totalMilage = (removal - installation).rounded()
-//	}
-
 
 }
 

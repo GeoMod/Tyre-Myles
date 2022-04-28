@@ -97,32 +97,12 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		saveToMOC()
 	}
 
-	func update(tire: TireEntity, using previousTotal: Double) {
-//		storedPreviousTotal = previousRemovalMilage - previousInstallMileage
-
-		if tire.isInStorage {
-			adjustTotalMilage(for: tire, adding: previousTotal)
-			saveToMOC()
-		} else {
-			saveToMOC()
-		}
-	}
-
-	private func adjustTotalMilage(for entity: TireEntity, adding previousTotal: Double) {
-//		let previousEntityTotalMiles = entity.totalTyreMyles
-//		let previousDifference = entity.removalMiles - entity.installMiles
-//
-//		let newMilageDifference = entity.totalTyreMyles - previousDifference
+	func adjustTotalMilage(for entity: TireEntity, adding previousTotal: Double) {
 		let newGrandTotal = entity.totalTyreMyles + previousTotal
 		entity.totalTyreMyles = newGrandTotal
 
-//
-//		let newGrandTotal = previousEntityTotalMiles + previousDifference
-//		entity.totalTyreMyles = newGrandTotal
-
-
+		saveToMOC()
 	}
-
 
 
 	func deleteTire(at index: IndexSet) {

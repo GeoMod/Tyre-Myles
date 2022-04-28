@@ -77,7 +77,6 @@ struct EditTireView: View {
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
 
-
 				HStack {
 					Button(role: .cancel) {
 						dismiss()
@@ -112,7 +111,6 @@ struct EditTireView: View {
 			.onAppear {
 				loadInitialValues()
 			}
-
 		} // End ScrollView
 
 	}
@@ -143,19 +141,19 @@ struct EditTireView: View {
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
-		if mileageDidChange() {
-			model.update(tire: currentTire, using: previousTotal)
+		if mileageDidChange() && currentTire.isInStorage {
+			model.adjustTotalMilage(for: currentTire, adding: previousTotal)
 		}
-		// Dismiss View
+
 		dismiss()
 	}
 
 	private func mileageDidChange() -> Bool {
 		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {
-			// do nothing
 			return false
 		} else {
-			// I want previous total.
+			// compute previous mileage to be added to final/current miles on tire set.
+			previousTotal = previousRemovalMilage - previousInstallMileage
 			return true
 		}
 	}
