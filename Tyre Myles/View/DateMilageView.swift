@@ -62,29 +62,22 @@ struct DateMilageView: View {
 					Text(currentTire.removalMiles.rounded(), format: .number)
 						.padding(.leading, -10)
 				}
+
+				HStack {
+					Text("Total Tyre Myles").bold()
+
+					Spacer()
+
+					Button {
+						showEditingSheet.toggle()
+					} label: {
+						Text(currentTire.totalTyreMyles, format: .number)
+							.foregroundColor(.primary)
+							.padding([.top, .bottom])
+					}
+
+				}.font(.title2)
 			}.opacity(currentTire.isInStorage ? 1.0 : 0.25)
-
-			HStack {
-				Text("Total Tyre Myles")
-					.bold()
-					.opacity(currentTire.isInStorage ? 1.0 : 0.25)
-
-				Spacer()
-
-				Button {
-					showEditingSheet.toggle()
-				} label: {
-//					Text(totalMilage, format: .number)
-//						.opacity(currentTire.isInStorage == false ? 0.25 : 1.0)
-//						.foregroundColor(.primary)
-//						.padding([.top, .bottom])
-					Text(currentTire.totalTyreMyles, format: .number)
-						.opacity(currentTire.isInStorage == false ? 0.25 : 1.0)
-						.foregroundColor(.primary)
-						.padding([.top, .bottom])
-				}
-
-			}.font(.title2)
 		}.font(.footnote.monospaced())
 			.onAppear {
 				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
@@ -94,7 +87,7 @@ struct DateMilageView: View {
 				// on dismiss
 				totalMiles(installation: currentTire.installMiles, removal: currentTire.removalMiles)
 			} content: {
-				EditTireView(currentTire: currentTire)
+				EditTireView(currentTire: currentTire, previousInstallMileage: currentTire.installMiles, previousRemovalMilage: currentTire.removalMiles)
 			}
 
 			.background {
@@ -105,7 +98,6 @@ struct DateMilageView: View {
 				}
 			}
 	}
-
 
 	private func totalMiles(installation: Double, removal: Double) {
 		totalMilage = (removal - installation).rounded()

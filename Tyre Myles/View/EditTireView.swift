@@ -26,6 +26,12 @@ struct EditTireView: View {
 
 	let currentTire: TireEntity
 
+	// To determine whether mileage values have been changed.
+	// If so, used in updating total tire mileage when in storage.
+	var previousInstallMileage: Double
+	var previousRemovalMilage: Double
+
+
 	var body: some View {
 		ScrollView {
 
@@ -127,19 +133,32 @@ struct EditTireView: View {
 		removalMilage = loadedRemovalMilage
 	}
 
+
+
 	private func saveEdit() {
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
 		currentTire.isInStorage = editingTire(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
+
+		if mileageDidChange() {
+			model.update(tire: currentTire)
+		}
+
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
-		model.update(tire: currentTire)
-
 		// Dismiss View
 		dismiss()
+	}
+
+	private func mileageDidChange() -> Bool {
+		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {
+			return false
+		} else {
+			return true
+		}
 	}
 
 	private func loadingTire(status: Bool) -> TireStatus {

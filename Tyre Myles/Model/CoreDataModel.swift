@@ -17,8 +17,6 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 	// MARK: CoreData Model
 	let savedTireController: NSFetchedResultsController<TireEntity>
 
-
-
 	init(managedObjectContext: NSManagedObjectContext) {
 		var request: NSFetchRequest<TireEntity> {
 			let fetched = NSFetchRequest<TireEntity>(entityName: "TireEntity")
@@ -92,7 +90,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		switch tire.status {
 			case .inStorage:
 				entity.isInStorage = true
-				adjustTotalMilage(install: tire.installMiles, removal: tire.removalMiles, for: entity)
+				adjustTotalMilage(for: entity)
 			case .onVehicle:
 				entity.isInStorage = false
 		}
@@ -101,63 +99,26 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 
 	func update(tire: TireEntity) {
 		if tire.isInStorage {
-			adjustTotalMilage(install: tire.installMiles, removal: tire.removalMiles, for: tire)
+			adjustTotalMilage(for: tire)
 			saveToMOC()
 		} else {
 			saveToMOC()
 		}
 	}
 
-	private func adjustTotalMilage(install: Double, removal: Double, for entity: TireEntity) {
-			#warning("Working here")
-		// I'm not checking for the old values matching the ones passed in.
-		var previousInstallMilage = install {
-			didSet {
-				if install != oldValue {
-					// did the previous value match the current one? Then don't update.
-				}
-			}
-		}
+	private func adjustTotalMilage(for entity: TireEntity) {
+		let previousEntityTotalMiles = entity.totalTyreMyles
+		let previousDifference = entity.removalMiles - entity.installMiles
 
-		var previousRemovalMilage = removal {
-			didSet {
-				if removal != oldValue {
-					// did the previous value match the current one? Then don't update.
-				}
-			}
-		}
-
-		// TODO: check for a negative value
-		let difference = removal - install
-		let milageToUpdate = entity.totalTyreMyles + difference
-
-		entity.totalTyreMyles = milageToUpdate
+		let updatedDifference = entity.totalTyreMyles - previousDifference 
+		print("Previous total: \(previousEntityTotalMiles)")
+		print("Previous differ: \(previousDifference)")
+		print("Updated Difference \(updatedDifference)")
 
 
+		let newGrandTotal = previousEntityTotalMiles + previousDifference
+		entity.totalTyreMyles = newGrandTotal
 	}
-
-
-//	private func adjustGrandTotalMilage(install: Double, removal: Double, for entity: TireEntity) {
-//		if entity.installMiles == install && entity.removalMiles == removal {
-//			// no change has occurred
-//			print("Numbers found to be the same")
-//			print("Entity Install \(entity.installMiles), removal \(entity.removalMiles)")
-//			print("Raw instll \(install), removal \(removal)")
-//			return
-//		}
-//		print("Entity removal \(entity.removalMiles) ⏰ install \(entity.installMiles)")
-//
-//		// TODO: check for a negative value
-//		let difference = removal - install
-//
-//		entity.totalTyreMyles = difference
-//	}
-
-//	func updateGrandTotalTyreMiles(for currentTire: TireEntity, using result: Double) {
-////#warning("marked for update/removal")
-//		let updatedMileage = currentTire.totalTyreMyles + result
-//		currentTire.totalTyreMyles = updatedMileage
-//	}
 
 
 
