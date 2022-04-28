@@ -111,10 +111,6 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		let previousDifference = entity.removalMiles - entity.installMiles
 
 		let updatedDifference = entity.totalTyreMyles - previousDifference 
-		print("Previous total: \(previousEntityTotalMiles)")
-		print("Previous differ: \(previousDifference)")
-		print("Updated Difference \(updatedDifference)")
-
 
 		let newGrandTotal = previousEntityTotalMiles + previousDifference
 		entity.totalTyreMyles = newGrandTotal

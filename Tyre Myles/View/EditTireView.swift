@@ -31,6 +31,10 @@ struct EditTireView: View {
 	var previousInstallMileage: Double
 	var previousRemovalMilage: Double
 
+	var previousTotal: Double {
+		return previousRemovalMilage - previousInstallMileage
+	}
+
 
 	var body: some View {
 		ScrollView {
@@ -73,9 +77,11 @@ struct EditTireView: View {
 				Group {
 					TextField("Installation Mileage", value: $installMilage, format: .number)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
+					Text("Prev Total: \(previousTotal)")
 				}
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
+
 
 				HStack {
 					Button(role: .cancel) {
@@ -141,14 +147,12 @@ struct EditTireView: View {
 		currentTire.isInStorage = editingTire(status: tireStatus)
 		currentTire.installDate = installDate
 		currentTire.removalDate = removalDate
+		currentTire.installMiles = installMilage
+		currentTire.removalMiles = removalMilage
 
 		if mileageDidChange() {
 			model.update(tire: currentTire)
 		}
-
-		currentTire.installMiles = installMilage
-		currentTire.removalMiles = removalMilage
-
 		// Dismiss View
 		dismiss()
 	}
