@@ -28,13 +28,9 @@ struct EditTireView: View {
 
 	// To determine whether mileage values have been changed.
 	// If so, used in updating total tire mileage when in storage.
+	@State private var previousTotal: Double = 0
 	var previousInstallMileage: Double
 	var previousRemovalMilage: Double
-
-	var previousTotal: Double {
-		return previousRemovalMilage - previousInstallMileage
-	}
-
 
 	var body: some View {
 		ScrollView {
@@ -77,7 +73,6 @@ struct EditTireView: View {
 				Group {
 					TextField("Installation Mileage", value: $installMilage, format: .number)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
-					Text("Prev Total: \(previousTotal)")
 				}
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
@@ -139,8 +134,6 @@ struct EditTireView: View {
 		removalMilage = loadedRemovalMilage
 	}
 
-
-
 	private func saveEdit() {
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
@@ -151,7 +144,7 @@ struct EditTireView: View {
 		currentTire.removalMiles = removalMilage
 
 		if mileageDidChange() {
-			model.update(tire: currentTire)
+			model.update(tire: currentTire, using: previousTotal)
 		}
 		// Dismiss View
 		dismiss()
@@ -159,8 +152,10 @@ struct EditTireView: View {
 
 	private func mileageDidChange() -> Bool {
 		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {
+			// do nothing
 			return false
 		} else {
+			// I want previous total.
 			return true
 		}
 	}
