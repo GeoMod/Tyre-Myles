@@ -75,11 +75,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		}
 	}
 
-	/*
-	 I don't think I'm saving the "previous" total miles on a set of tires properly, before moving to the edit screen.
-
-	 Also the tire total should display whether the tires are on the car or in storage. For UI continuity.
-	 */
+	#warning("Mileage computations appear to work on the Happy Path")
 
 	func saveNew(tire: TyreModel) {
 		let moc = savedTireController.managedObjectContext
