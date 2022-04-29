@@ -28,7 +28,7 @@ struct EditTireView: View {
 
 	// To determine whether mileage values have been changed.
 	// If so, used in updating total tire mileage when in storage.
-	@State private var previousTotal: Double = 0
+//	@State private var previousTotal: Double = 0
 	var previousInstallMileage: Double
 	var previousRemovalMilage: Double
 
@@ -141,8 +141,10 @@ struct EditTireView: View {
 		currentTire.installMiles = installMilage
 		currentTire.removalMiles = removalMilage
 
+		let difference = removalMilage - installMilage
+
 		if mileageDidChange() && currentTire.isInStorage {
-			model.adjustTotalMilage(for: currentTire, adding: previousTotal)
+			model.adjustTotalMilage(for: currentTire, adding: difference)
 		}
 
 		dismiss()
@@ -153,7 +155,7 @@ struct EditTireView: View {
 			return false
 		} else {
 			// compute previous mileage to be added to final/current miles on tire set.
-			previousTotal = previousRemovalMilage - previousInstallMileage
+//			previousTotal = previousRemovalMilage - previousInstallMileage
 			return true
 		}
 	}

@@ -93,27 +93,24 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		entity.seasonType = tire.type.rawValue
 		entity.installDate = tire.installDate
 		entity.removalDate = tire.removalDate
-		entity.totalTyreMyles = total //tire.totalTyreMiles
+		entity.totalTyreMyles = total
 		entity.id = UUID()
 
 		switch tire.status {
 			case .inStorage:
 				entity.isInStorage = true
-//				let total = tire.removalMiles - tire.installMiles
-//				adjustTotalMilage(for: entity, adding: total)
 			case .onVehicle:
 				entity.isInStorage = false
 		}
 		saveToMOC()
 	}
 
-	func adjustTotalMilage(for entity: TireEntity, adding previousTotal: Double) {
-		let newGrandTotal = entity.totalTyreMyles + previousTotal
+	func adjustTotalMilage(for entity: TireEntity, adding difference: Double) {
+		let newGrandTotal = entity.totalTyreMyles + difference
 		entity.totalTyreMyles = newGrandTotal
 
 		saveToMOC()
 	}
-
 
 	func deleteTire(at index: IndexSet) {
 		withAnimation {
