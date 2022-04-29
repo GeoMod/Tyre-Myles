@@ -75,9 +75,17 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		}
 	}
 
+	/*
+	 I don't think I'm saving the "previous" total miles on a set of tires properly, before moving to the edit screen.
+
+	 Also the tire total should display whether the tires are on the car or in storage. For UI continuity.
+	 */
+
 	func saveNew(tire: TyreModel) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
+
+		let total = tire.removalMiles - tire.installMiles
 
 		entity.name = tire.name
 		entity.installMiles = tire.installMiles
@@ -85,12 +93,14 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		entity.seasonType = tire.type.rawValue
 		entity.installDate = tire.installDate
 		entity.removalDate = tire.removalDate
+		entity.totalTyreMyles = total //tire.totalTyreMiles
 		entity.id = UUID()
 
 		switch tire.status {
 			case .inStorage:
 				entity.isInStorage = true
-				adjustTotalMilage(for: entity, adding: 0)
+//				let total = tire.removalMiles - tire.installMiles
+//				adjustTotalMilage(for: entity, adding: total)
 			case .onVehicle:
 				entity.isInStorage = false
 		}
