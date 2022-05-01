@@ -95,7 +95,7 @@ struct EditTireView: View {
 					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
-					.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
+					.alert("Mileage Entry Error", isPresented: $model.isPresentingAlert) {
 						Button(role: .cancel) {
 							removalMilage = 0
 						} label: {
@@ -154,8 +154,6 @@ struct EditTireView: View {
 		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {
 			return false
 		} else {
-			// compute previous mileage to be added to final/current miles on tire set.
-//			previousTotal = previousRemovalMilage - previousInstallMileage
 			return true
 		}
 	}

@@ -24,6 +24,9 @@ struct AddTireView: View {
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
 
+	// Alert
+	@State private var errorDetails: ErrorDetails?
+
 	enum Field {
 		case name
 		case install
@@ -97,15 +100,30 @@ struct AddTireView: View {
 
 				SaveButton
 			}
-			.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
-				Button(role: .cancel) {
-					//removalMilage = 0
+//			.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
+//				Button(role: .cancel) {
+//					//removalMilage = 0
+//				} label: {
+//					Text("OK")
+//				}
+//			} message: {
+//				Text(ErrorMessage.negativeNumber)
+//			}
+			.alert(errorDetails?.title ?? "NIL", isPresented: $model.isPresentingAlert, presenting: errorDetails) { detail in
+				Button {
+					// action
+					print("Fukc Yeah!!")
 				} label: {
-					Text("OK")
+					Text(detail.title)
 				}
-			} message: {
-				Text(ErrorMessage.negativeNumber)
+				Button("Retry") {
+					print("Handle retry.")
+				}
+
+			} message: { detail in
+				Text(detail.message)
 			}
+
 
 		}// End of ScrollView
 		.navigationBarTitle(Text("Add New Tire"))
@@ -151,7 +169,7 @@ struct AddTireView: View {
 
 		model.addNew(tire: newTire)
 
-		dismiss()
+		if !model.isPresentingAlert { dismiss() }
 	}
 
 	private func cancel() {

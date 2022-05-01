@@ -8,11 +8,10 @@
 import CoreData
 import SwiftUI
 
-
 final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 	@Published var tires: [TireEntity] = []
-	@Published var isShowingAlert = false
-
+	@Published var isPresentingAlert = false
+	@Published var errorDetails: ErrorDetails?
 
 	// MARK: CoreData Model
 	let savedTireController: NSFetchedResultsController<TireEntity>
@@ -69,13 +68,12 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		if tire.status == .inStorage && result < 0 {
 			// a negative mileage value has resulted.
 			// trigger alert
-			isShowingAlert = true
+			save(error: "Entry Error", message: ErrorMessage.negativeNumber)
 		} else {
 			saveNew(tire: tire)
 		}
 	}
 
-	#warning("Mileage computations appear to work on the Happy Path")
 
 	func saveNew(tire: TyreModel) {
 		let moc = savedTireController.managedObjectContext
@@ -120,4 +118,10 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		saveToMOC()
 	}
 
+	private func save(error title: String, message: String) {
+		errorDetails = ErrorDetails(title: title, message: message)
+		isPresentingAlert = true
+	}
+
 }
+
