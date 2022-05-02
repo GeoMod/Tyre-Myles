@@ -12,7 +12,7 @@ struct ContentView: View {
 	@EnvironmentObject var model: CoreDataModel
 
 	@State private var editing: EditMode = .inactive
-	@State private var selectedTireSeason: SeasonType = .allSeason
+	@State private var selectedTireSeason: TyreModel.SeasonType = .allSeason
 
 	@State private var selectedTire: TireEntity? = nil
 

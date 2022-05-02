@@ -13,8 +13,8 @@ struct AddTireView: View {
 	@EnvironmentObject var model: CoreDataModel
 
 	@State private var name = ""
-	@State private var seasonType: SeasonType = .allSeason
-	@State private var tireStatus: TireStatus = .inStorage
+	@State private var seasonType: TyreModel.SeasonType = .allSeason
+	@State private var tireStatus: TyreModel.TireStatus = .inStorage
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
 	@State private var installMilage: Double? = nil
@@ -23,9 +23,6 @@ struct AddTireView: View {
 
 	@FocusState private var focusedField: Field?
 	@FocusState private var mileageIsFocused: Bool
-
-	// Alert
-	@State private var errorDetails: ErrorDetails?
 
 	enum Field {
 		case name
@@ -43,11 +40,11 @@ struct AddTireView: View {
 			VStack {
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
-						.tag(SeasonType.summer)
+						.tag(TyreModel.SeasonType.summer)
 					Text("All Season")
-						.tag(SeasonType.allSeason)
+						.tag(TyreModel.SeasonType.allSeason)
 					Text("Winter")
-						.tag(SeasonType.winter)
+						.tag(TyreModel.SeasonType.winter)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -85,8 +82,8 @@ struct AddTireView: View {
 					DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 
 					Picker("Wheel Status", selection: $tireStatus) {
-						Text("On Vehicle").tag(TireStatus.onVehicle)
-						Text("In Storage").tag(TireStatus.inStorage)
+						Text("On Vehicle").tag(TyreModel.TireStatus.onVehicle)
+						Text("In Storage").tag(TyreModel.TireStatus.inStorage)
 					}
 					.pickerStyle(.segmented)
 					.padding(.vertical)
@@ -100,26 +97,10 @@ struct AddTireView: View {
 
 				SaveButton
 			}
-//			.alert("Mileage Entry Error", isPresented: $model.isShowingAlert) {
-//				Button(role: .cancel) {
-//					//removalMilage = 0
-//				} label: {
-//					Text("OK")
-//				}
-//			} message: {
-//				Text(ErrorMessage.negativeNumber)
-//			}
-			.alert(errorDetails?.title ?? "NIL", isPresented: $model.isPresentingAlert, presenting: errorDetails) { detail in
-				Button {
-					// action
-					print("Fukc Yeah!!")
-				} label: {
-					Text(detail.title)
+			.alert(model.errorDetails?.title ?? "NIL Error", isPresented: $model.isPresentingAlert, presenting: model.errorDetails) { detail in
+				Button("OK", role: .cancel) {
+					// No Action Taken.
 				}
-				Button("Retry") {
-					print("Handle retry.")
-				}
-
 			} message: { detail in
 				Text(detail.message)
 			}
@@ -170,10 +151,6 @@ struct AddTireView: View {
 		model.addNew(tire: newTire)
 
 		if !model.isPresentingAlert { dismiss() }
-	}
-
-	private func cancel() {
-		dismiss()
 	}
 
 }

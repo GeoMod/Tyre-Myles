@@ -13,22 +13,21 @@ struct EditTireView: View {
 	
 	@EnvironmentObject var model: CoreDataModel
 
+	@FocusState private var fieldIsFocused: Bool
+
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
 
 	@State private var name = ""
 	@State private var installMilage: Double = 0
 	@State private var removalMilage: Double = 0
-	@State private var seasonType: SeasonType = .allSeason
-	@State private var tireStatus: TireStatus = .inStorage
-
-	@FocusState private var fieldIsFocused: Bool
+	@State private var seasonType: TyreModel.SeasonType = .allSeason
+	@State private var tireStatus: TyreModel.TireStatus = .inStorage
 
 	let currentTire: TireEntity
 
 	// To determine whether mileage values have been changed.
 	// If so, used in updating total tire mileage when in storage.
-//	@State private var previousTotal: Double = 0
 	var previousInstallMileage: Double
 	var previousRemovalMilage: Double
 
@@ -42,11 +41,11 @@ struct EditTireView: View {
 					.textFieldStyle(.roundedBorder)
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
-						.tag(SeasonType.summer)
+						.tag(TyreModel.SeasonType.summer)
 					Text("All Season")
-						.tag(SeasonType.allSeason)
+						.tag(TyreModel.SeasonType.allSeason)
 					Text("Winter")
-						.tag(SeasonType.winter)
+						.tag(TyreModel.SeasonType.winter)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -57,8 +56,8 @@ struct EditTireView: View {
 				DatePicker("Install Date", selection: $installDate, displayedComponents: .date)
 
 				Picker("Wheel Status", selection: $tireStatus) {
-					Text("On Vehicle").tag(TireStatus.onVehicle)
-					Text("In Storage").tag(TireStatus.inStorage)
+					Text("On Vehicle").tag(TyreModel.TireStatus.onVehicle)
+					Text("In Storage").tag(TyreModel.TireStatus.inStorage)
 				}.pickerStyle(.segmented)
 					.padding(.vertical)
 
@@ -95,6 +94,8 @@ struct EditTireView: View {
 					.disabled(removalMilage == 0 && tireStatus == .inStorage)
 					// Disabled to prevent poor UX logic.
 					.padding()
+
+
 					.alert("Mileage Entry Error", isPresented: $model.isPresentingAlert) {
 						Button(role: .cancel) {
 							removalMilage = 0
@@ -103,11 +104,10 @@ struct EditTireView: View {
 						}
 					} message: {
 						Text(ErrorMessage.negativeNumber)
+			#warning("Complete error handling in the edit view.")
 					}
 				}
-
-			}
-			.padding()
+			}.padding()
 			.onAppear {
 				loadInitialValues()
 			}
@@ -119,7 +119,7 @@ struct EditTireView: View {
 		guard let loadedName = currentTire.name else { return }
 		guard let loadedInstallDate = currentTire.installDate else { return }
 		guard let loadedRemovalDate = currentTire.removalDate else { return }
-		guard let loadedTireSeason = SeasonType(rawValue: currentTire.seasonType!) else { return }
+		guard let loadedTireSeason = TyreModel.SeasonType(rawValue: currentTire.seasonType!) else { return }
 		let loadedInstallMilage = currentTire.installMiles
 		let loadedRemovalMilage = currentTire.removalMiles
 
@@ -133,6 +133,8 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
+		#warning("Move this logic over to CoreData Model?")
+
 		currentTire.name = name
 		currentTire.seasonType = seasonType.rawValue
 		currentTire.isInStorage = editingTire(status: tireStatus)
@@ -147,7 +149,10 @@ struct EditTireView: View {
 			model.adjustTotalMilage(for: currentTire, adding: difference)
 		}
 
-		dismiss()
+		model.saveToMOC()
+
+		if !model.isPresentingAlert { dismiss() }
+
 	}
 
 	private func mileageDidChange() -> Bool {
@@ -158,7 +163,7 @@ struct EditTireView: View {
 		}
 	}
 
-	private func loadingTire(status: Bool) -> TireStatus {
+	private func loadingTire(status: Bool) -> TyreModel.TireStatus {
 		// To set value of Picker when loading Edit View.
 		switch status {
 			case true:
@@ -168,7 +173,7 @@ struct EditTireView: View {
 		}
 	}
 
-	private func editingTire(status: TireStatus) -> Bool {
+	private func editingTire(status: TyreModel.TireStatus) -> Bool {
 		switch status {
 			case .onVehicle:
 				return false

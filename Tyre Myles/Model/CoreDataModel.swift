@@ -35,7 +35,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 			try savedTireController.performFetch()
 			tires = savedTireController.fetchedObjects ?? []
 		} catch {
-			print("failed to fetch items!")
+			saveError(title: "Loading Error", message: ErrorMessage.mocFetchError)
 		}
 	}
 
@@ -52,7 +52,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		do {
 			try moc.save()
 		} catch {
-			print("Error in ", #function)
+			saveError(title: "Disk Error", message: ErrorMessage.coreDataError)
 		}
 	}
 
@@ -66,9 +66,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		let result = tire.removalMiles - tire.installMiles
 
 		if tire.status == .inStorage && result < 0 {
-			// a negative mileage value has resulted.
-			// trigger alert
-			save(error: "Entry Error", message: ErrorMessage.negativeNumber)
+			saveError(title: "Entry Error", message: ErrorMessage.negativeNumber)
 		} else {
 			saveNew(tire: tire)
 		}
@@ -118,7 +116,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		saveToMOC()
 	}
 
-	private func save(error title: String, message: String) {
+	private func saveError(title: String, message: String) {
 		errorDetails = ErrorDetails(title: title, message: message)
 		isPresentingAlert = true
 	}
