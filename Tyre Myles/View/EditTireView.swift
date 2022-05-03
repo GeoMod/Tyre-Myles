@@ -95,7 +95,6 @@ struct EditTireView: View {
 					// Disabled to prevent poor UX logic.
 					.padding()
 
-
 					.alert("Mileage Entry Error", isPresented: $model.isPresentingAlert) {
 						Button(role: .cancel) {
 							// No action taken.
@@ -132,21 +131,6 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
-//		currentTire.name = name
-//		currentTire.seasonType = seasonType.rawValue
-//		currentTire.isInStorage = editingTire(status: tireStatus)
-//		currentTire.installDate = installDate
-//		currentTire.removalDate = removalDate
-//		currentTire.installMiles = installMilage
-//		currentTire.removalMiles = removalMilage
-//
-//
-//		let difference = removalMilage - installMilage
-//
-//		if mileageDidChange() && currentTire.isInStorage {
-//			model.adjustTotalMilage(for: currentTire, adding: difference)
-//		}
-
 		if mileageDidChange() && currentTire.isInStorage {
 			model.adjustTotalMilage(for: currentTire, adding: removalMilage - installMilage)
 		}
@@ -156,9 +140,7 @@ struct EditTireView: View {
 		model.editTire(entity: currentTire, with: editedTire)
 
 		if !model.isPresentingAlert { dismiss() }
-
 	}
-
 
 	private func mileageDidChange() -> Bool {
 		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {

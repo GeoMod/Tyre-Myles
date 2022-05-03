@@ -83,7 +83,6 @@ struct DateMilageView: View {
 			} content: {
 				EditTireView(currentTire: currentTire, previousInstallMileage: currentTire.installMiles, previousRemovalMilage: currentTire.removalMiles)
 			}
-
 			.background {
 				if currentTire.isInStorage {
 					Text("In Storage")

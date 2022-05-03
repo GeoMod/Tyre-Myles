@@ -105,7 +105,6 @@ struct AddTireView: View {
 				Text(detail.message)
 			}
 
-
 		}// End of ScrollView
 		.navigationBarTitle(Text("Add New Tire"))
 
