@@ -98,13 +98,12 @@ struct EditTireView: View {
 
 					.alert("Mileage Entry Error", isPresented: $model.isPresentingAlert) {
 						Button(role: .cancel) {
-							removalMilage = 0
+							// No action taken.
 						} label: {
 							Text("OK")
 						}
 					} message: {
 						Text(ErrorMessage.negativeNumber)
-			#warning("Complete error handling in the edit view.")
 					}
 				}
 			}.padding()
@@ -133,27 +132,33 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
-		#warning("Move this logic over to CoreData Model?")
-
-		currentTire.name = name
-		currentTire.seasonType = seasonType.rawValue
-		currentTire.isInStorage = editingTire(status: tireStatus)
-		currentTire.installDate = installDate
-		currentTire.removalDate = removalDate
-		currentTire.installMiles = installMilage
-		currentTire.removalMiles = removalMilage
-
-		let difference = removalMilage - installMilage
+//		currentTire.name = name
+//		currentTire.seasonType = seasonType.rawValue
+//		currentTire.isInStorage = editingTire(status: tireStatus)
+//		currentTire.installDate = installDate
+//		currentTire.removalDate = removalDate
+//		currentTire.installMiles = installMilage
+//		currentTire.removalMiles = removalMilage
+//
+//
+//		let difference = removalMilage - installMilage
+//
+//		if mileageDidChange() && currentTire.isInStorage {
+//			model.adjustTotalMilage(for: currentTire, adding: difference)
+//		}
 
 		if mileageDidChange() && currentTire.isInStorage {
-			model.adjustTotalMilage(for: currentTire, adding: difference)
+			model.adjustTotalMilage(for: currentTire, adding: removalMilage - installMilage)
 		}
 
-		model.saveToMOC()
+		let editedTire = TyreModel(installMiles: installMilage, removalMiles: removalMilage, name: name, type: seasonType, status: tireStatus, installDate: installDate, removalDate: removalDate)
+
+		model.editTire(entity: currentTire, with: editedTire)
 
 		if !model.isPresentingAlert { dismiss() }
 
 	}
+
 
 	private func mileageDidChange() -> Bool {
 		if previousInstallMileage == installMilage && previousRemovalMilage == removalMilage {

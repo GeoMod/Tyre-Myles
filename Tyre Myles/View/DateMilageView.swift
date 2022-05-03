@@ -60,8 +60,10 @@ struct DateMilageView: View {
 				}
 
 				HStack {
-					Text("Total Tyre Myles").bold()
-
+					Text("Total \(currentTire.name ?? "") Myles").bold()
+						.fixedSize(horizontal: false, vertical: true)
+						.lineLimit(2)
+						.minimumScaleFactor(0.7)
 					Spacer()
 
 					Button {

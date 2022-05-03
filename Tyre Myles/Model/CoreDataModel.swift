@@ -72,7 +72,6 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		}
 	}
 
-
 	func saveNew(tire: TyreModel) {
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
@@ -95,6 +94,24 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 				entity.isInStorage = false
 		}
 		saveToMOC()
+	}
+
+	func editTire(entity: TireEntity, with editedTire: TyreModel) {
+		entity.name = editedTire.name
+		entity.seasonType = editedTire.type.rawValue
+		entity.isInStorage = (editedTire.status == .inStorage)
+		entity.installDate = editedTire.installDate
+		entity.removalDate = editedTire.removalDate
+		entity.installMiles = editedTire.installMiles
+		entity.removalMiles = editedTire.removalMiles
+
+		let result = editedTire.removalMiles - editedTire.installMiles
+
+		if editedTire.status == .inStorage && result < 0 {
+			saveError(title: "Entry Error", message: ErrorMessage.negativeNumber)
+		} else {
+			saveToMOC()
+		}
 	}
 
 	func adjustTotalMilage(for entity: TireEntity, adding difference: Double) {
