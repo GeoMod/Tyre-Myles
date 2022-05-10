@@ -76,7 +76,11 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		let moc = savedTireController.managedObjectContext
 		let entity = TireEntity(context: moc)
 
-		let total = tire.removalMiles - tire.installMiles
+		var total = 0.0
+
+		if tire.status == .inStorage {
+			total = tire.removalMiles - tire.installMiles
+		}
 
 		entity.name = tire.name
 		entity.installMiles = tire.installMiles
@@ -118,7 +122,7 @@ final class CoreDataModel: NSObject, ObservableObject, NSFetchedResultsControlle
 		let newGrandTotal = entity.totalTyreMyles + difference
 		entity.totalTyreMyles = newGrandTotal
 
-		saveToMOC()
+//		saveToMOC()
 	}
 
 	func deleteTire(at index: IndexSet) {

@@ -59,6 +59,11 @@ struct EditTireView: View {
 					Text("On Vehicle").tag(TyreModel.TireStatus.onVehicle)
 					Text("In Storage").tag(TyreModel.TireStatus.inStorage)
 				}.pickerStyle(.segmented)
+					.onChange(of: tireStatus, perform: { newStatus in
+						if newStatus == .inStorage {
+							removalMilage = 0
+						}
+					})
 					.padding(.vertical)
 
 				DatePicker("Removal Date", selection: $removalDate, in: installDate..., displayedComponents: .date)
@@ -131,7 +136,7 @@ struct EditTireView: View {
 	}
 
 	private func saveEdit() {
-		if mileageDidChange() && currentTire.isInStorage {
+		if mileageDidChange() && tireStatus == .inStorage {
 			model.adjustTotalMilage(for: currentTire, adding: removalMilage - installMilage)
 		}
 

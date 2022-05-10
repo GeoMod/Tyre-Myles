@@ -60,7 +60,7 @@ struct DateMilageView: View {
 				}
 
 				HStack {
-					Text("Total \(currentTire.name ?? "") Myles").bold()
+					Text("\(currentTire.name ?? "") Total Myles").bold()
 						.fixedSize(horizontal: false, vertical: true)
 						.lineLimit(2)
 						.minimumScaleFactor(0.7)
