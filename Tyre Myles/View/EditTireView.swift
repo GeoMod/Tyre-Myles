@@ -13,7 +13,7 @@ struct EditTireView: View {
 	
 	@EnvironmentObject var model: CoreDataModel
 
-	@FocusState private var fieldIsFocused: Bool
+	@FocusState private var focusedField: Field?
 
 	@State private var installDate = Date()
 	@State private var removalDate = Date()
@@ -30,6 +30,10 @@ struct EditTireView: View {
 	// If so, used in updating total tire mileage when in storage.
 	var previousInstallMileage: Double
 	var previousRemovalMilage: Double
+
+	enum Field {
+		case removal
+	}
 
 	var body: some View {
 		ScrollView {
@@ -61,6 +65,7 @@ struct EditTireView: View {
 				}.pickerStyle(.segmented)
 					.onChange(of: tireStatus, perform: { newStatus in
 						if newStatus == .inStorage {
+							focusedField = nil
 							removalMilage = 0
 						}
 					})
@@ -77,6 +82,7 @@ struct EditTireView: View {
 				Group {
 					TextField("Installation Mileage", value: $installMilage, format: .number)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
+						.focused($focusedField, equals: .removal)
 				}
 				.keyboardType(.numberPad)
 				.textFieldStyle(.roundedBorder)
