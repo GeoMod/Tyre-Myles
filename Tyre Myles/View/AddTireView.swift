@@ -55,7 +55,7 @@ struct AddTireView: View {
 						.keyboardType(.alphabet)
 						.submitLabel(.next)
 						.padding(.top, 10)
-					TextField("Milage on Vehicle", value: $installMilage, format: .number)
+					TextField("Mileage on Vehicle", value: $installMilage, format: .number)
 						.focused($focusedField, equals: .install)
 						.focused($mileageIsFocused)
 					TextField("Removal Mileage", value: $removalMilage, format: .number)
