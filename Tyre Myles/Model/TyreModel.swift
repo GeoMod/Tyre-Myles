@@ -30,5 +30,6 @@ struct TyreModel {
 		case summer 	= "Summer"
 		case allSeason 	= "All Season"
 		case winter 	= "Winter"
+		case track		= "Track"
 	}
 }

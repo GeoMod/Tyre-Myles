@@ -33,10 +33,8 @@ struct AddTireView: View {
 	// Save button outline.
 	let linearGradient = LinearGradient(gradient: Gradient(colors: [.gray, .white, .gray]), startPoint: .top, endPoint: .bottom)
 
-
 	var body: some View {
 		ScrollView {
-
 			VStack {
 				Picker("Season", selection: $seasonType) {
 					Text("Summer")
@@ -45,6 +43,8 @@ struct AddTireView: View {
 						.tag(TyreModel.SeasonType.allSeason)
 					Text("Winter")
 						.tag(TyreModel.SeasonType.winter)
+					Text("Track")
+						.tag(TyreModel.SeasonType.track)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -123,9 +123,7 @@ struct AddTireView: View {
 			}
 		}
 
-
 	}
-
 
 	private var SaveButton: some View {
 		Button {

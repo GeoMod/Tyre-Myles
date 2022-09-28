@@ -14,7 +14,6 @@ struct DateMilageView: View {
 	@State private var showEditingSheet = false
 	@State private var tireStatus: TyreModel.TireStatus = .inStorage
 
-
 	var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
@@ -77,7 +76,6 @@ struct DateMilageView: View {
 				}.font(.title2)
 			}.opacity(currentTire.isInStorage ? 1.0 : 0.25)
 		}.font(.footnote.monospaced())
-
 			.sheet(isPresented: $showEditingSheet) {
 				// on dismiss
 			} content: {

@@ -19,6 +19,5 @@ enum ErrorMessage {
 
 	static let coreDataError = "There was an error saving to the disc."
 	static let mocFetchError = "Failed to load objects from the disc."
-
 }
 

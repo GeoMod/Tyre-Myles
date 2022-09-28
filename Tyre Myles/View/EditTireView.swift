@@ -50,6 +50,8 @@ struct EditTireView: View {
 						.tag(TyreModel.SeasonType.allSeason)
 					Text("Winter")
 						.tag(TyreModel.SeasonType.winter)
+					Text("Track")
+						.tag(TyreModel.SeasonType.track)
 				}
 				.padding([.leading, .trailing])
 				.pickerStyle(.segmented)
@@ -179,8 +181,6 @@ struct EditTireView: View {
 				return true
 		}
 	}
-
-
 
 }
 
